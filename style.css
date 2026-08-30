@@ -1,0 +1,1047 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-start: #f8fafc;
+  --bg-mid: #ffffff;
+  --bg-end: #f1f5f9;
+  --card-bg: #ffffff;
+  --card-border: rgba(226, 232, 240, 0.8);
+  --text-900: #0f172a;
+  --text-600: #475569;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: #100e0b;
+  color: var(--text-900);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 64rem;
+}
+
+@media (max-width: 900px) {
+  .cards {
+    grid-template-columns: 1fr;
+    max-width: 24rem;
+  }
+}
+
+.card {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 2.5rem 2rem;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: #fff;
+}
+
+.card[data-module='sales'] {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.25), rgba(37, 99, 235, 0.15));
+  backdrop-filter: blur(20px);
+}
+
+.card[data-module='entrepreneurial'] {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(13, 148, 136, 0.15));
+  backdrop-filter: blur(20px);
+}
+
+.card[data-module='product'] {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(234, 88, 12, 0.15));
+  backdrop-filter: blur(20px);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover,
+.card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+.card:hover::before,
+.card:focus-visible::before {
+  opacity: 1;
+}
+
+.card-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-icon--blue {
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
+}
+.card-icon--green {
+  background: linear-gradient(135deg, #10b981, #0d9488);
+}
+.card-icon--amber {
+  background: linear-gradient(135deg, #f59e0b, #ea580c);
+}
+
+.card[data-module='sales']:hover {
+  box-shadow: 0 20px 40px rgba(14, 165, 233, 0.18);
+}
+.card[data-module='sales']::before {
+  background: linear-gradient(90deg, #0ea5e9, #2563eb);
+}
+
+.card[data-module='entrepreneurial']:hover {
+  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.18);
+}
+.card[data-module='entrepreneurial']::before {
+  background: linear-gradient(90deg, #10b981, #0d9488);
+}
+
+.card[data-module='product']:hover {
+  box-shadow: 0 20px 40px rgba(245, 158, 11, 0.18);
+}
+.card[data-module='product']::before {
+  background: linear-gradient(90deg, #f59e0b, #ea580c);
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.card-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  transition: gap 0.3s ease;
+}
+
+.card:hover .card-link {
+  gap: 0.85rem;
+}
+
+.aura-bg {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+/* Background glow. This used to be four separate divs, each with a
+   live CSS `filter: blur()` (up to 160px radius) recomputed by the
+   browser on every resize/zoom — expensive by itself, and worse
+   whenever position:fixed inset:0 sizing changes (browser zoom, pinch
+   zoom) since all four had to re-render at the new size simultaneously.
+   That was the main source of zoom lag.
+
+   Replaced with one precomputed image (aura-bg.webp) that bakes in the
+   same colors/positions/blend result ahead of time — the browser just
+   scales a ~15KB picture instead of recomputing four Gaussian blurs.
+   Fixed positioning is kept exactly as before (capped to one viewport's
+   worth of pixels, stays put while scrolling, unaffected by page
+   length) — only the "how is the glow itself drawn" part changed. */
+.aura-layer {
+  position: fixed; inset: 0;
+  z-index: 0;
+  background: #100e0b url('aura-bg.webp') center center / cover no-repeat;
+  transform: translateZ(0);
+  pointer-events: none;
+}
+.aura-content {
+  position: relative;
+  z-index: 1;
+}
+.page-title {
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 600px) {
+  .page-title {
+    font-size: 1.75rem;
+  }
+}
+
+/* The big "Chapter N" heading on chapter detail pages, scaled down
+   a bit closer in proportion to the subtitle sitting right below it
+   (rather than the larger default .page-title size used elsewhere). */
+#chapterHeading {
+  font-size: 2rem;
+}
+
+@media (max-width: 600px) {
+  #chapterHeading {
+    font-size: 1.5rem;
+  }
+}
+
+/* Placeholder module pages */
+
+/* Row of back-icon buttons on chapter pages: a swooping back arrow to
+   the module list, plus a house icon straight to the Archive front
+   page. Circular glass buttons, same visual language as the
+   undo/redo/reset toolbar buttons elsewhere on this page. */
+.back-links-row {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  z-index: 5;
+}
+
+.back-icon-btn {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+/* Inside the chapter page's row, positioning is handled by the row
+   itself (flex layout, two icons side by side) rather than each icon
+   individually. */
+.back-links-row .back-icon-btn {
+  position: static;
+}
+
+.back-icon-btn svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.back-icon-btn:hover,
+.back-icon-btn:focus-visible {
+  border-color: var(--accent, #38bdf8);
+  color: #fff;
+  transform: translateY(-1px);
+  outline: none;
+}
+
+@media (max-width: 600px) {
+  .back-icon-btn {
+    width: 2.1rem;
+    height: 2.1rem;
+  }
+  .back-icon-btn svg {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+}
+
+.page-subtitle {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.05rem;
+  text-align: center;
+  max-width: 32rem;
+}
+
+/* Pages with tall stacked content (e.g. chapter lists) should start
+   from the top and grow, rather than trying to vertically center. */
+.page--top {
+  justify-content: flex-start;
+  padding-top: 6rem;
+  padding-bottom: 4rem;
+}
+
+.chapter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  width: 100%;
+  max-width: 30rem;
+}
+
+.chapter-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 0.85rem 1.25rem;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chapter-card:hover,
+.chapter-card:focus-visible {
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.chapter-number {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Reserved blank space below the chapter number for a title,
+   to be filled in manually later. */
+.chapter-title-space {
+  min-height: 1.4rem;
+  margin-top: 0.3rem;
+}
+
+/* Once a title is filled in (from window.CHAPTER_TITLES, wired up in
+   chapter-nav.js), it renders here at the same proportion as the
+   "Chapter N" label above it by default. Long titles get their font
+   size shrunk down by chapter-nav.js (via the --title-fit-scale
+   variable) just enough to keep fitting the card cleanly, since not
+   every chapter's title length is known ahead of time. */
+.chapter-title-space.has-title {
+  min-height: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 500;
+  line-height: 1.35;
+  font-size: calc(0.95rem * var(--title-fit-scale, 1));
+}
+
+.chapter-card--blue {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(37, 99, 235, 0.12));
+  backdrop-filter: blur(20px);
+}
+.chapter-card--blue:hover {
+  box-shadow: 0 12px 24px rgba(14, 165, 233, 0.15);
+}
+
+.chapter-card--green {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(13, 148, 136, 0.12));
+  backdrop-filter: blur(20px);
+}
+.chapter-card--green:hover {
+  box-shadow: 0 12px 24px rgba(16, 185, 129, 0.15);
+}
+
+.chapter-card--amber {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(234, 88, 12, 0.12));
+  backdrop-filter: blur(20px);
+}
+.chapter-card--amber:hover {
+  box-shadow: 0 12px 24px rgba(245, 158, 11, 0.15);
+}
+
+/* ============================================================
+   Floating Action Button (FAB) — the "<" icon on the right edge
+   that morphs into a glowing ring and opens a stack of options.
+   ============================================================ */
+
+.fab-wrap {
+  position: fixed;
+  top: 50%;
+  right: 1.75rem;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  z-index: 100;
+}
+
+.fab-icon {
+  position: relative;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  transition: background 0.35s ease, border-color 0.35s ease,
+    box-shadow 0.35s ease, transform 0.2s ease;
+  touch-action: manipulation;
+}
+
+.fab-icon svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.35s ease;
+}
+
+.fab-icon:hover {
+  transform: scale(1.07);
+}
+
+/* Icon "becomes" a thin glowing halo/ring when opened */
+.fab-wrap.is-open .fab-icon {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1.5px solid var(--accent, #38bdf8);
+  box-shadow: 0 0 4px var(--accent, #38bdf8), 0 0 24px var(--accent, #38bdf8);
+}
+
+.fab-wrap.is-open .fab-icon svg {
+  transform: rotate(180deg);
+}
+
+.fab-options {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(14px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
+  max-width: 15rem;
+}
+
+.fab-wrap.is-open .fab-options {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  pointer-events: auto;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0s;
+}
+
+/* Glowing vertical spine connecting all option containers */
+.fab-options::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -0.85rem;
+  width: 2px;
+  background: var(--accent, #38bdf8);
+  opacity: 0.55;
+  box-shadow: 0 0 8px var(--accent, #38bdf8);
+  border-radius: 2px;
+}
+
+/* Glowing tick connecting the spine to the halo */
+.fab-options::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -1.7rem;
+  width: 0.85rem;
+  height: 2px;
+  background: var(--accent, #38bdf8);
+  opacity: 0.55;
+  box-shadow: 0 0 8px var(--accent, #38bdf8);
+}
+
+/* Desktop only (mobile keeps the layout above, untouched): the FAB
+   now hugs the content container's edge instead of the screen's edge
+   (actual positioning is computed by widget.js, since the content
+   container's width varies). Because it sits close to the content
+   with no spare room on its content-facing side, the icon and the
+   option stack swap visual order here — the icon stays anchored
+   right next to the content, and the options reveal to its OUTER
+   side (away from the content, into the empty margin) instead of
+   spilling toward the content and overlapping the text. */
+@media (min-width: 601px) {
+  .fab-icon {
+    order: 1;
+  }
+
+  .fab-options {
+    order: 2;
+    transform: translateX(-10px);
+  }
+
+  .fab-wrap.is-open .fab-options {
+    transform: translateX(0);
+  }
+
+  .fab-options::before {
+    right: auto;
+    left: -0.85rem;
+  }
+
+  .fab-options::after {
+    right: auto;
+    left: -1.7rem;
+  }
+}
+
+.fab-option {
+  position: relative;
+  padding: 0.65rem 1rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(20, 20, 20, 0.6);
+  backdrop-filter: blur(14px);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  touch-action: manipulation;
+}
+
+.fab-option:hover {
+  border-color: var(--accent, #38bdf8);
+  transform: translateX(-2px);
+}
+
+/* Armed/active state (highlight, underline, bold "pens" toggled on) —
+   stays glowing until pressed again, independent of the panel open/closed. */
+.fab-option.is-active {
+  border-color: var(--accent, #38bdf8);
+  background: rgba(255, 255, 255, 0.08);
+  animation: fabPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes fabPulse {
+  0%, 100% {
+    box-shadow: 0 0 4px var(--accent, #38bdf8), 0 0 10px var(--accent, #38bdf8);
+  }
+  50% {
+    box-shadow: 0 0 8px var(--accent, #38bdf8), 0 0 20px var(--accent, #38bdf8);
+  }
+}
+
+@media (max-width: 640px) {
+  /* Anchor to the bottom-right corner on mobile instead of vertical
+     center. This keeps it (and its expanded panel) well clear of the
+     sticky toolbar/theme-toggle pinned at the top of the screen — the
+     overlap between the two was what made the theme toggle untappable. */
+  .fab-wrap {
+    top: auto;
+    bottom: 1.25rem;
+    right: 1rem;
+    transform: none;
+    gap: 0.75rem;
+  }
+  .fab-option {
+    font-size: 0.75rem;
+    padding: 0.55rem 0.8rem;
+    white-space: normal;
+  }
+  .fab-options {
+    max-width: 11rem;
+  }
+}
+
+/* ============================================================
+   Chapter detail page — editable content area
+   ============================================================ */
+
+.chapter-meta {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.chapter-content-wrap {
+  width: 100%;
+  max-width: 44rem;
+  margin-top: 1.5rem;
+  position: relative;
+}
+
+/* Zero-height marker placed just above the toolbar — purely so
+   JS can watch (via IntersectionObserver) for the moment the
+   toolbar reaches the top of the screen and becomes "stuck". */
+.toolbar-sentinel {
+  height: 1px;
+}
+
+.chapter-content {
+  min-height: 16rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.85rem;
+  padding: 1.75rem;
+  color: #fff;
+  line-height: 1.7;
+  font-size: 0.95rem;
+  outline: none;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+@media (max-width: 600px) {
+  .chapter-content {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    padding: 1.25rem;
+  }
+}
+
+.chapter-content:empty::before {
+  content: attr(data-placeholder);
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* Book-style typesetting for whatever text is placed inside — just
+   wrap each paragraph in <p> tags in chapter-content.js and this
+   handles the rest (justified, indented, drop cap on the opener). */
+.chapter-content {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.chapter-content p {
+  margin: 0 0 1.1em;
+  text-align: justify;
+  text-indent: 1.6em;
+}
+
+.chapter-content p:first-of-type {
+  text-indent: 0;
+}
+
+.chapter-content p:first-of-type::first-letter {
+  float: left;
+  font-size: 2.7em;
+  font-weight: 700;
+  line-height: 0.85;
+  padding-right: 0.09em;
+  padding-top: 0.04em;
+}
+
+.chapter-content h3 {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.2em;
+  margin: 1.5em 0 0.6em;
+}
+
+.chapter-content ul,
+.chapter-content ol {
+  margin: 0 0 1.1em 1.6em;
+  padding: 0;
+}
+
+.chapter-content li {
+  margin-bottom: 0.4em;
+  text-align: justify;
+}
+
+/* Blank space under the big "Chapter N" heading on chapter detail
+   pages, left empty for the title to be added manually. */
+.chapter-title-space--detail {
+  min-height: 2.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.chapter-title-space--detail.has-title {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+/* Light mode: white box, black text */
+.chapter-content-wrap.is-light .chapter-content {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+}
+
+.chapter-content-wrap.is-light .chapter-content:empty::before {
+  color: rgba(15, 23, 42, 0.4);
+}
+
+/* ============================================================
+   Chapter toolbar — undo / redo / reset on the left, light-dark
+   switch on the right. Sits in normal flow by default. JS (a
+   sentinel + IntersectionObserver in chapter.html) detects when
+   it hits the top of the screen and adds "is-stuck", which
+   switches it to position: fixed at that exact moment.
+
+   NOTE: this is deliberately JS-driven fixed positioning rather
+   than native CSS position: sticky — the page background wrapper
+   (.aura-bg) has overflow: hidden for the glow effect, and an
+   overflow: hidden ancestor silently disables position: sticky
+   on mobile Safari/some Android browsers. Fixed positioning
+   isn't affected by that, so this works consistently everywhere.
+
+     - Desktop: once stuck, it detaches into a fixed vertical
+       dock in the LEFT corner of the viewport, outside the
+       content column — mirroring the round "<" FAB dock on the
+       right (see the min-width: 601px override below).
+     - Mobile: once stuck, it pins to the top of the screen at
+       the same left/right position it already sat at in normal
+       flow — no rearranging, no sideways movement, only vertical.
+   ============================================================ */
+.chapter-toolbar {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.chapter-toolbar.is-stuck {
+  position: fixed;
+  top: 0.6rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  padding: 0.4rem 0.6rem;
+  background: rgba(16, 14, 11, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 0.85rem;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chapter-content-wrap.is-light .chapter-toolbar.is-stuck {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(15, 23, 42, 0.12);
+}
+
+/* Desktop: once stuck, leave the content column entirely and dock
+   as a fixed vertical stack in the left corner of the viewport —
+   same fixed/centered-vertically placement as the right-side FAB
+   ("<") toggle, just mirrored to the left and holding 4 controls
+   instead of 1. */
+@media (min-width: 601px) {
+  .chapter-toolbar.is-stuck {
+    top: 50%;
+    left: 1.75rem;
+    right: auto;
+    transform: translateY(-50%);
+    flex-direction: column;
+    justify-content: center;
+    width: auto;
+    padding: 0.6rem 0.5rem;
+    border-radius: 999px;
+    gap: 0.7rem;
+  }
+
+  .chapter-toolbar.is-stuck .toolbar-group {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.history-btn {
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+  touch-action: manipulation;
+}
+
+.history-btn svg {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.history-btn:hover:not(:disabled) {
+  border-color: var(--accent, #38bdf8);
+}
+
+.history-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* This gives the buttons their own solid light background rather
+   than a near-transparent tint — that near-transparent version relied
+   on the "is-stuck" pill's white backdrop for contrast, so the icons
+   were invisible (dark-on-dark) whenever the toolbar sat normally at
+   the top of the page, on both mobile and desktop. */
+.chapter-content-wrap.is-light .history-btn {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(15, 23, 42, 0.15);
+  color: #0f172a;
+}
+
+@media (max-width: 600px) {
+  .toolbar-group {
+    gap: 0.4rem;
+  }
+  .history-btn {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+}
+
+/* Small light/dark switch — sits in the toolbar flow now instead of
+   being pinned to a corner, so it can slide/animate with the rest. */
+.theme-toggle {
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.theme-toggle-track {
+  display: block;
+  width: 2.5rem;
+  height: 1.3rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  position: relative;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.chapter-content-wrap.is-light .theme-toggle-track {
+  background: #e2e8f0;
+  border-color: rgba(15, 23, 42, 0.15);
+}
+
+.theme-toggle-knob {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  background: #0f172a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.chapter-content-wrap.is-light .theme-toggle-knob {
+  transform: translateX(1.2rem);
+  background: #fbbf24;
+  color: #78350f;
+}
+
+.theme-toggle-knob svg {
+  width: 0.7rem;
+  height: 0.7rem;
+}
+
+.theme-toggle-knob .icon-sun {
+  display: none;
+}
+.theme-toggle-knob .icon-moon {
+  display: block;
+}
+
+.chapter-content-wrap.is-light .theme-toggle-knob .icon-sun {
+  display: block;
+}
+.chapter-content-wrap.is-light .theme-toggle-knob .icon-moon {
+  display: none;
+}
+
+/* ============================================================
+   "Select Chapter Download" popup (module pages) — glow-select
+   chapters, then download them as one merged .docx. Reuses the
+   existing --accent variable and fabPulse glow animation so it
+   matches the FAB's look on each module's color.
+   ============================================================ */
+
+.chapter-picker-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 1.25rem;
+}
+
+.chapter-picker-modal {
+  position: relative;
+  width: 100%;
+  max-width: 26rem;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  background: rgba(20, 20, 20, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 1rem;
+  padding: 1.5rem 1.35rem 1.35rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.chapter-picker-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.chapter-picker-close:hover {
+  border-color: var(--accent, #38bdf8);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.chapter-picker-close svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.chapter-picker-heading {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  padding-right: 1.5rem;
+}
+
+.chapter-picker-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+.chapter-picker-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.chapter-picker-chip:hover {
+  border-color: var(--accent, #38bdf8);
+}
+
+.chapter-picker-chip-note {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
+}
+
+.chapter-picker-chip.is-selected {
+  border-color: var(--accent, #38bdf8);
+  background: rgba(255, 255, 255, 0.08);
+  animation: fabPulse 1.8s ease-in-out infinite;
+}
+
+.chapter-picker-proceed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--accent, #38bdf8);
+  background: var(--accent, #38bdf8);
+  color: #0f172a;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.chapter-picker-proceed svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.chapter-picker-proceed:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.chapter-picker-proceed:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.chapter-picker-proceed.is-loading {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+@media (max-width: 640px) {
+  .chapter-picker-modal {
+    max-width: 100%;
+  }
+}
