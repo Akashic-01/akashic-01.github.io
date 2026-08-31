@@ -1,0 +1,3353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sales Management - Chapter 3 Quiz</title>
+
+<style>
+:root{
+    --primary:#172554;
+    --primary2:#1e3a8a;
+    --light:#f5f7fb;
+    --border:#d9deea;
+    --text:#172033;
+    --muted:#667085;
+    --success:#15803d;
+    --successBg:#ecfdf3;
+    --danger:#b91c1c;
+    --dangerBg:#fef2f2;
+    --warning:#b45309;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--light);
+    color:var(--text);
+}
+
+.container{
+    width:min(1000px,94%);
+    margin:35px auto;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+h1,h2,h3{
+    margin-top:0;
+}
+
+.subtitle{
+    color:var(--muted);
+    line-height:1.6;
+}
+
+.settings{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin:25px 0;
+}
+
+.field label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+select,
+input[type="text"]{
+    width:100%;
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+}
+
+select:focus,
+input[type="text"]:focus{
+    border-color:var(--primary2);
+}
+
+button{
+    border:none;
+    border-radius:10px;
+    padding:12px 18px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.15s;
+}
+
+button:hover:not(:disabled){
+    transform:translateY(-1px);
+}
+
+button:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.primary{
+    background:var(--primary);
+    color:white;
+}
+
+.secondary{
+    background:#e9edf5;
+    color:var(--text);
+}
+
+.danger{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.quiz-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.badges{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.badge{
+    background:#eef2ff;
+    color:#3730a3;
+    padding:7px 11px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.progress-container{
+    height:9px;
+    background:#e5e7eb;
+    border-radius:50px;
+    overflow:hidden;
+    margin:20px 0 30px;
+}
+
+.progress{
+    height:100%;
+    width:0;
+    background:var(--primary);
+    transition:.25s;
+}
+
+.question{
+    font-size:23px;
+    line-height:1.5;
+    margin-bottom:22px;
+    white-space:pre-line;
+}
+
+.choices{
+    display:grid;
+    gap:12px;
+}
+
+.choice{
+    width:100%;
+    text-align:left;
+    background:white;
+    border:2px solid var(--border);
+    color:var(--text);
+    padding:15px 17px;
+}
+
+.choice:hover:not(:disabled){
+    border-color:var(--primary2);
+    background:#f8faff;
+}
+
+.choice.correct{
+    border-color:var(--success);
+    background:var(--successBg);
+    color:#166534;
+}
+
+.choice.wrong{
+    border-color:var(--danger);
+    background:var(--dangerBg);
+    color:#991b1b;
+}
+
+.choice-letter{
+    display:inline-flex;
+    width:30px;
+    height:30px;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#edf0f5;
+    margin-right:10px;
+    font-weight:bold;
+}
+
+.feedback{
+    display:none;
+    margin-top:22px;
+    padding:17px;
+    border-radius:12px;
+    line-height:1.6;
+}
+
+.feedback.show{
+    display:block;
+}
+
+.feedback.correct{
+    background:var(--successBg);
+    color:#166534;
+}
+
+.feedback.incorrect{
+    background:var(--dangerBg);
+    color:#991b1b;
+}
+
+.feedback-title{
+    font-weight:bold;
+    font-size:17px;
+    margin-bottom:5px;
+}
+
+.controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+.control-right{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.text-answer{
+    display:grid;
+    gap:12px;
+}
+
+.enumeration-inputs{
+    display:grid;
+    gap:10px;
+}
+
+.enum-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.enum-number{
+    width:30px;
+    font-weight:bold;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.notice{
+    background:#f8fafc;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    color:var(--muted);
+    line-height:1.5;
+}
+
+.result-score{
+    font-size:52px;
+    font-weight:800;
+    color:var(--primary);
+}
+
+.result-percent{
+    font-size:22px;
+    margin:10px 0 25px;
+}
+
+.review-item{
+    border-top:1px solid var(--border);
+    padding:18px 0;
+    line-height:1.6;
+}
+
+.review-status{
+    font-weight:bold;
+}
+
+.review-status.correct{
+    color:var(--success);
+}
+
+.review-status.incorrect{
+    color:var(--danger);
+}
+
+.review-status.skipped{
+    color:var(--warning);
+}
+
+@media(max-width:750px){
+
+    .settings{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .question{
+        font-size:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- =====================================================
+     START SCREEN
+     ===================================================== -->
+
+<section id="startScreen" class="card">
+
+    <h1>Sales Management — Chapter 3 Quiz</h1>
+
+    <p class="subtitle">
+        Test your understanding of Chapter 3 using different question types and question styles.
+    </p>
+
+    <div class="settings">
+
+        <div class="field">
+
+            <label for="questionType">
+                Question Type
+            </label>
+
+            <select id="questionType">
+
+                <option value="mc">
+                    Multiple Choice
+                </option>
+
+                <option value="identification">
+                    Identification
+                </option>
+
+                <option value="tf">
+                    True / False
+                </option>
+
+                <option value="enumeration">
+                    Enumeration
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="questionStyle">
+                Question Style
+            </label>
+
+            <select id="questionStyle">
+
+                <option value="direct">
+                    Direct
+                </option>
+
+                <option value="situational">
+                    Situational
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="questionOrder">
+                Question Order
+            </label>
+
+            <select id="questionOrder">
+
+                <option value="ordered">
+                    In Order
+                </option>
+
+                <option value="random">
+                    Randomized
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div class="notice">
+
+        <b>Question count:</b>
+        Multiple Choice, Identification, and True/False contain
+        28 questions per style. Enumeration uses only the lists that
+        naturally fit the chapter content.
+
+    </div>
+
+    <br>
+
+    <button
+        id="startButton"
+        class="primary">
+
+        Start Quiz
+
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     QUIZ SCREEN
+     ===================================================== -->
+
+<section id="quizScreen" class="card hidden">
+
+    <div class="quiz-header">
+
+        <div>
+            <b id="questionCounter">
+                Question 1 of 28
+            </b>
+        </div>
+
+        <div>
+            <b id="scoreDisplay">
+                Score: 0
+            </b>
+        </div>
+
+    </div>
+
+
+    <div class="progress-container">
+
+        <div
+            id="progressBar"
+            class="progress">
+        </div>
+
+    </div>
+
+
+    <div class="badges">
+
+        <span
+            id="typeBadge"
+            class="badge">
+        </span>
+
+        <span
+            id="styleBadge"
+            class="badge">
+        </span>
+
+    </div>
+
+    <br>
+
+
+    <div
+        id="questionText"
+        class="question">
+    </div>
+
+
+    <div id="answerArea">
+    </div>
+
+
+    <div
+        id="feedback"
+        class="feedback">
+    </div>
+
+
+    <div class="controls">
+
+        <button
+            id="backButton"
+            class="secondary">
+
+            ← Back
+
+        </button>
+
+
+        <div class="control-right">
+
+            <button
+                id="skipButton"
+                class="secondary">
+
+                Skip
+
+            </button>
+
+
+            <button
+                id="restartButton"
+                class="danger">
+
+                Restart
+
+            </button>
+
+
+            <button
+                id="nextButton"
+                class="primary hidden">
+
+                Next →
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RESULT SCREEN
+     ===================================================== -->
+
+<section id="resultScreen" class="card hidden">
+
+    <h1>
+        Quiz Complete!
+    </h1>
+
+    <div
+        id="resultScore"
+        class="result-score">
+
+        0 / 0
+
+    </div>
+
+
+    <div
+        id="resultPercent"
+        class="result-percent">
+
+        0%
+
+    </div>
+
+
+    <p
+        id="resultMessage"
+        class="subtitle">
+    </p>
+
+
+    <div class="controls">
+
+        <button
+            id="reviewButton"
+            class="primary">
+
+            Review Answers
+
+        </button>
+
+
+        <button
+            id="resultRestartButton"
+            class="danger">
+
+            Restart Quiz
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="reviewArea"
+        class="hidden">
+    </div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CHAPTER 3 — SOURCE CONTENT
+   Based on Chapter-3-SM (1).pptx
+   ========================================================= */
+
+
+/* =========================================================
+   CORE CONCEPTS
+   ========================================================= */
+
+const FACTS = [
+
+    {
+        term:"Specialization",
+
+        definition:
+        "It is the degree in which individuals perform some of the required tasks to the exclusion of others. Individuals can become experts on certain tasks, leading to better performance for the entire organization.",
+
+        category:"Sales Organization Concept"
+    },
+
+    {
+        term:"Geographical Specialization",
+
+        definition:
+        "It can be used for mastering markets and addressing customers more thoroughly.",
+
+        category:"Specialization"
+    },
+
+    {
+        term:"Product-based Specialization",
+
+        definition:
+        "Individuals can become experts in one or two products or services instead of the whole line.",
+
+        category:"Specialization"
+    },
+
+    {
+        term:"Client-based Specialization",
+
+        definition:
+        "Structuring sales forces by type of client can be another useful approach.",
+
+        category:"Specialization"
+    },
+
+    {
+        term:"Centralization",
+
+        definition:
+        "Centralization is the degree in which important decisions and tasks are performed at the higher levels in the management hierarchy.",
+
+        category:"Sales Organization Concept"
+    },
+
+    {
+        term:"Decentralization",
+
+        definition:
+        "High decentralization in sales force management is found mainly among companies with large sales forces.",
+
+        category:"Sales Organization Concept"
+    },
+
+    {
+        term:"Central Sales Office",
+
+        definition:
+        "The central sales office has full responsibility for recruiting, selecting, training, compensating, supervising, motivating, controlling, and evaluating the sales force.",
+
+        category:"Centralization"
+    },
+
+    {
+        term:"Span of Control",
+
+        definition:
+        "The number of sales persons that can be managed efficiently and effectively by a sales manager in sales organization.",
+
+        category:"Span of Control"
+    },
+
+    {
+        term:"Management Level",
+
+        definition:
+        "The number of different hierarchical levels of sales management within an organization.",
+
+        category:"Span of Control"
+    },
+
+    {
+        term:"Narrow Span of Control",
+
+        definition:
+        "A single sales manager or sales supervisor who oversees few salespersons.",
+
+        category:"Span of Control"
+    },
+
+    {
+        term:"Wide Span of Control",
+
+        definition:
+        "A single sales manager or sales supervisor who oversees a large number of salespersons.",
+
+        category:"Span of Control"
+    },
+
+    {
+        term:"Line Sales Position",
+
+        definition:
+        "A position directly involved in the day-to-day sales operations of the organization.",
+
+        category:"Line versus Staff Positions"
+    },
+
+    {
+        term:"Staff Sales Position",
+
+        definition:
+        "A position that indirectly supports line sales functions and uses technical expertise to assist line salespeople and aid top management.",
+
+        category:"Line versus Staff Positions"
+    },
+
+    {
+        term:"Geographic Sales Organization",
+
+        definition:
+        "A structure apparent when characteristics of a large number of customers differ by geographic location, diverse selling problems are encountered in different areas, or certain products are more strongly ordered in some regions than in others.",
+
+        category:"Sales Organization Structures"
+    },
+
+    {
+        term:"Customer Sales Organization",
+
+        definition:
+        "A structure fitting when practically identical products are marketed to several types of customers and the problems of selling to each type are different.",
+
+        category:"Sales Organization Structures"
+    },
+
+    {
+        term:"Product Sales Organization",
+
+        definition:
+        "A structure that splits the sales task among subordinate executives, each directing sales operations for part of the product line.",
+
+        category:"Sales Organization Structures"
+    },
+
+    {
+        term:"Functional Sales Organization",
+
+        definition:
+        "A type of organizational structure founded on the principle that everyone in the organization should perform as few distinct duties as possible.",
+
+        category:"Sales Organization Structures"
+    },
+
+    {
+        term:"Mix Sales Organization",
+
+        definition:
+        "A structure using multiple or combined structures, structuring the selling task more than once to promote greater specialization.",
+
+        category:"Sales Organization Structures"
+    },
+
+    {
+        term:"Allocation of Selling Effort",
+
+        definition:
+        "The allocation of selling effort or setting account priorities is a vital decision in salesforce deployment and must be created strategically.",
+
+        category:"Salesforce Planning"
+    },
+
+    {
+        term:"Single Factor Model",
+
+        definition:
+        "The easiest and most widely used model for allocating salespeople's time.",
+
+        category:"Allocation of Selling Effort"
+    },
+
+    {
+        term:"Portfolio Model",
+
+        definition:
+        "A model that considers multiple factors when determining the attractiveness of individual accounts.",
+
+        category:"Allocation of Selling Effort"
+    },
+
+    {
+        term:"Decision Model",
+
+        definition:
+        "The most meticulous yet complete method in determining the allocation of selling effort.",
+
+        category:"Allocation of Selling Effort"
+    },
+
+    {
+        term:"Productivity",
+
+        definition:
+        "The ratio between outputs and inputs. Sales productivity is a measure of the amount of money that the sales organization makes from the efforts of each salesperson.",
+
+        category:"Salesforce Size"
+    },
+
+    {
+        term:"Turnover",
+
+        definition:
+        "The ratio of the number of people who leave to the average size of the salesforce.",
+
+        category:"Salesforce Size"
+    },
+
+    {
+        term:"Organizational Strategy",
+
+        definition:
+        "The decision about salesforce size must be aligned with organizational strategy.",
+
+        category:"Salesforce Size"
+    },
+
+    {
+        term:"Breakdown Approach",
+
+        definition:
+        "An approach used to determine the number of salespeople needed to generate a forecasted level of sales.",
+
+        category:"Calculating Salesforce Size"
+    },
+
+    {
+        term:"Workload Approach",
+
+        definition:
+        "An approach that determines how much selling effort is needed to adequately cover the firm's market.",
+
+        category:"Calculating Salesforce Size"
+    },
+
+    {
+        term:"Incremental Approach",
+
+        definition:
+        "The most rigorous approach for calculating salesforce size. Its basic concept is to compare the marginal profits and marginal cost associated with each incremental salesperson.",
+
+        category:"Calculating Salesforce Size"
+    }
+
+];
+
+
+/* =========================================================
+   SITUATIONAL QUESTIONS
+   ========================================================= */
+
+const SITUATIONS = [
+
+    {
+        term:"Specialization",
+        situation:"A company assigns certain employees to handle specific sales tasks instead of making every employee perform all required tasks."
+    },
+
+    {
+        term:"Geographical Specialization",
+        situation:"A company divides its salespeople according to geographic areas so each salesperson can become more familiar with the market and customers in that area."
+    },
+
+    {
+        term:"Product-based Specialization",
+        situation:"A company assigns a salesperson to concentrate on only one or two products so the salesperson can become highly knowledgeable about them."
+    },
+
+    {
+        term:"Client-based Specialization",
+        situation:"A company organizes its sales force according to different types of customers because each client group has different needs."
+    },
+
+    {
+        term:"Centralization",
+        situation:"A company keeps major sales decisions and important tasks in the hands of managers at the higher levels of its hierarchy."
+    },
+
+    {
+        term:"Decentralization",
+        situation:"A large company gives more sales-management responsibility to lower levels of management instead of keeping all responsibility at the central office."
+    },
+
+    {
+        term:"Central Sales Office",
+        situation:"The head sales office handles recruiting, selecting, training, compensation, supervision, motivation, control, and evaluation of the sales force."
+    },
+
+    {
+        term:"Span of Control",
+        situation:"A sales manager is determining how many salespeople can be supervised efficiently and effectively."
+    },
+
+    {
+        term:"Management Level",
+        situation:"A company examines how many different hierarchical levels exist within its sales management structure."
+    },
+
+    {
+        term:"Narrow Span of Control",
+        situation:"One sales supervisor is responsible for only a small number of salespeople."
+    },
+
+    {
+        term:"Wide Span of Control",
+        situation:"One sales manager supervises a very large number of salespeople."
+    },
+
+    {
+        term:"Line Sales Position",
+        situation:"A sales manager is directly involved in daily sales operations and directs salespeople toward company goals."
+    },
+
+    {
+        term:"Staff Sales Position",
+        situation:"A specialist provides technical expertise to support salespeople and top management without directly handling the daily sales operation."
+    },
+
+    {
+        term:"Geographic Sales Organization",
+        situation:"A company organizes its salespeople by region because customers and selling problems differ significantly from one location to another."
+    },
+
+    {
+        term:"Customer Sales Organization",
+        situation:"A company sells nearly identical products to different customer groups, but each group has different selling problems."
+    },
+
+    {
+        term:"Product Sales Organization",
+        situation:"A company divides its sales operations according to portions of its product line, with different executives responsible for different products."
+    },
+
+    {
+        term:"Functional Sales Organization",
+        situation:"A company structures its sales organization so employees perform as few distinct duties as possible."
+    },
+
+    {
+        term:"Mix Sales Organization",
+        situation:"A company combines more than one sales organization structure because it wants to promote greater specialization."
+    },
+
+    {
+        term:"Allocation of Selling Effort",
+        situation:"A sales manager decides which customer accounts should receive greater selling attention before making decisions about territories and salesforce size."
+    },
+
+    {
+        term:"Single Factor Model",
+        situation:"A manager wants to use the easiest and most widely used model for allocating salespeople's time."
+    },
+
+    {
+        term:"Portfolio Model",
+        situation:"A manager evaluates several factors when deciding how attractive different customer accounts are."
+    },
+
+    {
+        term:"Decision Model",
+        situation:"A manager wants the most meticulous and complete method for determining how selling effort should be allocated."
+    },
+
+    {
+        term:"Productivity",
+        situation:"A sales manager measures the amount of money the sales organization makes from the efforts of each salesperson."
+    },
+
+    {
+        term:"Turnover",
+        situation:"A company calculates the proportion of salespeople who leave compared with the average size of its salesforce."
+    },
+
+    {
+        term:"Organizational Strategy",
+        situation:"A company decides how large its salesforce should be while making sure the decision supports its overall organizational strategy."
+    },
+
+    {
+        term:"Breakdown Approach",
+        situation:"A manager calculates the number of salespeople needed to generate a forecasted level of sales."
+    },
+
+    {
+        term:"Workload Approach",
+        situation:"A manager determines how much selling effort is necessary to adequately cover the firm's market."
+    },
+
+    {
+        term:"Incremental Approach",
+        situation:"A manager compares the additional profit with the additional cost of adding another salesperson before deciding whether to increase the salesforce."
+    }
+
+];
+
+
+/* =========================================================
+   TRUE / FALSE DIRECT
+   ========================================================= */
+
+const TF_DIRECT = [
+
+    ["Specialization is the degree in which individuals perform some required tasks to the exclusion of others.", true],
+
+    ["Geographical specialization can be used for mastering markets and addressing customers more thoroughly.", true],
+
+    ["Product-based specialization allows individuals to become experts in the whole product line rather than one or two products.", false],
+
+    ["Client-based specialization structures sales forces by type of client.", true],
+
+    ["Centralization is the degree in which important decisions and tasks are performed at higher levels in the management hierarchy.", true],
+
+    ["High decentralization in sales force management is found mainly among companies with small sales forces.", false],
+
+    ["The central sales office has full responsibility for recruiting, selecting, training, compensating, supervising, motivating, controlling, and evaluating the sales force.", true],
+
+    ["Span of control refers to the number of salespersons that can be managed efficiently and effectively by a sales manager.", true],
+
+    ["Management level refers to the number of different hierarchical levels of sales management within an organization.", true],
+
+    ["A narrow span of control means a manager oversees a large number of salespersons.", false],
+
+    ["A wide span of control means a manager oversees a large number of salespersons.", true],
+
+    ["A line sales position is directly involved in the day-to-day sales operations of the organization.", true],
+
+    ["Staff sales positions directly perform the day-to-day sales operations of the organization.", false],
+
+    ["Geographic Sales Organization is appropriate when customer characteristics and selling problems differ by geographic location.", true],
+
+    ["Customer Sales Organization is fitting when practically identical products are marketed to several types of customers with different selling problems.", true],
+
+    ["Product Sales Organization splits the sales task among subordinate executives who direct operations for parts of the product line.", true],
+
+    ["Functional Sales Organization is based on the principle that employees should perform as many distinct duties as possible.", false],
+
+    ["Mix Sales Organization uses multiple or combined structures to promote greater specialization.", true],
+
+    ["Allocation of selling effort or setting account priorities is a vital decision in salesforce deployment.", true],
+
+    ["The Single Factor Model is the easiest and most widely used model for allocating salespeople's time.", true],
+
+    ["The Portfolio Model considers multiple factors when determining the attractiveness of individual accounts.", true],
+
+    ["The Decision Model is the least complete method for allocating selling effort.", false],
+
+    ["Sales productivity is the ratio between outputs and inputs.", true],
+
+    ["Turnover is the ratio of the number of people who leave to the average size of the salesforce.", true],
+
+    ["A company's salesforce size decision should be aligned with organizational strategy.", true],
+
+    ["The Breakdown Approach is used to determine the number of salespeople needed to generate a forecasted level of sales.", true],
+
+    ["The Workload Approach determines how much selling effort is needed to adequately cover the firm's market.", true],
+
+    ["The Incremental Approach compares marginal profits and marginal costs associated with each incremental salesperson.", true]
+
+];
+
+
+/* =========================================================
+   TRUE / FALSE SITUATIONAL
+   ========================================================= */
+
+const TF_SITUATIONAL = [
+
+    ["A company assigns specific sales tasks to specific employees rather than requiring everyone to handle every task. This demonstrates specialization.", true],
+
+    ["A company divides salespeople by region to help them master local markets. This demonstrates geographical specialization.", true],
+
+    ["A salesperson focuses on one or two products rather than the whole product line. This demonstrates client-based specialization.", false],
+
+    ["A company structures its sales force according to different types of customers. This demonstrates client-based specialization.", true],
+
+    ["Important sales decisions are concentrated at higher levels of management. This demonstrates centralization.", true],
+
+    ["A large company gives more sales-management responsibility to lower levels. This situation is consistent with decentralization.", true],
+
+    ["The central sales office handles recruitment, training, compensation, supervision, motivation, control, and evaluation. This demonstrates the responsibility of the central sales office.", true],
+
+    ["A manager decides how many salespeople can be efficiently supervised. This concerns span of control.", true],
+
+    ["A company counts the number of different hierarchical levels in its sales management. This concerns management level.", true],
+
+    ["A supervisor manages only a few salespeople. This represents a wide span of control.", false],
+
+    ["One manager supervises a large number of salespeople. This represents a wide span of control.", true],
+
+    ["A manager directly participates in daily sales operations. This is a line sales position.", true],
+
+    ["A technical specialist supports line salespeople and top management. This is a staff sales position.", true],
+
+    ["A company organizes salespeople by geographic region because selling problems differ between areas. This is a Geographic Sales Organization.", true],
+
+    ["A company sells similar products to several customer types whose selling problems differ. This is a Customer Sales Organization.", true],
+
+    ["A company divides its sales operations according to parts of its product line. This is a Product Sales Organization.", true],
+
+    ["A company expects every employee to perform as many different duties as possible. This follows the principle of Functional Sales Organization.", false],
+
+    ["A company combines multiple sales organization structures to promote specialization. This is a Mix Sales Organization.", true],
+
+    ["A manager decides which accounts deserve more selling attention. This involves allocation of selling effort.", true],
+
+    ["A manager uses the easiest and most widely used model for allocating salespeople's time. This is the Single Factor Model.", true],
+
+    ["A manager evaluates several factors to determine the attractiveness of individual accounts. This is the Portfolio Model.", true],
+
+    ["A manager selects the most meticulous and complete method for allocating selling effort. This is the Decision Model.", true],
+
+    ["A manager measures how much money the sales organization makes from the efforts of each salesperson. This relates to sales productivity.", true],
+
+    ["A company experiences many employees leaving its salesforce. This situation represents turnover.", true],
+
+    ["A company changes salesforce size without considering its organizational strategy. This follows the chapter's recommendation.", false],
+
+    ["A manager determines how many salespeople are needed to generate a forecasted level of sales. This uses the Breakdown Approach.", true],
+
+    ["A manager determines how much selling effort is required to cover the firm's market. This uses the Workload Approach.", true],
+
+    ["A manager compares marginal profit and marginal cost when considering each additional salesperson. This uses the Incremental Approach.", true]
+
+];
+
+
+/* =========================================================
+   ENUMERATION
+   ========================================================= */
+
+const ENUMERATION = [
+
+    {
+        question:
+        "Enumerate the three types of specialization discussed in Chapter 3.",
+
+        answers:[
+            "Geographical",
+            "Product-based",
+            "Client-based"
+        ],
+
+        explanation:
+        "The three types are Geographical, Product-based, and Client-based specialization."
+    },
+
+    {
+        question:
+        "Enumerate the four Sales Organization Structures discussed in Chapter 3.",
+
+        answers:[
+            "Geographic Sales Organization",
+            "Customer Sales Organization",
+            "Product Sales Organization",
+            "Functional Sales Organization"
+        ],
+
+        explanation:
+        "The four structures are Geographic, Customer, Product, and Functional Sales Organization."
+    },
+
+    {
+        question:
+        "Enumerate the three models for allocating selling effort.",
+
+        answers:[
+            "Single Factor Model",
+            "Portfolio Model",
+            "Decision Model"
+        ],
+
+        explanation:
+        "The three models are Single Factor Model, Portfolio Model, and Decision Model."
+    },
+
+    {
+        question:
+        "Enumerate the three analytical approaches for calculating salesforce size.",
+
+        answers:[
+            "Breakdown Approach",
+            "Workload Approach",
+            "Incremental Approach"
+        ],
+
+        explanation:
+        "The three approaches are Breakdown, Workload, and Incremental Approach."
+    },
+
+    {
+        question:
+        "Enumerate the six activities involved in systematic journey planning.",
+
+        answers:[
+            "Developing a call frequency",
+            "Establishing priorities",
+            "Minimizing travelling time",
+            "Evolving a call pattern",
+            "Assessing the workload",
+            "Combining a program with flexibility"
+        ],
+
+        explanation:
+        "Systematic journey planning involves developing a call frequency, establishing priorities, minimizing travelling time, evolving a call pattern, assessing the workload, and combining a program with flexibility."
+    }
+
+];
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let quizQuestions = [];
+
+let currentQuestion = 0;
+
+let score = 0;
+
+let answers = [];
+
+let selectedType = "mc";
+
+let selectedStyle = "direct";
+
+let selectedOrder = "ordered";
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
+
+const startScreen =
+    document.getElementById("startScreen");
+
+const quizScreen =
+    document.getElementById("quizScreen");
+
+const resultScreen =
+    document.getElementById("resultScreen");
+
+const questionType =
+    document.getElementById("questionType");
+
+const questionStyle =
+    document.getElementById("questionStyle");
+
+const questionOrder =
+    document.getElementById("questionOrder");
+
+const startButton =
+    document.getElementById("startButton");
+
+const backButton =
+    document.getElementById("backButton");
+
+const skipButton =
+    document.getElementById("skipButton");
+
+const restartButton =
+    document.getElementById("restartButton");
+
+const nextButton =
+    document.getElementById("nextButton");
+
+const reviewButton =
+    document.getElementById("reviewButton");
+
+const resultRestartButton =
+    document.getElementById("resultRestartButton");
+
+
+/* =========================================================
+   SHUFFLE
+   ========================================================= */
+
+function shuffle(array){
+
+    const result = [...array];
+
+    for(
+        let i = result.length - 1;
+        i > 0;
+        i--
+    ){
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [
+            result[i],
+            result[j]
+        ] =
+        [
+            result[j],
+            result[i]
+        ];
+
+    }
+
+    return result;
+}
+
+
+/* =========================================================
+   NORMALIZE ANSWER
+   ========================================================= */
+
+function normalize(text){
+
+    return String(text)
+        .toLowerCase()
+        .replace(/[.,!?;:'"()]/g,"")
+        .replace(/\s+/g," ")
+        .trim();
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   BUILD MULTIPLE CHOICE — DIRECT
+   ========================================================= */
+
+function buildMCDirect(){
+
+    return FACTS.map(
+        (fact,index)=>{
+
+            const otherAnswers =
+                shuffle(
+                    FACTS.filter(
+                        item =>
+                            item.term !==
+                            fact.term
+                    )
+                )
+                .slice(0,3)
+                .map(
+                    item =>
+                        item.term
+                );
+
+            const choices =
+                shuffle([
+                    fact.term,
+                    ...otherAnswers
+                ]);
+
+            return {
+
+                id:
+                    "mc-direct-" + index,
+
+                type:
+                    "Multiple Choice",
+
+                style:
+                    "Direct",
+
+                question:
+                    `Which of the following is described by this definition?\n\n"${fact.definition}"`,
+
+                choices:
+                    choices,
+
+                correctIndex:
+                    choices.indexOf(
+                        fact.term
+                    ),
+
+                correctText:
+                    fact.term,
+
+                explanation:
+                    `${fact.term} is the concept described by the definition.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BUILD MULTIPLE CHOICE — SITUATIONAL
+   ========================================================= */
+
+function buildMCSituational(){
+
+    return SITUATIONS.map(
+        (item,index)=>{
+
+            const distractors =
+                shuffle(
+                    SITUATIONS.filter(
+                        x =>
+                            x.term !==
+                            item.term
+                    )
+                )
+                .slice(0,3)
+                .map(
+                    x =>
+                        x.term
+                );
+
+            const choices =
+                shuffle([
+                    item.term,
+                    ...distractors
+                ]);
+
+            return {
+
+                id:
+                    "mc-situational-" + index,
+
+                type:
+                    "Multiple Choice",
+
+                style:
+                    "Situational",
+
+                question:
+                    `${item.situation}\n\nWhich Chapter 3 concept is being demonstrated?`,
+
+                choices:
+                    choices,
+
+                correctIndex:
+                    choices.indexOf(
+                        item.term
+                    ),
+
+                correctText:
+                    item.term,
+
+                explanation:
+                    `The situation demonstrates ${item.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION — DIRECT
+   ========================================================= */
+
+function buildIdentificationDirect(){
+
+    return FACTS.map(
+        (fact,index)=>{
+
+            return {
+
+                id:
+                    "id-direct-" + index,
+
+                type:
+                    "Identification",
+
+                style:
+                    "Direct",
+
+                question:
+                    `Identify the concept described below.\n\n"${fact.definition}"`,
+
+                correctText:
+                    fact.term,
+
+                explanation:
+                    `The correct answer is ${fact.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION — SITUATIONAL
+   ========================================================= */
+
+function buildIdentificationSituational(){
+
+    return SITUATIONS.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "id-situational-" + index,
+
+                type:
+                    "Identification",
+
+                style:
+                    "Situational",
+
+                question:
+                    `${item.situation}\n\nIdentify the Chapter 3 concept being demonstrated.`,
+
+                correctText:
+                    item.term,
+
+                explanation:
+                    `The correct concept is ${item.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE — DIRECT
+   ========================================================= */
+
+function buildTFDirect(){
+
+    return TF_DIRECT.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "tf-direct-" + index,
+
+                type:
+                    "True / False",
+
+                style:
+                    "Direct",
+
+                question:
+                    item[0],
+
+                correct:
+                    item[1],
+
+                correctText:
+                    item[1]
+                        ? "True"
+                        : "False",
+
+                explanation:
+                    item[1]
+                        ? "The statement agrees with the Chapter 3 presentation."
+                        : "The statement is misleading or contradicts the Chapter 3 presentation."
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE — SITUATIONAL
+   ========================================================= */
+
+function buildTFSituational(){
+
+    return TF_SITUATIONAL.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "tf-situational-" + index,
+
+                type:
+                    "True / False",
+
+                style:
+                    "Situational",
+
+                question:
+                    item[0],
+
+                correct:
+                    item[1],
+
+                correctText:
+                    item[1]
+                        ? "True"
+                        : "False",
+
+                explanation:
+                    item[1]
+                        ? "The situation correctly represents the Chapter 3 concept."
+                        : "The situation does not correctly represent the Chapter 3 concept."
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ENUMERATION
+   ========================================================= */
+
+function buildEnumeration(){
+
+    return ENUMERATION.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "enumeration-" + index,
+
+                type:
+                    "Enumeration",
+
+                style:
+                    "Direct",
+
+                question:
+                    item.question,
+
+                answers:
+                    item.answers,
+
+                correctText:
+                    item.answers.join("; "),
+
+                explanation:
+                    item.explanation
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BUILD SELECTED QUIZ
+   ========================================================= */
+
+function buildQuiz(){
+
+    if(
+        selectedType === "mc"
+    ){
+
+        if(
+            selectedStyle === "direct"
+        ){
+
+            return buildMCDirect();
+
+        }
+
+        return buildMCSituational();
+
+    }
+
+
+    if(
+        selectedType === "identification"
+    ){
+
+        if(
+            selectedStyle === "direct"
+        ){
+
+            return buildIdentificationDirect();
+
+        }
+
+        return buildIdentificationSituational();
+
+    }
+
+
+    if(
+        selectedType === "tf"
+    ){
+
+        if(
+            selectedStyle === "direct"
+        ){
+
+            return buildTFDirect();
+
+        }
+
+        return buildTFSituational();
+
+    }
+
+
+    if(
+        selectedType === "enumeration"
+    ){
+
+        return buildEnumeration();
+
+    }
+
+
+    return [];
+
+}
+
+
+/* =========================================================
+   START QUIZ
+   ========================================================= */
+
+function startQuiz(){
+
+    selectedType =
+        questionType.value;
+
+    selectedStyle =
+        questionStyle.value;
+
+    selectedOrder =
+        questionOrder.value;
+
+
+    quizQuestions =
+        buildQuiz();
+
+
+    if(
+        selectedOrder === "random"
+    ){
+
+        quizQuestions =
+            shuffle(
+                quizQuestions
+            );
+
+    }
+
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answers = [];
+
+
+    startScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.add(
+        "hidden"
+    );
+
+    quizScreen.classList.remove(
+        "hidden"
+    );
+
+
+    renderQuestion();
+
+}
+
+
+/* =========================================================
+   RENDER QUESTION
+   ========================================================= */
+
+function renderQuestion(){
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    if(!q){
+
+        finishQuiz();
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "questionCounter"
+    ).textContent =
+        `Question ${currentQuestion + 1} of ${quizQuestions.length}`;
+
+
+    document.getElementById(
+        "scoreDisplay"
+    ).textContent =
+        `Score: ${score}`;
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        `${((currentQuestion + 1) / quizQuestions.length) * 100}%`;
+
+
+    document.getElementById(
+        "typeBadge"
+    ).textContent =
+        q.type;
+
+
+    document.getElementById(
+        "styleBadge"
+    ).textContent =
+        q.style;
+
+
+    document.getElementById(
+        "questionText"
+    ).textContent =
+        q.question;
+
+
+    const answerArea =
+        document.getElementById(
+            "answerArea"
+        );
+
+
+    answerArea.innerHTML = "";
+
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    feedback.className =
+        "feedback";
+
+
+    feedback.innerHTML =
+        "";
+
+
+    nextButton.classList.add(
+        "hidden"
+    );
+
+
+    backButton.disabled =
+        currentQuestion === 0;
+
+
+    skipButton.disabled =
+        false;
+
+
+    /* =====================================================
+       MULTIPLE CHOICE
+       ===================================================== */
+
+    if(
+        q.type === "Multiple Choice"
+    ){
+
+        const choices =
+            document.createElement(
+                "div"
+            );
+
+        choices.className =
+            "choices";
+
+
+        q.choices.forEach(
+            (choice,index)=>{
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.className =
+                    "choice";
+
+
+                button.innerHTML =
+                    `
+                    <span class="choice-letter">
+                        ${String.fromCharCode(65 + index)}
+                    </span>
+                    ${escapeHTML(choice)}
+                    `;
+
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        answerMultipleChoice(
+                            index
+                        );
+
+                    }
+                );
+
+
+                choices.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        answerArea.appendChild(
+            choices
+        );
+
+    }
+
+
+    /* =====================================================
+       TRUE / FALSE
+       ===================================================== */
+
+    else if(
+        q.type === "True / False"
+    ){
+
+        const choices =
+            document.createElement(
+                "div"
+            );
+
+        choices.className =
+            "choices";
+
+
+        ["True","False"]
+        .forEach(
+            value=>{
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.className =
+                    "choice";
+
+                button.textContent =
+                    value;
+
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        answerTrueFalse(
+                            value === "True"
+                        );
+
+                    }
+                );
+
+
+                choices.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        answerArea.appendChild(
+            choices
+        );
+
+    }
+
+
+    /* =====================================================
+       IDENTIFICATION
+       ===================================================== */
+
+    else if(
+        q.type === "Identification"
+    ){
+
+        answerArea.innerHTML =
+            `
+            <div class="text-answer">
+
+                <input
+                    type="text"
+                    id="textAnswer"
+                    placeholder="Type your answer here..."
+                    autocomplete="off"
+                >
+
+                <button
+                    id="submitIdentification"
+                    class="primary">
+
+                    Submit Answer
+
+                </button>
+
+            </div>
+            `;
+
+
+        document
+            .getElementById(
+                "submitIdentification"
+            )
+            .addEventListener(
+                "click",
+                answerIdentification
+            );
+
+
+        document
+            .getElementById(
+                "textAnswer"
+            )
+            .addEventListener(
+                "keydown",
+                function(event){
+
+                    if(
+                        event.key === "Enter"
+                    ){
+
+                        answerIdentification();
+
+                    }
+
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       ENUMERATION
+       ===================================================== */
+
+    else if(
+        q.type === "Enumeration"
+    ){
+
+        let html =
+            `<div class="enumeration-inputs">`;
+
+
+        q.answers.forEach(
+            (answer,index)=>{
+
+                html +=
+                    `
+                    <div class="enum-row">
+
+                        <div class="enum-number">
+                            ${index + 1}.
+                        </div>
+
+                        <input
+                            type="text"
+                            id="enumInput${index}"
+                            placeholder="Enter answer ${index + 1}"
+                        >
+
+                    </div>
+                    `;
+
+            }
+        );
+
+
+        html +=
+            `
+            </div>
+
+            <br>
+
+            <button
+                id="submitEnumeration"
+                class="primary">
+
+                Submit Answers
+
+            </button>
+            `;
+
+
+        answerArea.innerHTML =
+            html;
+
+
+        document
+            .getElementById(
+                "submitEnumeration"
+            )
+            .addEventListener(
+                "click",
+                answerEnumeration
+            );
+
+    }
+
+
+    restoreSavedAnswer();
+
+}
+
+
+/* =========================================================
+   MULTIPLE CHOICE ANSWER
+   ========================================================= */
+
+function answerMultipleChoice(index){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const isCorrect =
+        index === q.correctIndex;
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            q.choices[index],
+
+        correct:
+            isCorrect
+
+    };
+
+
+    const buttons =
+        document.querySelectorAll(
+            "#answerArea .choice"
+        );
+
+
+    buttons.forEach(
+        (button,i)=>{
+
+            button.disabled =
+                true;
+
+
+            if(
+                i === q.correctIndex
+            ){
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+
+            if(
+                i === index &&
+                !isCorrect
+            ){
+
+                button.classList.add(
+                    "wrong"
+                );
+
+            }
+
+        }
+    );
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE ANSWER
+   ========================================================= */
+
+function answerTrueFalse(value){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const isCorrect =
+        value === q.correct;
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            value
+                ? "True"
+                : "False",
+
+        correct:
+            isCorrect
+
+    };
+
+
+    const buttons =
+        document.querySelectorAll(
+            "#answerArea .choice"
+        );
+
+
+    buttons.forEach(
+        button=>{
+
+            button.disabled =
+                true;
+
+
+            if(
+                button.textContent ===
+                q.correctText
+            ){
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+
+            if(
+                button.textContent ===
+                (
+                    value
+                        ? "True"
+                        : "False"
+                ) &&
+                !isCorrect
+            ){
+
+                button.classList.add(
+                    "wrong"
+                );
+
+            }
+
+        }
+    );
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION ANSWER
+   ========================================================= */
+
+function answerIdentification(){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "textAnswer"
+        );
+
+
+    const entered =
+        input.value.trim();
+
+
+    if(!entered){
+
+        alert(
+            "Please enter an answer."
+        );
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const isCorrect =
+        normalize(entered) ===
+        normalize(q.correctText);
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            entered,
+
+        correct:
+            isCorrect
+
+    };
+
+
+    input.disabled =
+        true;
+
+
+    document
+        .getElementById(
+            "submitIdentification"
+        )
+        .disabled =
+            true;
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   ENUMERATION ANSWER
+   ========================================================= */
+
+function answerEnumeration(){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const entered = [];
+
+
+    for(
+        let i = 0;
+        i < q.answers.length;
+        i++
+    ){
+
+        const input =
+            document.getElementById(
+                `enumInput${i}`
+            );
+
+
+        if(
+            !input.value.trim()
+        ){
+
+            alert(
+                "Please answer all items."
+            );
+
+            return;
+
+        }
+
+
+        entered.push(
+            input.value.trim()
+        );
+
+    }
+
+
+    /*
+       Enumeration is checked against the
+       correct list. Order is required because
+       the chapter presents these lists in order.
+    */
+
+    let isCorrect = true;
+
+
+    if(
+        entered.length !==
+        q.answers.length
+    ){
+
+        isCorrect = false;
+
+    }
+    else{
+
+        for(
+            let i = 0;
+            i < q.answers.length;
+            i++
+        ){
+
+            if(
+                normalize(entered[i]) !==
+                normalize(q.answers[i])
+            ){
+
+                isCorrect = false;
+
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            entered.join(" | "),
+
+        correct:
+            isCorrect
+
+    };
+
+
+    document
+        .querySelectorAll(
+            "#answerArea input"
+        )
+        .forEach(
+            input =>
+                input.disabled = true
+        );
+
+
+    document
+        .getElementById(
+            "submitEnumeration"
+        )
+        .disabled =
+            true;
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   SHOW FEEDBACK
+   ========================================================= */
+
+function showFeedback(
+    isCorrect,
+    explanation,
+    correctAnswer
+){
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    feedback.className =
+        "feedback show " +
+        (
+            isCorrect
+                ? "correct"
+                : "incorrect"
+        );
+
+
+    feedback.innerHTML =
+        `
+        <div class="feedback-title">
+
+            ${
+                isCorrect
+                    ? "✓ Correct!"
+                    : "✗ Incorrect"
+            }
+
+        </div>
+
+        <div>
+            ${escapeHTML(
+                explanation
+            )}
+        </div>
+
+        <div style="margin-top:8px;">
+
+            <b>Correct answer:</b>
+            ${escapeHTML(
+                correctAnswer
+            )}
+
+        </div>
+        `;
+
+
+    document.getElementById(
+        "scoreDisplay"
+    ).textContent =
+        `Score: ${score}`;
+
+
+    skipButton.disabled =
+        true;
+
+
+    nextButton.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   SKIP
+   ========================================================= */
+
+function skipQuestion(){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:true,
+
+        answer:"Skipped",
+
+        correct:false
+
+    };
+
+
+    showFeedback(
+        false,
+        "You skipped this question. No point was awarded.",
+        q.correctText ||
+        (
+            q.answers
+                ? q.answers.join("; ")
+                : ""
+        )
+    );
+
+}
+
+
+/* =========================================================
+   NEXT
+   ========================================================= */
+
+function nextQuestion(){
+
+    if(
+        currentQuestion <
+        quizQuestions.length - 1
+    ){
+
+        currentQuestion++;
+
+        renderQuestion();
+
+    }
+    else{
+
+        finishQuiz();
+
+    }
+
+}
+
+
+/* =========================================================
+   BACK
+   ========================================================= */
+
+function goBack(){
+
+    if(
+        currentQuestion <= 0
+    ){
+
+        return;
+
+    }
+
+
+    currentQuestion--;
+
+    renderQuestion();
+
+}
+
+
+/* =========================================================
+   RESTORE PREVIOUS ANSWER
+   ========================================================= */
+
+function restoreSavedAnswer(){
+
+    const saved =
+        answers[currentQuestion];
+
+
+    if(!saved){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    /* =====================================================
+       MULTIPLE CHOICE
+       ===================================================== */
+
+    if(
+        q.type === "Multiple Choice"
+    ){
+
+        const buttons =
+            document.querySelectorAll(
+                "#answerArea .choice"
+            );
+
+
+        buttons.forEach(
+            (button,index)=>{
+
+                button.disabled =
+                    true;
+
+
+                if(
+                    index ===
+                    q.correctIndex
+                ){
+
+                    button.classList.add(
+                        "correct"
+                    );
+
+                }
+
+
+                if(
+                    button.textContent
+                        .replace(/^[A-D]\s*/,"")
+                        .trim() ===
+                    saved.answer &&
+                    !saved.correct
+                ){
+
+                    button.classList.add(
+                        "wrong"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       TRUE / FALSE
+       ===================================================== */
+
+    else if(
+        q.type === "True / False"
+    ){
+
+        const buttons =
+            document.querySelectorAll(
+                "#answerArea .choice"
+            );
+
+
+        buttons.forEach(
+            button=>{
+
+                button.disabled =
+                    true;
+
+
+                if(
+                    button.textContent ===
+                    q.correctText
+                ){
+
+                    button.classList.add(
+                        "correct"
+                    );
+
+                }
+
+
+                if(
+                    button.textContent ===
+                    saved.answer &&
+                    !saved.correct
+                ){
+
+                    button.classList.add(
+                        "wrong"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       IDENTIFICATION
+       ===================================================== */
+
+    else if(
+        q.type === "Identification"
+    ){
+
+        const input =
+            document.getElementById(
+                "textAnswer"
+            );
+
+
+        if(input){
+
+            input.value =
+                saved.answer;
+
+            input.disabled =
+                true;
+
+        }
+
+
+        const submit =
+            document.getElementById(
+                "submitIdentification"
+            );
+
+
+        if(submit){
+
+            submit.disabled =
+                true;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ENUMERATION
+       ===================================================== */
+
+    else if(
+        q.type === "Enumeration"
+    ){
+
+        const values =
+            saved.answer.split(
+                " | "
+            );
+
+
+        values.forEach(
+            (value,index)=>{
+
+                const input =
+                    document.getElementById(
+                        `enumInput${index}`
+                    );
+
+
+                if(input){
+
+                    input.value =
+                        value;
+
+                    input.disabled =
+                        true;
+
+                }
+
+            }
+        );
+
+
+        const submit =
+            document.getElementById(
+                "submitEnumeration"
+            );
+
+
+        if(submit){
+
+            submit.disabled =
+                true;
+
+        }
+
+    }
+
+
+    showFeedback(
+        saved.correct,
+        q.explanation,
+        q.correctText ||
+        (
+            q.answers
+                ? q.answers.join("; ")
+                : ""
+        )
+    );
+
+}
+
+
+/* =========================================================
+   FINISH QUIZ
+   ========================================================= */
+
+function finishQuiz(){
+
+    quizScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.remove(
+        "hidden"
+    );
+
+
+    const total =
+        quizQuestions.length;
+
+
+    const percentage =
+        total === 0
+            ? 0
+            : Math.round(
+                (score / total) * 100
+            );
+
+
+    document.getElementById(
+        "resultScore"
+    ).textContent =
+        `${score} / ${total}`;
+
+
+    document.getElementById(
+        "resultPercent"
+    ).textContent =
+        `${percentage}%`;
+
+
+    let message;
+
+
+    if(
+        percentage >= 90
+    ){
+
+        message =
+            "Excellent work! You have a strong understanding of Chapter 3.";
+
+    }
+    else if(
+        percentage >= 75
+    ){
+
+        message =
+            "Good job! You have a solid understanding of the chapter.";
+
+    }
+    else if(
+        percentage >= 60
+    ){
+
+        message =
+            "Not bad. Review the chapter and try again.";
+
+    }
+    else{
+
+        message =
+            "Keep studying. Review Chapter 3 and try the quiz again.";
+
+    }
+
+
+    document.getElementById(
+        "resultMessage"
+    ).textContent =
+        message;
+
+}
+
+
+/* =========================================================
+   REVIEW ANSWERS
+   ========================================================= */
+
+function showReview(){
+
+    const area =
+        document.getElementById(
+            "reviewArea"
+        );
+
+
+    if(
+        !area.classList.contains(
+            "hidden"
+        )
+    ){
+
+        area.classList.add(
+            "hidden"
+        );
+
+        return;
+
+    }
+
+
+    area.classList.remove(
+        "hidden"
+    );
+
+
+    let html =
+        "<h2>Answer Review</h2>";
+
+
+    quizQuestions.forEach(
+        (q,index)=>{
+
+            const result =
+                answers[index];
+
+
+            let status =
+                "Not answered";
+
+
+            let statusClass =
+                "skipped";
+
+
+            let userAnswer =
+                "Not answered";
+
+
+            if(result){
+
+                userAnswer =
+                    result.answer;
+
+
+                if(
+                    result.skipped
+                ){
+
+                    status =
+                        "Skipped";
+
+                    statusClass =
+                        "skipped";
+
+                }
+                else if(
+                    result.correct
+                ){
+
+                    status =
+                        "Correct";
+
+                    statusClass =
+                        "correct";
+
+                }
+                else{
+
+                    status =
+                        "Incorrect";
+
+                    statusClass =
+                        "incorrect";
+
+                }
+
+            }
+
+
+            const correctAnswer =
+                q.correctText ||
+                (
+                    q.answers
+                        ? q.answers.join("; ")
+                        : ""
+                );
+
+
+            html +=
+                `
+                <div class="review-item">
+
+                    <b>
+                        ${index + 1}.
+                        ${escapeHTML(
+                            q.question
+                        )}
+                    </b>
+
+                    <br><br>
+
+                    <b>Your answer:</b>
+                    ${escapeHTML(
+                        userAnswer
+                    )}
+
+                    <br>
+
+                    <b>Correct answer:</b>
+                    ${escapeHTML(
+                        correctAnswer
+                    )}
+
+                    <br><br>
+
+                    <span class="review-status ${statusClass}">
+
+                        ${status}
+
+                    </span>
+
+                </div>
+                `;
+
+        }
+    );
+
+
+    area.innerHTML =
+        html;
+
+}
+
+
+/* =========================================================
+   RESTART
+   ========================================================= */
+
+function restartQuiz(){
+
+    quizQuestions = [];
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answers = [];
+
+
+    quizScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.add(
+        "hidden"
+    );
+
+
+    document
+        .getElementById(
+            "reviewArea"
+        )
+        .classList
+        .add("hidden");
+
+
+    startScreen.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   BUTTON EVENTS
+   ========================================================= */
+
+startButton.addEventListener(
+    "click",
+    startQuiz
+);
+
+
+backButton.addEventListener(
+    "click",
+    goBack
+);
+
+
+skipButton.addEventListener(
+    "click",
+    skipQuestion
+);
+
+
+restartButton.addEventListener(
+    "click",
+    restartQuiz
+);
+
+
+nextButton.addEventListener(
+    "click",
+    nextQuestion
+);
+
+
+reviewButton.addEventListener(
+    "click",
+    showReview
+);
+
+
+resultRestartButton.addEventListener(
+    "click",
+    restartQuiz
+);
+
+</script>
+
+</body>
+</html>
