@@ -1,0 +1,3498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sales Management - Chapter 2 Quiz</title>
+
+<style>
+
+:root{
+    --primary:#172554;
+    --primary2:#1e3a8a;
+    --light:#f5f7fb;
+    --border:#d9deea;
+    --text:#172033;
+    --muted:#667085;
+
+    --success:#15803d;
+    --successBg:#ecfdf3;
+
+    --danger:#b91c1c;
+    --dangerBg:#fef2f2;
+
+    --warning:#b45309;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--light);
+    color:var(--text);
+}
+
+.container{
+    width:min(1000px,94%);
+    margin:35px auto;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+h1,h2,h3{
+    margin-top:0;
+}
+
+.subtitle{
+    color:var(--muted);
+    line-height:1.6;
+}
+
+.settings{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin:25px 0;
+}
+
+.field label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+select,
+input[type="text"]{
+    width:100%;
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+}
+
+select:focus,
+input[type="text"]:focus{
+    border-color:var(--primary2);
+}
+
+button{
+    border:none;
+    border-radius:10px;
+    padding:12px 18px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.15s;
+}
+
+button:hover:not(:disabled){
+    transform:translateY(-1px);
+}
+
+button:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.primary{
+    background:var(--primary);
+    color:white;
+}
+
+.secondary{
+    background:#e9edf5;
+    color:var(--text);
+}
+
+.danger{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.success{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.quiz-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.badges{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.badge{
+    background:#eef2ff;
+    color:#3730a3;
+    padding:7px 11px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.progress-container{
+    height:9px;
+    background:#e5e7eb;
+    border-radius:50px;
+    overflow:hidden;
+    margin:20px 0 30px;
+}
+
+.progress{
+    height:100%;
+    width:0;
+    background:var(--primary);
+    transition:.25s;
+}
+
+.question{
+    font-size:23px;
+    line-height:1.45;
+    margin-bottom:22px;
+    white-space:pre-line;
+}
+
+.choices{
+    display:grid;
+    gap:12px;
+}
+
+.choice{
+    width:100%;
+    text-align:left;
+    background:white;
+    border:2px solid var(--border);
+    color:var(--text);
+    padding:15px 17px;
+}
+
+.choice:hover:not(:disabled){
+    border-color:var(--primary2);
+    background:#f8faff;
+}
+
+.choice.correct{
+    border-color:var(--success);
+    background:var(--successBg);
+    color:#166534;
+}
+
+.choice.wrong{
+    border-color:var(--danger);
+    background:var(--dangerBg);
+    color:#991b1b;
+}
+
+.choice-letter{
+    display:inline-flex;
+    width:30px;
+    height:30px;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#edf0f5;
+    margin-right:10px;
+    font-weight:bold;
+}
+
+.feedback{
+    display:none;
+    margin-top:22px;
+    padding:17px;
+    border-radius:12px;
+    line-height:1.6;
+}
+
+.feedback.show{
+    display:block;
+}
+
+.feedback.correct{
+    background:var(--successBg);
+    color:#166534;
+}
+
+.feedback.incorrect{
+    background:var(--dangerBg);
+    color:#991b1b;
+}
+
+.feedback-title{
+    font-weight:bold;
+    font-size:17px;
+    margin-bottom:5px;
+}
+
+.controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+.control-right{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.text-answer{
+    display:grid;
+    gap:12px;
+}
+
+.enumeration-inputs{
+    display:grid;
+    gap:10px;
+}
+
+.enum-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.enum-number{
+    width:30px;
+    font-weight:bold;
+}
+
+.result-score{
+    font-size:52px;
+    font-weight:800;
+    color:var(--primary);
+}
+
+.result-percent{
+    font-size:22px;
+    margin:10px 0 25px;
+}
+
+.review-item{
+    border-top:1px solid var(--border);
+    padding:18px 0;
+    line-height:1.6;
+}
+
+.review-status{
+    font-weight:bold;
+}
+
+.review-status.correct{
+    color:var(--success);
+}
+
+.review-status.incorrect{
+    color:var(--danger);
+}
+
+.review-status.skipped{
+    color:var(--warning);
+}
+
+.hidden{
+    display:none!important;
+}
+
+.notice{
+    background:#f8fafc;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    color:var(--muted);
+    line-height:1.6;
+    margin-top:18px;
+}
+
+.small-note{
+    font-size:13px;
+    color:var(--muted);
+    margin-top:8px;
+}
+
+@media(max-width:750px){
+
+    .settings{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .question{
+        font-size:20px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- =========================================================
+     START SCREEN
+     ========================================================= -->
+
+<section id="startScreen" class="card">
+
+<h1>Sales Management — Chapter 2 Quiz</h1>
+
+<p class="subtitle">
+Test your understanding of Chapter 2: Sales Career using
+different question types and question styles.
+</p>
+
+<div class="settings">
+
+<div class="field">
+
+<label for="questionType">
+Question Type
+</label>
+
+<select id="questionType">
+
+<option value="mc">
+Multiple Choice
+</option>
+
+<option value="identification">
+Identification
+</option>
+
+<option value="tf">
+True / False
+</option>
+
+<option value="enumeration">
+Enumeration
+</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label for="questionStyle">
+Question Style
+</label>
+
+<select id="questionStyle">
+
+<option value="direct">
+Direct
+</option>
+
+<option value="situational">
+Situational
+</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label for="questionOrder">
+Question Order
+</label>
+
+<select id="questionOrder">
+
+<option value="ordered">
+In Order
+</option>
+
+<option value="random">
+Randomized
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<div class="notice">
+    <b>Question count:</b> Multiple Choice, Identification, and True/False contain 22 questions per style. Enumeration uses only the lists that naturally fit the chapter content.
+</div>
+
+<br>
+
+<button
+class="primary"
+onclick="startQuiz()">
+
+Start Quiz
+
+</button>
+
+</section>
+
+
+<!-- =========================================================
+     QUIZ SCREEN
+     ========================================================= -->
+
+<section id="quizScreen" class="card hidden">
+
+<div class="quiz-header">
+
+<div>
+<b id="questionCounter">
+Question 1
+</b>
+</div>
+
+<div>
+<b id="scoreDisplay">
+Score: 0
+</b>
+</div>
+
+</div>
+
+
+<div class="progress-container">
+
+<div
+id="progressBar"
+class="progress">
+</div>
+
+</div>
+
+
+<div class="badges">
+
+<span
+id="typeBadge"
+class="badge">
+</span>
+
+<span
+id="styleBadge"
+class="badge">
+</span>
+
+</div>
+
+<br>
+
+
+<div
+id="questionText"
+class="question">
+</div>
+
+
+<div
+id="answerArea">
+</div>
+
+
+<div
+id="feedback"
+class="feedback">
+</div>
+
+
+<div class="controls">
+
+<button
+id="backButton"
+class="secondary"
+onclick="goBack()">
+
+← Back
+
+</button>
+
+
+<div class="control-right">
+
+<button
+id="skipButton"
+class="secondary"
+onclick="skipQuestion()">
+
+Skip
+
+</button>
+
+
+<button
+class="danger"
+onclick="restartQuiz()">
+
+Restart
+
+</button>
+
+
+<button
+id="nextButton"
+class="primary hidden"
+onclick="nextQuestion()">
+
+Next →
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     RESULT SCREEN
+     ========================================================= -->
+
+<section id="resultScreen" class="card hidden">
+
+<h1>
+Quiz Complete!
+</h1>
+
+
+<div
+id="resultScore"
+class="result-score">
+
+0 / 0
+
+</div>
+
+
+<div
+id="resultPercent"
+class="result-percent">
+
+0%
+
+</div>
+
+
+<p
+id="resultMessage"
+class="subtitle">
+</p>
+
+
+<div class="controls">
+
+<button
+class="primary"
+onclick="showReview()">
+
+Review Answers
+
+</button>
+
+
+<button
+class="danger"
+onclick="restartQuiz()">
+
+Restart Quiz
+
+</button>
+
+</div>
+
+
+<div
+id="reviewArea"
+class="hidden">
+</div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CHAPTER 2 SOURCE DATA
+
+   Chapter:
+   SALES CAREER
+
+   Major content:
+   7 Characteristics of Sales Career
+   3 Classifications of Personal Selling Jobs
+   12 Qualifications / Skills
+
+   TOTAL SOURCE CONCEPTS = 22
+
+   Therefore:
+   MC Direct       = up to 22
+   MC Situational  = up to 22
+   ID Direct       = up to 22
+   ID Situational  = up to 22
+   TF Direct       = up to 22
+   TF Situational  = up to 22
+
+   Enumeration is content-dependent.
+   ========================================================= */
+
+
+/* =========================================================
+   22 SOURCE CONCEPTS
+   ========================================================= */
+
+const FACTS = [
+
+/* =========================
+   CHARACTERISTICS OF SALES CAREER
+   ========================= */
+
+{
+    id:"c1",
+    term:"Job Security",
+    category:"Characteristics of Sales Career",
+    source:"Job Security"
+},
+
+{
+    id:"c2",
+    term:"Entrepreneurship",
+    category:"Characteristics of Sales Career",
+    source:"Entrepreneurship"
+},
+
+{
+    id:"c3",
+    term:"Prestige",
+    category:"Characteristics of Sales Career",
+    source:"Prestige"
+},
+
+{
+    id:"c4",
+    term:"Freedom / Flexibility",
+    category:"Characteristics of Sales Career",
+    source:"Freedom / Flexibility"
+},
+
+{
+    id:"c5",
+    term:"Income",
+    category:"Characteristics of Sales Career",
+    source:"Income"
+},
+
+{
+    id:"c6",
+    term:"Accomplishment",
+    category:"Characteristics of Sales Career",
+    source:"Accomplishment"
+},
+
+{
+    id:"c7",
+    term:"Challenging",
+    category:"Characteristics of Sales Career",
+    source:"Challenging"
+},
+
+
+/* =========================
+   CLASSIFICATION OF PERSONAL
+   SELLING JOBS
+   ========================= */
+
+{
+    id:"j1",
+    term:"Support Personnel",
+    category:"Classification of Personal Selling Jobs",
+    source:"Refers to the individuals who make use of their expertise to give advice to customers about the company's products or services through the dissemination of information, samples, and personal visits."
+},
+
+{
+    id:"j2",
+    term:"Order Taking",
+    category:"Classification of Personal Selling Jobs",
+    source:"They complete the sales transaction and mainly deal with the same or similar customers. An order taker is also called account maintenance because he maintains an ongoing relationship with current customers."
+},
+
+{
+    id:"j3",
+    term:"Order Getting",
+    category:"Classification of Personal Selling Jobs",
+    source:"Attempts to increase their firm's sales by selling to new customers or by convincing current customers to buy more of a company's products."
+},
+
+
+/* =========================
+   QUALIFICATIONS AND SKILLS
+   ========================= */
+
+{
+    id:"s1",
+    term:"Character and the ability to Build Trust",
+    category:"Qualifications and Skills",
+    source:"Character and the ability to Build Trust"
+},
+
+{
+    id:"s2",
+    term:"The Ability to Connect",
+    category:"Qualifications and Skills",
+    source:"The Ability to Connect"
+},
+
+{
+    id:"s3",
+    term:"Listening Skills",
+    category:"Qualifications and Skills",
+    source:"Listening Skills"
+},
+
+{
+    id:"s4",
+    term:"The Ability to Ask the Right Questions",
+    category:"Qualifications and Skills",
+    source:"The Ability to Ask the Right Questions"
+},
+
+{
+    id:"s5",
+    term:"The Willingness to Learn",
+    category:"Qualifications and Skills",
+    source:"The Willingness to Learn"
+},
+
+{
+    id:"s6",
+    term:"The Drive to Succeed",
+    category:"Qualifications and Skills",
+    source:"The Drive to Succeed"
+},
+
+{
+    id:"s7",
+    term:"Resilience and a Positive Attitude",
+    category:"Qualifications and Skills",
+    source:"Resilience and a Positive Attitute"
+},
+
+{
+    id:"s8",
+    term:"The Willingness to Take Risk",
+    category:"Qualifications and Skills",
+    source:"The Willingness to Take Risk"
+},
+
+{
+    id:"s9",
+    term:"The Ability to Ask for an Order",
+    category:"Qualifications and Skills",
+    source:"The Ability to Ask for an Order"
+},
+
+{
+    id:"s10",
+    term:"Independence and Discipline",
+    category:"Qualifications and Skills",
+    source:"Independence and Discipline"
+},
+
+{
+    id:"s11",
+    term:"Flexibility",
+    category:"Qualifications and Skills",
+    source:"Flexibility"
+},
+
+{
+    id:"s12",
+    term:"Passion",
+    category:"Qualifications and Skills",
+    source:"Passion"
+}
+
+];
+
+
+/* =========================================================
+   ENUMERATION
+
+   ONLY NATURAL LISTS FROM CHAPTER 2
+   ========================================================= */
+
+const ENUMERATION = [
+
+{
+    q:
+    "Enumerate the seven characteristics of a sales career.",
+
+    answers:[
+        "Job Security",
+        "Entrepreneurship",
+        "Prestige",
+        "Freedom / Flexibility",
+        "Income",
+        "Accomplishment",
+        "Challenging"
+    ],
+
+    explanation:
+    "The presentation lists seven characteristics of a sales career: Job Security, Entrepreneurship, Prestige, Freedom / Flexibility, Income, Accomplishment, and Challenging."
+},
+
+{
+    q:
+    "Enumerate the three classifications of personal selling jobs.",
+
+    answers:[
+        "Support Personnel",
+        "Order Taking",
+        "Order Getting"
+    ],
+
+    explanation:
+    "The presentation classifies personal selling jobs into Support Personnel, Order Taking, and Order Getting."
+},
+
+{
+    q:
+    "Enumerate the qualifications and skills required to be a successful salesperson.",
+
+    answers:[
+        "Character and the ability to Build Trust",
+        "The Ability to Connect",
+        "Listening Skills",
+        "The Ability to Ask the Right Questions",
+        "The Willingness to Learn",
+        "The Drive to Succeed",
+        "Resilience and a Positive Attitude",
+        "The Willingness to Take Risk",
+        "The Ability to Ask for an Order",
+        "Independence and Discipline",
+        "Flexibility",
+        "Passion"
+    ],
+
+    explanation:
+    "These are the qualifications and skills listed in the Chapter 2 presentation."
+}
+
+];
+
+
+/* =========================================================
+   SITUATIONAL QUESTION DATA
+   ========================================================= */
+
+const SCENARIOS = [
+
+{
+    term:"Job Security",
+    scenario:
+    "Maria is considering a career in sales because she wants a career that can provide a stable and continuing source of employment."
+},
+
+{
+    term:"Entrepreneurship",
+    scenario:
+    "Carlo enjoys creating opportunities for himself, taking initiative, and treating sales work as a chance to build something of his own."
+},
+
+{
+    term:"Prestige",
+    scenario:
+    "A salesperson takes pride in being recognized professionally because of the reputation and respect associated with successful sales work."
+},
+
+{
+    term:"Freedom / Flexibility",
+    scenario:
+    "Instead of following the exact same routine every day, Ana is able to adjust her schedule and manage her activities according to customer needs."
+},
+
+{
+    term:"Income",
+    scenario:
+    "John is attracted to sales because successful performance can provide him with opportunities to earn money."
+},
+
+{
+    term:"Accomplishment",
+    scenario:
+    "After reaching an important sales target, Mark feels a strong sense of achievement because he successfully completed his goal."
+},
+
+{
+    term:"Challenging",
+    scenario:
+    "A salesperson encounters different customers, changing situations, and difficult sales situations that require continuous effort and problem-solving."
+},
+
+{
+    term:"Support Personnel",
+    scenario:
+    "A salesperson uses product expertise to advise customers and provides information, samples, and personal visits to help them understand the company's offerings."
+},
+
+{
+    term:"Order Taking",
+    scenario:
+    "A salesperson mainly works with existing customers, completes their sales transactions, and maintains an ongoing relationship with them."
+},
+
+{
+    term:"Order Getting",
+    scenario:
+    "A salesperson actively looks for new customers and persuades existing customers to purchase more of the company's products."
+},
+
+{
+    term:"Character and the ability to Build Trust",
+    scenario:
+    "A salesperson is honest, dependable, and consistent, causing customers to feel that they can trust the salesperson."
+},
+
+{
+    term:"The Ability to Connect",
+    scenario:
+    "A salesperson quickly establishes a positive relationship with a customer and makes the customer feel comfortable communicating with them."
+},
+
+{
+    term:"Listening Skills",
+    scenario:
+    "Instead of immediately talking about the product, the salesperson carefully pays attention to what the customer is saying."
+},
+
+{
+    term:"The Ability to Ask the Right Questions",
+    scenario:
+    "A salesperson asks relevant questions to discover what the customer actually needs before recommending a product."
+},
+
+{
+    term:"The Willingness to Learn",
+    scenario:
+    "A salesperson continually studies new products, customer needs, and new information so that their knowledge improves."
+},
+
+{
+    term:"The Drive to Succeed",
+    scenario:
+    "Even when sales are difficult, the salesperson remains motivated and continues working toward achieving the desired results."
+},
+
+{
+    term:"Resilience and a Positive Attitude",
+    scenario:
+    "After several customers reject his offer, a salesperson remains optimistic and continues trying rather than becoming discouraged."
+},
+
+{
+    term:"The Willingness to Take Risk",
+    scenario:
+    "A salesperson is willing to enter an unfamiliar opportunity after carefully considering the possible results."
+},
+
+{
+    term:"The Ability to Ask for an Order",
+    scenario:
+    "After explaining the product and answering the customer's concerns, the salesperson confidently asks the customer to make the purchase."
+},
+
+{
+    term:"Independence and Discipline",
+    scenario:
+    "A salesperson manages their own responsibilities, follows their schedule, and completes tasks even when no manager is directly supervising them."
+},
+
+{
+    term:"Flexibility",
+    scenario:
+    "A salesperson changes their approach when a customer's situation or needs suddenly change."
+},
+
+{
+    term:"Passion",
+    scenario:
+    "A salesperson shows strong enthusiasm and genuine interest in the sales profession and the work they are doing."
+}
+
+];
+
+
+/* =========================================================
+   TRUE / FALSE DATA
+   =========================================================
+
+   Statements are deliberately mixed.
+
+   The buttons themselves are always:
+   TRUE
+   FALSE
+
+   The statement determines the correct answer.
+   ========================================================= */
+
+const TF_DIRECT = [
+
+{
+    statement:
+    "Job Security is listed as one of the characteristics of a sales career.",
+    answer:true,
+    explanation:
+    "Correct. Job Security is one of the characteristics of a sales career presented in Chapter 2."
+},
+
+{
+    statement:
+    "Entrepreneurship is not included among the characteristics of a sales career.",
+    answer:false,
+    explanation:
+    "Entrepreneurship is included among the characteristics of a sales career."
+},
+
+{
+    statement:
+    "Prestige is one of the characteristics of a sales career.",
+    answer:true,
+    explanation:
+    "The presentation lists Prestige as a characteristic of a sales career."
+},
+
+{
+    statement:
+    "Freedom / Flexibility is listed as a characteristic of a sales career.",
+    answer:true,
+    explanation:
+    "Freedom / Flexibility is included in the presentation."
+},
+
+{
+    statement:
+    "Income is excluded from the characteristics of a sales career.",
+    answer:false,
+    explanation:
+    "Income is one of the listed characteristics."
+},
+
+{
+    statement:
+    "Accomplishment is presented as a characteristic of a sales career.",
+    answer:true,
+    explanation:
+    "Accomplishment is included in the list."
+},
+
+{
+    statement:
+    "The presentation describes a sales career as only challenging and does not identify other characteristics.",
+    answer:false,
+    explanation:
+    "The presentation identifies several characteristics, not only Challenging."
+},
+
+{
+    statement:
+    "Support Personnel is one classification of personal selling jobs.",
+    answer:true,
+    explanation:
+    "Support Personnel is one of the three classifications."
+},
+
+{
+    statement:
+    "Order Taking mainly involves establishing relationships with completely new customers only.",
+    answer:false,
+    explanation:
+    "Order Taking mainly deals with the same or similar customers and completes sales transactions."
+},
+
+{
+    statement:
+    "Order Getting attempts to increase sales by selling to new customers or convincing current customers to buy more.",
+    answer:true,
+    explanation:
+    "That is the description given in the presentation."
+},
+
+{
+    statement:
+    "Listening Skills are included among the qualifications and skills required of a successful salesperson.",
+    answer:true,
+    explanation:
+    "Listening Skills are explicitly listed."
+},
+
+{
+    statement:
+    "The Willingness to Learn is not considered a skill for a successful salesperson.",
+    answer:false,
+    explanation:
+    "The Willingness to Learn is explicitly included in the presentation."
+},
+
+{
+    statement:
+    "The Drive to Succeed is one of the listed skills.",
+    answer:true,
+    explanation:
+    "The Drive to Succeed appears in the presentation."
+},
+
+{
+    statement:
+    "Resilience and a Positive Attitude is one of the listed skills.",
+    answer:true,
+    explanation:
+    "The presentation lists Resilience and a Positive Attitude."
+},
+
+{
+    statement:
+    "The Willingness to Take Risk is included among the required skills.",
+    answer:true,
+    explanation:
+    "It is one of the skills listed in Chapter 2."
+},
+
+{
+    statement:
+    "The Ability to Ask for an Order is not necessary for a successful salesperson according to the chapter.",
+    answer:false,
+    explanation:
+    "The Ability to Ask for an Order is explicitly listed."
+},
+
+{
+    statement:
+    "Independence and Discipline are listed as qualifications or skills.",
+    answer:true,
+    explanation:
+    "Independence and Discipline are included in the presentation."
+},
+
+{
+    statement:
+    "Flexibility is one of the qualifications and skills listed in Chapter 2.",
+    answer:true,
+    explanation:
+    "Flexibility is explicitly listed."
+},
+
+{
+    statement:
+    "Passion is included among the qualifications and skills required to be a successful salesperson.",
+    answer:true,
+    explanation:
+    "Passion appears at the end of the listed skills."
+},
+
+{
+    statement:
+    "Order Getting is the classification that mainly completes transactions with the same or similar customers.",
+    answer:false,
+    explanation:
+    "That description belongs to Order Taking."
+},
+
+{
+    statement:
+    "Support Personnel use their expertise to give advice to customers about company products or services.",
+    answer:true,
+    explanation:
+    "This matches the presentation's description of Support Personnel."
+},
+
+{
+    statement:
+    "The Ability to Ask the Right Questions is one of the skills listed for successful salespeople.",
+    answer:true,
+    explanation:
+    "The presentation explicitly includes this skill."
+}
+
+];
+
+
+/* =========================================================
+   TRUE / FALSE SITUATIONAL
+   ========================================================= */
+
+const TF_SITUATIONAL = [
+
+{
+    statement:
+    "A salesperson carefully listens to a customer's concerns before responding. This demonstrates Listening Skills.",
+    answer:true,
+    explanation:
+    "The situation directly demonstrates Listening Skills."
+},
+
+{
+    statement:
+    "A salesperson ignores customer concerns and immediately gives a sales pitch. This demonstrates strong Listening Skills.",
+    answer:false,
+    explanation:
+    "Ignoring the customer's concerns does not demonstrate Listening Skills."
+},
+
+{
+    statement:
+    "A salesperson asks questions to discover what the customer actually needs. This demonstrates The Ability to Ask the Right Questions.",
+    answer:true,
+    explanation:
+    "The salesperson is using questions to understand the customer's needs."
+},
+
+{
+    statement:
+    "A salesperson refuses to learn anything about new products because existing knowledge is enough. This demonstrates The Willingness to Learn.",
+    answer:false,
+    explanation:
+    "Refusing to learn is the opposite of The Willingness to Learn."
+},
+
+{
+    statement:
+    "A salesperson continues working toward a target even when achieving it becomes difficult. This demonstrates The Drive to Succeed.",
+    answer:true,
+    explanation:
+    "Continuing to pursue the target demonstrates the drive to succeed."
+},
+
+{
+    statement:
+    "After repeated rejection, a salesperson stays optimistic and continues trying. This demonstrates Resilience and a Positive Attitude.",
+    answer:true,
+    explanation:
+    "Remaining positive after rejection demonstrates resilience and a positive attitude."
+},
+
+{
+    statement:
+    "A salesperson becomes discouraged after one rejection and immediately gives up. This demonstrates strong resilience.",
+    answer:false,
+    explanation:
+    "Giving up immediately does not demonstrate resilience."
+},
+
+{
+    statement:
+    "A salesperson is willing to consider a carefully evaluated opportunity even though it involves uncertainty. This can demonstrate The Willingness to Take Risk.",
+    answer:true,
+    explanation:
+    "The situation reflects a willingness to take a reasonable risk."
+},
+
+{
+    statement:
+    "A salesperson explains a product completely but refuses to ask the customer whether they want to purchase it. This demonstrates The Ability to Ask for an Order.",
+    answer:false,
+    explanation:
+    "Refusing to ask for the purchase does not demonstrate the ability to ask for an order."
+},
+
+{
+    statement:
+    "A salesperson organizes their own work and completes responsibilities without constant supervision. This demonstrates Independence and Discipline.",
+    answer:true,
+    explanation:
+    "Independent responsibility and disciplined work habits fit this skill."
+},
+
+{
+    statement:
+    "A salesperson changes their approach when the customer's needs change. This demonstrates Flexibility.",
+    answer:true,
+    explanation:
+    "Adapting to changing customer needs demonstrates flexibility."
+},
+
+{
+    statement:
+    "A salesperson refuses to adjust their approach regardless of the customer's situation. This demonstrates Flexibility.",
+    answer:false,
+    explanation:
+    "Refusing to adapt is contrary to flexibility."
+},
+
+{
+    statement:
+    "A salesperson shows genuine enthusiasm for sales work and remains highly engaged in the profession. This demonstrates Passion.",
+    answer:true,
+    explanation:
+    "Strong enthusiasm and genuine interest demonstrate passion."
+},
+
+{
+    statement:
+    "A salesperson builds credibility by being honest and dependable with customers. This demonstrates Character and the ability to Build Trust.",
+    answer:true,
+    explanation:
+    "Honesty and dependability help establish trust."
+},
+
+{
+    statement:
+    "A salesperson immediately tries to close a sale with a completely new customer without attempting to establish a relationship. This automatically demonstrates The Ability to Connect.",
+    answer:false,
+    explanation:
+    "The situation does not demonstrate an ability to establish a connection."
+},
+
+{
+    statement:
+    "A salesperson develops a comfortable relationship with a customer and communicates effectively with them. This demonstrates The Ability to Connect.",
+    answer:true,
+    explanation:
+    "Establishing a comfortable relationship demonstrates the ability to connect."
+},
+
+{
+    statement:
+    "A salesperson mainly completes transactions with existing customers and maintains ongoing relationships with them. This describes Order Taking.",
+    answer:true,
+    explanation:
+    "That matches the chapter's description of Order Taking."
+},
+
+{
+    statement:
+    "A salesperson focuses on finding new customers and convincing current customers to buy more. This describes Order Getting.",
+    answer:true,
+    explanation:
+    "That is the chapter's description of Order Getting."
+},
+
+{
+    statement:
+    "A salesperson gives customers product advice, information, samples, and personal visits. This describes Support Personnel.",
+    answer:true,
+    explanation:
+    "Those activities match the description of Support Personnel."
+},
+
+{
+    statement:
+    "A salesperson who maintains relationships with current customers is necessarily classified as Order Getting.",
+    answer:false,
+    explanation:
+    "Maintaining ongoing relationships with current customers is associated with Order Taking."
+},
+
+{
+    statement:
+    "A salesperson who adjusts their schedule and activities according to customer needs may demonstrate Freedom / Flexibility.",
+    answer:true,
+    explanation:
+    "Freedom / Flexibility is one of the characteristics of a sales career."
+},
+
+{
+    statement:
+    "A salesperson who achieves an important goal and feels a sense of achievement demonstrates Accomplishment.",
+    answer:true,
+    explanation:
+    "The situation represents accomplishment."
+}
+
+];
+
+
+/* =========================================================
+   UTILITY FUNCTIONS
+   ========================================================= */
+
+function shuffle(array){
+
+    const copy = [...array];
+
+    for(
+        let i = copy.length - 1;
+        i > 0;
+        i--
+    ){
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [
+            copy[i],
+            copy[j]
+        ] =
+        [
+            copy[j],
+            copy[i]
+        ];
+
+    }
+
+    return copy;
+}
+
+
+function normalize(value){
+
+    return String(value)
+        .toLowerCase()
+        .replace(/[.,!?;:'"]/g,"")
+        .replace(/\s+/g," ")
+        .trim();
+
+}
+
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   GLOBAL QUIZ VARIABLES
+   ========================================================= */
+
+let quizQuestions = [];
+
+let currentQuestion = 0;
+
+let score = 0;
+
+let answers = [];
+
+let questionType = "";
+
+let questionStyle = "";
+
+let questionOrder = "";
+
+
+/* =========================================================
+   GET DIRECT CONCEPTS
+   ========================================================= */
+
+function getConcepts(){
+
+    return FACTS.map(item => ({
+        ...item
+    }));
+
+}
+
+
+/* =========================================================
+   MULTIPLE CHOICE — DIRECT
+   ========================================================= */
+
+function generateMCDirect(){
+
+    const concepts =
+        getConcepts();
+
+    return concepts.map(
+        (item,index)=>{
+
+            let question;
+
+            if(
+                item.category ===
+                "Classification of Personal Selling Jobs"
+            ){
+
+                question =
+                    `Which personal selling job is described by the following information?\n\n"${item.source}"`;
+
+            }
+
+            else if(
+                item.category ===
+                "Characteristics of Sales Career"
+            ){
+
+                question =
+                    `Which of the following is listed in the presentation as a characteristic of a sales career?`;
+
+            }
+
+            else{
+
+                question =
+                    `Which of the following is listed in the presentation under qualifications and skills required to be a successful salesperson?`;
+
+            }
+
+
+            let possible =
+                shuffle(
+                    concepts.filter(
+                        x =>
+                            x.id !== item.id
+                    )
+                )
+                .slice(0,3)
+                .map(x=>x.term);
+
+
+            let choices =
+                shuffle([
+                    item.term,
+                    ...possible
+                ]);
+
+
+            return {
+
+                id:
+                    `mc-direct-${index}`,
+
+                type:
+                    "Multiple Choice",
+
+                style:
+                    "Direct",
+
+                question:
+                    question,
+
+                choices:
+                    choices,
+
+                correct:
+                    choices.indexOf(
+                        item.term
+                    ),
+
+                correctText:
+                    item.term,
+
+                explanation:
+                    item.category ===
+                    "Classification of Personal Selling Jobs"
+
+                    ?
+
+                    `The presentation describes this classification as: "${item.source}"`
+
+                    :
+
+                    `${item.term} is explicitly listed in the Chapter 2 presentation under ${item.category}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   MULTIPLE CHOICE — SITUATIONAL
+   ========================================================= */
+
+function generateMCSituational(){
+
+    const scenarios =
+        [...SCENARIOS];
+
+    return scenarios.map(
+        (item,index)=>{
+
+            let distractors =
+                shuffle(
+                    scenarios.filter(
+                        x =>
+                            x.term !==
+                            item.term
+                    )
+                )
+                .slice(0,3)
+                .map(
+                    x=>x.term
+                );
+
+
+            let choices =
+                shuffle([
+                    item.term,
+                    ...distractors
+                ]);
+
+
+            return {
+
+                id:
+                    `mc-situational-${index}`,
+
+                type:
+                    "Multiple Choice",
+
+                style:
+                    "Situational",
+
+                question:
+                    `${item.scenario}\n\nWhich Chapter 2 concept is being demonstrated?`,
+
+                choices:
+                    choices,
+
+                correct:
+                    choices.indexOf(
+                        item.term
+                    ),
+
+                correctText:
+                    item.term,
+
+                explanation:
+                    `The situation demonstrates ${item.term}. This concept is included in Chapter 2 under the topic ${FACTS.find(x=>x.term===item.term)?.category || "Sales Career"}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION — DIRECT
+   ========================================================= */
+
+function generateIdentificationDirect(){
+
+    const concepts =
+        getConcepts();
+
+    return concepts.map(
+        (item,index)=>{
+
+            let question;
+
+            if(
+                item.category ===
+                "Classification of Personal Selling Jobs"
+            ){
+
+                question =
+                    `Identify the personal selling job described below:\n\n"${item.source}"`;
+
+            }
+
+            else if(
+                item.category ===
+                "Characteristics of Sales Career"
+            ){
+
+                question =
+                    `Identify the characteristic of a sales career represented by the following term from the presentation:\n\n"${item.source}"`;
+
+            }
+
+            else{
+
+                question =
+                    `Identify the qualification or skill listed in the presentation:\n\n"${item.source}"`;
+
+            }
+
+
+            return {
+
+                id:
+                    `id-direct-${index}`,
+
+                type:
+                    "Identification",
+
+                style:
+                    "Direct",
+
+                question:
+                    question,
+
+                correctText:
+                    item.term,
+
+                explanation:
+                    `The correct answer is ${item.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION — SITUATIONAL
+   ========================================================= */
+
+function generateIdentificationSituational(){
+
+    return SCENARIOS.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    `id-situational-${index}`,
+
+                type:
+                    "Identification",
+
+                style:
+                    "Situational",
+
+                question:
+                    `${item.scenario}\n\nIdentify the Chapter 2 concept being demonstrated.`,
+
+                correctText:
+                    item.term,
+
+                explanation:
+                    `The situation demonstrates ${item.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE — DIRECT
+   ========================================================= */
+
+function generateTFDirect(){
+
+    return TF_DIRECT.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    `tf-direct-${index}`,
+
+                type:
+                    "True / False",
+
+                style:
+                    "Direct",
+
+                question:
+                    item.statement,
+
+                correct:
+                    item.answer,
+
+                correctText:
+                    item.answer
+                        ? "True"
+                        : "False",
+
+                explanation:
+                    item.explanation
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE — SITUATIONAL
+   ========================================================= */
+
+function generateTFSituational(){
+
+    return TF_SITUATIONAL.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    `tf-situational-${index}`,
+
+                type:
+                    "True / False",
+
+                style:
+                    "Situational",
+
+                question:
+                    item.statement,
+
+                correct:
+                    item.answer,
+
+                correctText:
+                    item.answer
+                        ? "True"
+                        : "False",
+
+                explanation:
+                    item.explanation
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ENUMERATION
+   ========================================================= */
+
+function generateEnumeration(){
+
+    return ENUMERATION.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    `enumeration-${index}`,
+
+                type:
+                    "Enumeration",
+
+                style:
+                    "Direct",
+
+                question:
+                    item.q,
+
+                answers:
+                    item.answers,
+
+                correctText:
+                    item.answers.join("; "),
+
+                explanation:
+                    item.explanation
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BUILD QUIZ
+   ========================================================= */
+
+function buildQuiz(){
+
+    if(
+        questionType === "mc" &&
+        questionStyle === "direct"
+    ){
+
+        return generateMCDirect();
+
+    }
+
+
+    if(
+        questionType === "mc" &&
+        questionStyle === "situational"
+    ){
+
+        return generateMCSituational();
+
+    }
+
+
+    if(
+        questionType === "identification" &&
+        questionStyle === "direct"
+    ){
+
+        return generateIdentificationDirect();
+
+    }
+
+
+    if(
+        questionType === "identification" &&
+        questionStyle === "situational"
+    ){
+
+        return generateIdentificationSituational();
+
+    }
+
+
+    if(
+        questionType === "tf" &&
+        questionStyle === "direct"
+    ){
+
+        return generateTFDirect();
+
+    }
+
+
+    if(
+        questionType === "tf" &&
+        questionStyle === "situational"
+    ){
+
+        return generateTFSituational();
+
+    }
+
+
+    if(
+        questionType === "enumeration"
+    ){
+
+        return generateEnumeration();
+
+    }
+
+
+    return [];
+
+}
+
+
+/* =========================================================
+   START QUIZ
+   ========================================================= */
+
+function startQuiz(){
+
+    questionType =
+        document
+        .getElementById("questionType")
+        .value;
+
+
+    questionStyle =
+        document
+        .getElementById("questionStyle")
+        .value;
+
+
+    questionOrder =
+        document
+        .getElementById("questionOrder")
+        .value;
+
+
+    quizQuestions =
+        buildQuiz();
+
+
+    /*
+       Shuffle the question order only if
+       Randomized is selected.
+
+       Multiple-choice choices are already
+       independently shuffled when generated.
+    */
+
+    if(
+        questionOrder === "random"
+    ){
+
+        quizQuestions =
+            shuffle(
+                quizQuestions
+            );
+
+    }
+
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answers = [];
+
+
+    document
+        .getElementById("startScreen")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("resultScreen")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("quizScreen")
+        .classList
+        .remove("hidden");
+
+
+    renderQuestion();
+
+}
+
+
+/* =========================================================
+   RENDER QUESTION
+   ========================================================= */
+
+function renderQuestion(){
+
+    const q =
+        quizQuestions[currentQuestion];
+
+
+    if(!q)
+        return;
+
+
+    const total =
+        quizQuestions.length;
+
+
+    document
+        .getElementById("questionCounter")
+        .textContent =
+            `Question ${currentQuestion + 1} of ${total}`;
+
+
+    document
+        .getElementById("scoreDisplay")
+        .textContent =
+            `Score: ${score}`;
+
+
+    document
+        .getElementById("progressBar")
+        .style.width =
+            `${((currentQuestion + 1) / total) * 100}%`;
+
+
+    document
+        .getElementById("typeBadge")
+        .textContent =
+            q.type;
+
+
+    document
+        .getElementById("styleBadge")
+        .textContent =
+            q.style;
+
+
+    document
+        .getElementById("questionText")
+        .textContent =
+            q.question;
+
+
+    document
+        .getElementById("feedback")
+        .className =
+            "feedback";
+
+
+    document
+        .getElementById("feedback")
+        .innerHTML =
+            "";
+
+
+    document
+        .getElementById("nextButton")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("skipButton")
+        .disabled =
+            false;
+
+
+    document
+        .getElementById("backButton")
+        .disabled =
+            currentQuestion === 0;
+
+
+    const area =
+        document.getElementById(
+            "answerArea"
+        );
+
+
+    area.innerHTML = "";
+
+
+    /* =====================================================
+       MULTIPLE CHOICE
+       ===================================================== */
+
+    if(
+        q.type ===
+        "Multiple Choice"
+    ){
+
+        const wrapper =
+            document.createElement(
+                "div"
+            );
+
+        wrapper.className =
+            "choices";
+
+
+        q.choices.forEach(
+            (choice,index)=>{
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.className =
+                    "choice";
+
+
+                button.dataset.originalIndex =
+                    index;
+
+
+                button.innerHTML =
+                    `
+                    <span class="choice-letter">
+                        ${String.fromCharCode(65 + index)}
+                    </span>
+                    ${escapeHTML(choice)}
+                    `;
+
+
+                button.onclick =
+                    () =>
+                        submitMultipleChoice(
+                            index
+                        );
+
+
+                wrapper.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        area.appendChild(
+            wrapper
+        );
+
+    }
+
+
+    /* =====================================================
+       TRUE / FALSE
+       ===================================================== */
+
+    else if(
+        q.type ===
+        "True / False"
+    ){
+
+        const wrapper =
+            document.createElement(
+                "div"
+            );
+
+        wrapper.className =
+            "choices";
+
+
+        ["True","False"]
+        .forEach(
+            value=>{
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.className =
+                    "choice";
+
+
+                button.textContent =
+                    value;
+
+
+                button.onclick =
+                    () =>
+                        submitTrueFalse(
+                            value === "True"
+                        );
+
+
+                wrapper.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        area.appendChild(
+            wrapper
+        );
+
+    }
+
+
+    /* =====================================================
+       IDENTIFICATION
+       ===================================================== */
+
+    else if(
+        q.type ===
+        "Identification"
+    ){
+
+        area.innerHTML =
+            `
+            <div class="text-answer">
+
+                <input
+                    type="text"
+                    id="textAnswer"
+                    placeholder="Type your answer here..."
+                    autocomplete="off"
+                >
+
+                <button
+                    class="primary"
+                    onclick="submitIdentification()">
+
+                    Submit Answer
+
+                </button>
+
+            </div>
+            `;
+
+
+        const input =
+            document.getElementById(
+                "textAnswer"
+            );
+
+
+        input.addEventListener(
+            "keydown",
+            function(event){
+
+                if(
+                    event.key === "Enter"
+                ){
+
+                    submitIdentification();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       ENUMERATION
+       ===================================================== */
+
+    else if(
+        q.type ===
+        "Enumeration"
+    ){
+
+        let html =
+            `<div class="enumeration-inputs">`;
+
+
+        q.answers.forEach(
+            (answer,index)=>{
+
+                html +=
+                    `
+                    <div class="enum-row">
+
+                        <div class="enum-number">
+                            ${index + 1}.
+                        </div>
+
+                        <input
+                            type="text"
+                            id="enumInput${index}"
+                            placeholder="Enter answer ${index + 1}"
+                        >
+
+                    </div>
+                    `;
+
+            }
+        );
+
+
+        html +=
+            `
+            </div>
+
+            <br>
+
+            <button
+                class="primary"
+                onclick="submitEnumeration()">
+
+                Submit Answers
+
+            </button>
+            `;
+
+
+        area.innerHTML =
+            html;
+
+    }
+
+
+    restoreAnswer();
+
+}
+
+
+/* =========================================================
+   MULTIPLE CHOICE SUBMISSION
+   ========================================================= */
+
+function submitMultipleChoice(index){
+
+    if(
+        answers[currentQuestion]
+    )
+        return;
+
+
+    const q =
+        quizQuestions[currentQuestion];
+
+
+    const correct =
+        index === q.correct;
+
+
+    if(correct)
+        score++;
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        answer:
+            q.choices[index],
+
+        correct:
+            correct,
+
+        skipped:false
+
+    };
+
+
+    const buttons =
+        document.querySelectorAll(
+            "#answerArea .choice"
+        );
+
+
+    buttons.forEach(
+        (button,buttonIndex)=>{
+
+            button.disabled =
+                true;
+
+
+            if(
+                buttonIndex ===
+                q.correct
+            ){
+
+                button.classList
+                    .add("correct");
+
+            }
+
+
+            if(
+                buttonIndex === index &&
+                !correct
+            ){
+
+                button.classList
+                    .add("wrong");
+
+            }
+
+        }
+    );
+
+
+    showFeedback(
+        correct,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE SUBMISSION
+   ========================================================= */
+
+function submitTrueFalse(value){
+
+    if(
+        answers[currentQuestion]
+    )
+        return;
+
+
+    const q =
+        quizQuestions[currentQuestion];
+
+
+    const correct =
+        value === q.correct;
+
+
+    if(correct)
+        score++;
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        answer:
+            value
+                ? "True"
+                : "False",
+
+        correct:
+            correct,
+
+        skipped:false
+
+    };
+
+
+    const buttons =
+        document.querySelectorAll(
+            "#answerArea .choice"
+        );
+
+
+    buttons.forEach(
+        button=>{
+
+            button.disabled =
+                true;
+
+
+            if(
+                button.textContent ===
+                q.correctText
+            ){
+
+                button.classList
+                    .add("correct");
+
+            }
+
+
+            if(
+                button.textContent ===
+                (value
+                    ? "True"
+                    : "False") &&
+                !correct
+            ){
+
+                button.classList
+                    .add("wrong");
+
+            }
+
+        }
+    );
+
+
+    showFeedback(
+        correct,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION SUBMISSION
+   ========================================================= */
+
+function submitIdentification(){
+
+    if(
+        answers[currentQuestion]
+    )
+        return;
+
+
+    const q =
+        quizQuestions[currentQuestion];
+
+
+    const input =
+        document.getElementById(
+            "textAnswer"
+        );
+
+
+    const entered =
+        input.value.trim();
+
+
+    if(!entered){
+
+        alert(
+            "Please enter an answer."
+        );
+
+        return;
+
+    }
+
+
+    const correct =
+        normalize(entered) ===
+        normalize(q.correctText);
+
+
+    if(correct)
+        score++;
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        answer:
+            entered,
+
+        correct:
+            correct,
+
+        skipped:false
+
+    };
+
+
+    input.disabled =
+        true;
+
+
+    document
+        .querySelectorAll(
+            "#answerArea button"
+        )
+        .forEach(
+            button =>
+                button.disabled =
+                    true
+        );
+
+
+    showFeedback(
+        correct,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   ENUMERATION SUBMISSION
+   ========================================================= */
+
+function submitEnumeration(){
+
+    if(
+        answers[currentQuestion]
+    )
+        return;
+
+
+    const q =
+        quizQuestions[currentQuestion];
+
+
+    const entered = [];
+
+
+    for(
+        let i=0;
+        i<q.answers.length;
+        i++
+    ){
+
+        const input =
+            document.getElementById(
+                `enumInput${i}`
+            );
+
+
+        entered.push(
+            input.value.trim()
+        );
+
+    }
+
+
+    if(
+        entered.some(
+            value => !value
+        )
+    ){
+
+        alert(
+            "Please answer all enumeration items."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Enumeration uses the order
+       presented by the chapter list.
+    */
+
+    const correct =
+        entered.length ===
+        q.answers.length &&
+
+        entered.every(
+            (value,index)=>
+                normalize(value) ===
+                normalize(q.answers[index])
+        );
+
+
+    if(correct)
+        score++;
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        answer:
+            entered.join(" | "),
+
+        correct:
+            correct,
+
+        skipped:false
+
+    };
+
+
+    document
+        .querySelectorAll(
+            "#answerArea input"
+        )
+        .forEach(
+            input =>
+                input.disabled =
+                    true
+        );
+
+
+    document
+        .querySelectorAll(
+            "#answerArea button"
+        )
+        .forEach(
+            button =>
+                button.disabled =
+                    true
+        );
+
+
+    showFeedback(
+        correct,
+        q.explanation,
+        q.answers.join("; ")
+    );
+
+}
+
+
+/* =========================================================
+   FEEDBACK
+   ========================================================= */
+
+function showFeedback(
+    correct,
+    explanation,
+    correctAnswer
+){
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    feedback.className =
+        "feedback show " +
+        (
+            correct
+                ? "correct"
+                : "incorrect"
+        );
+
+
+    feedback.innerHTML =
+        `
+        <div class="feedback-title">
+
+            ${correct
+                ? "✓ Correct!"
+                : "✗ Incorrect"}
+
+        </div>
+
+        <div>
+            ${escapeHTML(
+                explanation
+            )}
+        </div>
+
+        <div style="margin-top:8px;">
+
+            <b>Correct answer:</b>
+
+            ${escapeHTML(
+                correctAnswer
+            )}
+
+        </div>
+        `;
+
+
+    document
+        .getElementById(
+            "scoreDisplay"
+        )
+        .textContent =
+            `Score: ${score}`;
+
+
+    document
+        .getElementById(
+            "skipButton"
+        )
+        .disabled =
+            true;
+
+
+    document
+        .getElementById(
+            "nextButton"
+        )
+        .classList
+        .remove("hidden");
+
+}
+
+
+/* =========================================================
+   NEXT QUESTION
+   ========================================================= */
+
+function nextQuestion(){
+
+    if(
+        currentQuestion <
+        quizQuestions.length - 1
+    ){
+
+        currentQuestion++;
+
+        renderQuestion();
+
+    }
+
+    else{
+
+        finishQuiz();
+
+    }
+
+}
+
+
+/* =========================================================
+   BACK
+   ========================================================= */
+
+function goBack(){
+
+    if(
+        currentQuestion <= 0
+    )
+        return;
+
+
+    currentQuestion--;
+
+    renderQuestion();
+
+}
+
+
+/* =========================================================
+   SKIP
+   ========================================================= */
+
+function skipQuestion(){
+
+    if(
+        answers[currentQuestion]
+    )
+        return;
+
+
+    const q =
+        quizQuestions[currentQuestion];
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:true,
+
+        answer:
+            "Skipped",
+
+        correct:false
+
+    };
+
+
+    showFeedback(
+
+        false,
+
+        "You skipped this question. No point was awarded.",
+
+        q.correctText ||
+        (
+            q.answers
+                ? q.answers.join("; ")
+                : ""
+        )
+
+    );
+
+}
+
+
+/* =========================================================
+   RESTORE PREVIOUS ANSWER
+   ========================================================= */
+
+function restoreAnswer(){
+
+    const saved =
+        answers[currentQuestion];
+
+
+    if(!saved)
+        return;
+
+
+    const q =
+        quizQuestions[currentQuestion];
+
+
+    /* =========================
+       MULTIPLE CHOICE
+       ========================= */
+
+    if(
+        q.type ===
+        "Multiple Choice"
+    ){
+
+        const buttons =
+            document.querySelectorAll(
+                "#answerArea .choice"
+            );
+
+
+        buttons.forEach(
+            (button,index)=>{
+
+                button.disabled =
+                    true;
+
+
+                if(
+                    q.choices[index] ===
+                    q.correctText
+                ){
+
+                    button.classList
+                        .add("correct");
+
+                }
+
+
+                if(
+                    q.choices[index] ===
+                    saved.answer &&
+                    !saved.correct
+                ){
+
+                    button.classList
+                        .add("wrong");
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================
+       TRUE / FALSE
+       ========================= */
+
+    else if(
+        q.type ===
+        "True / False"
+    ){
+
+        document
+            .querySelectorAll(
+                "#answerArea .choice"
+            )
+            .forEach(
+                button=>{
+
+                    button.disabled =
+                        true;
+
+
+                    if(
+                        button.textContent ===
+                        q.correctText
+                    ){
+
+                        button.classList
+                            .add("correct");
+
+                    }
+
+
+                    if(
+                        button.textContent ===
+                        saved.answer &&
+                        !saved.correct
+                    ){
+
+                        button.classList
+                            .add("wrong");
+
+                    }
+
+                }
+            );
+
+    }
+
+
+    /* =========================
+       IDENTIFICATION
+       ========================= */
+
+    else if(
+        q.type ===
+        "Identification"
+    ){
+
+        const input =
+            document.getElementById(
+                "textAnswer"
+            );
+
+
+        if(input){
+
+            input.value =
+                saved.answer;
+
+            input.disabled =
+                true;
+
+        }
+
+
+        document
+            .querySelectorAll(
+                "#answerArea button"
+            )
+            .forEach(
+                button =>
+                    button.disabled =
+                        true
+            );
+
+    }
+
+
+    /* =========================
+       ENUMERATION
+       ========================= */
+
+    else if(
+        q.type ===
+        "Enumeration"
+    ){
+
+        const values =
+            saved.answer.split(
+                " | "
+            );
+
+
+        values.forEach(
+            (value,index)=>{
+
+                const input =
+                    document.getElementById(
+                        `enumInput${index}`
+                    );
+
+
+                if(input){
+
+                    input.value =
+                        value;
+
+                    input.disabled =
+                        true;
+
+                }
+
+            }
+        );
+
+
+        document
+            .querySelectorAll(
+                "#answerArea button"
+            )
+            .forEach(
+                button =>
+                    button.disabled =
+                        true
+            );
+
+    }
+
+
+    showFeedback(
+
+        saved.correct,
+
+        q.explanation,
+
+        q.correctText ||
+        (
+            q.answers
+                ? q.answers.join("; ")
+                : ""
+        )
+
+    );
+
+}
+
+
+/* =========================================================
+   FINISH QUIZ
+   ========================================================= */
+
+function finishQuiz(){
+
+    document
+        .getElementById(
+            "quizScreen"
+        )
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById(
+            "resultScreen"
+        )
+        .classList
+        .remove("hidden");
+
+
+    const total =
+        quizQuestions.length;
+
+
+    const percentage =
+        total === 0
+            ? 0
+            : Math.round(
+                (score / total) * 100
+            );
+
+
+    document
+        .getElementById(
+            "resultScore"
+        )
+        .textContent =
+            `${score} / ${total}`;
+
+
+    document
+        .getElementById(
+            "resultPercent"
+        )
+        .textContent =
+            `${percentage}%`;
+
+
+    let message;
+
+
+    if(
+        percentage >= 90
+    ){
+
+        message =
+            "Excellent work! You have a strong understanding of Chapter 2.";
+
+    }
+
+    else if(
+        percentage >= 75
+    ){
+
+        message =
+            "Good job! You have a solid understanding of the Sales Career chapter.";
+
+    }
+
+    else if(
+        percentage >= 60
+    ){
+
+        message =
+            "Not bad. Review Chapter 2 and try the quiz again.";
+
+    }
+
+    else{
+
+        message =
+            "Keep studying. Reviewing Chapter 2 before trying the quiz again may help.";
+
+    }
+
+
+    document
+        .getElementById(
+            "resultMessage"
+        )
+        .textContent =
+            message;
+
+}
+
+
+/* =========================================================
+   REVIEW
+   ========================================================= */
+
+function showReview(){
+
+    const review =
+        document.getElementById(
+            "reviewArea"
+        );
+
+
+    if(
+        !review.classList.contains(
+            "hidden"
+        )
+    ){
+
+        review.classList.add(
+            "hidden"
+        );
+
+        return;
+
+    }
+
+
+    review.classList.remove(
+        "hidden"
+    );
+
+
+    let html =
+        "<h2>Answer Review</h2>";
+
+
+    quizQuestions.forEach(
+        (q,index)=>{
+
+            const result =
+                answers[index];
+
+
+            let status =
+                "Not answered";
+
+
+            let statusClass =
+                "skipped";
+
+
+            let userAnswer =
+                "Not answered";
+
+
+            if(result){
+
+                userAnswer =
+                    result.answer;
+
+
+                if(
+                    result.skipped
+                ){
+
+                    status =
+                        "Skipped";
+
+                    statusClass =
+                        "skipped";
+
+                }
+
+                else if(
+                    result.correct
+                ){
+
+                    status =
+                        "Correct";
+
+                    statusClass =
+                        "correct";
+
+                }
+
+                else{
+
+                    status =
+                        "Incorrect";
+
+                    statusClass =
+                        "incorrect";
+
+                }
+
+            }
+
+
+            html +=
+                `
+                <div class="review-item">
+
+                    <b>
+                        ${index + 1}.
+                        ${escapeHTML(
+                            q.question
+                        )}
+                    </b>
+
+                    <br><br>
+
+                    <b>Your answer:</b>
+                    ${escapeHTML(
+                        userAnswer
+                    )}
+
+                    <br>
+
+                    <b>Correct answer:</b>
+                    ${escapeHTML(
+                        q.correctText ||
+                        (
+                            q.answers
+                                ? q.answers.join("; ")
+                                : ""
+                        )
+                    )}
+
+                    <br>
+
+                    <span
+                        class="review-status ${statusClass}">
+
+                        ${status}
+
+                    </span>
+
+                </div>
+                `;
+
+        }
+    );
+
+
+    review.innerHTML =
+        html;
+
+}
+
+
+/* =========================================================
+   RESTART
+   ========================================================= */
+
+function restartQuiz(){
+
+    document
+        .getElementById(
+            "quizScreen"
+        )
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById(
+            "resultScreen"
+        )
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById(
+            "reviewArea"
+        )
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById(
+            "startScreen"
+        )
+        .classList
+        .remove("hidden");
+
+
+    quizQuestions = [];
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answers = [];
+
+}
+
+</script>
+
+</body>
+</html>
