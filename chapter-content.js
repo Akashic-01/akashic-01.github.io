@@ -8,6 +8,7 @@
 window.ASSESSMENT_URLS = {
   'sales-1': 'assessments/sales-1.html',
   'sales-2': 'assessments/sales-2.html',
+  'sales-3': 'assessments/sales-3.html',
 };
 
 // Chapter titles — shown below the big "Chapter N" heading. Same key
