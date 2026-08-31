@@ -426,14 +426,25 @@
       // touches don't count as overlap, so a range that merely ends at
       // the start of a node doesn't pull that node in).
       function rangeIntersectsNode(range, node) {
-        const nodeRange = document.createRange();
-        nodeRange.selectNode(node);
-        const result =
-          range.compareBoundaryPoints(Range.END_TO_START, nodeRange) < 0 &&
-          range.compareBoundaryPoints(Range.START_TO_END, nodeRange) > 0;
-        nodeRange.detach && nodeRange.detach();
-        return result;
-      }
+      // The browser's own implementation — reliable everywhere. (A
+      // hand-rolled version using compareBoundaryPoints used to live
+      // here with its two checks accidentally inverted, which made
+      // it return false for every node that WAS actually inside the
+      // selection — the reason an already-bold word could be
+      // selected and the Bold button still wouldn't light up: this
+      // function was reporting zero text nodes as "selected" at all.)
+        if (typeof range.intersectsNode === 'function') {
+          return range.intersectsNode(node);
+  }
+        
+  const nodeRange = document.createRange();
+  nodeRange.selectNode(node);
+  const result =
+    range.compareBoundaryPoints(Range.END_TO_START, nodeRange) > 0 &&
+    range.compareBoundaryPoints(Range.START_TO_END, nodeRange) < 0;
+  nodeRange.detach && nodeRange.detach();
+  return result;
+}
 
       // Splits `range` into an array of {block, startNode, startOffset,
       // endNode, endOffset} groups, one per block element it touches,
