@@ -295,11 +295,11 @@
       // the toolbar wraps around text you bold yourself. Highlight and
       // underline have no such native-tag equivalent, so they only ever
       // match their own class.
+      const NATIVE_BOLD_TAGS = new Set(['STRONG', 'B', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6']);
+
       function elementMatchesFormat(el, className) {
         if (el.classList && el.classList.contains(className)) return true;
-        if (className === 'user-bold' && (el.tagName === 'STRONG' || el.tagName === 'B')) {
-          return true;
-        }
+        if (className === 'user-bold' && NATIVE_BOLD_TAGS.has(el.tagName)) return true;
         return false;
       }
 
