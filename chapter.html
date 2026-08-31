@@ -1043,9 +1043,12 @@
           id: 'assessment-test',
           label: 'Assessment test',
           onSelect: () => {
-            // Placeholder for now — tell me what this should do when ready,
-            // and I'll wire up autosaving for it the same way as the text.
-            console.log('Assessment test clicked:', moduleTitle, 'Chapter', num);
+            const assessmentUrl = (window.ASSESSMENT_URLS && window.ASSESSMENT_URLS[contentKey]) || '';
+            if (assessmentUrl) {
+              window.open(assessmentUrl, '_blank');
+            } else {
+              alert('The assessment test for this chapter isn\u2019t ready yet.');
+            }
           },
         },
         {
