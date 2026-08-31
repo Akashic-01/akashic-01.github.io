@@ -1,3 +1,14 @@
+// Assessment test links — shown as the "Assessment test" FAB option on
+// each chapter page. Same key format as CHAPTER_CONTENT below
+// ("<module>-<chapter number>"). Point a value at the assessment's HTML
+// file (kept in the assessments/ folder) to enable it for that chapter;
+// leave it out (or set to '') for chapters that don't have one yet —
+// the button will let the person know it isn't ready instead of trying
+// to open a missing page.
+window.ASSESSMENT_URLS = {
+  'sales-1': 'assessments/sales-1.html',
+};
+
 // Chapter titles — shown below the big "Chapter N" heading. Same key
 // format as CHAPTER_CONTENT below ("<module>-<chapter number>"). Leave
 // a value as an empty string ('') to leave that chapter's title blank.
