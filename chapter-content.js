@@ -7,6 +7,7 @@
 // to open a missing page.
 window.ASSESSMENT_URLS = {
   'sales-1': 'assessments/sales-1.html',
+  'sales-2': 'assessments/sales-2.html',
 };
 
 // Chapter titles — shown below the big "Chapter N" heading. Same key
