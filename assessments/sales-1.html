@@ -1,0 +1,3474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales Management - Chapter 1 Quiz</title>
+
+<style>
+:root{
+    --primary:#172554;
+    --primary2:#1e3a8a;
+    --light:#f5f7fb;
+    --border:#d9deea;
+    --text:#172033;
+    --muted:#667085;
+    --success:#15803d;
+    --successBg:#ecfdf3;
+    --danger:#b91c1c;
+    --dangerBg:#fef2f2;
+    --warning:#b45309;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--light);
+    color:var(--text);
+}
+
+.container{
+    width:min(1000px,94%);
+    margin:35px auto;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+h1,h2,h3{
+    margin-top:0;
+}
+
+.subtitle{
+    color:var(--muted);
+    line-height:1.6;
+}
+
+.settings{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin:25px 0;
+}
+
+.field label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+select,
+input[type="text"]{
+    width:100%;
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+}
+
+select:focus,
+input[type="text"]:focus{
+    border-color:var(--primary2);
+}
+
+button{
+    border:none;
+    border-radius:10px;
+    padding:12px 18px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.15s;
+}
+
+button:hover:not(:disabled){
+    transform:translateY(-1px);
+}
+
+button:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.primary{
+    background:var(--primary);
+    color:white;
+}
+
+.secondary{
+    background:#e9edf5;
+    color:var(--text);
+}
+
+.danger{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.success{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.quiz-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.badges{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.badge{
+    background:#eef2ff;
+    color:#3730a3;
+    padding:7px 11px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.progress-container{
+    height:9px;
+    background:#e5e7eb;
+    border-radius:50px;
+    overflow:hidden;
+    margin:20px 0 30px;
+}
+
+.progress{
+    height:100%;
+    width:0;
+    background:var(--primary);
+    transition:.25s;
+}
+
+.question{
+    font-size:23px;
+    line-height:1.45;
+    margin-bottom:22px;
+}
+
+.choices{
+    display:grid;
+    gap:12px;
+}
+
+.choice{
+    width:100%;
+    text-align:left;
+    background:white;
+    border:2px solid var(--border);
+    color:var(--text);
+    padding:15px 17px;
+}
+
+.choice:hover:not(:disabled){
+    border-color:var(--primary2);
+    background:#f8faff;
+}
+
+.choice.correct{
+    border-color:var(--success);
+    background:var(--successBg);
+    color:#166534;
+}
+
+.choice.wrong{
+    border-color:var(--danger);
+    background:var(--dangerBg);
+    color:#991b1b;
+}
+
+.choice-letter{
+    display:inline-flex;
+    width:30px;
+    height:30px;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#edf0f5;
+    margin-right:10px;
+    font-weight:bold;
+}
+
+.feedback{
+    display:none;
+    margin-top:22px;
+    padding:17px;
+    border-radius:12px;
+    line-height:1.6;
+}
+
+.feedback.show{
+    display:block;
+}
+
+.feedback.correct{
+    background:var(--successBg);
+    color:#166534;
+}
+
+.feedback.incorrect{
+    background:var(--dangerBg);
+    color:#991b1b;
+}
+
+.feedback-title{
+    font-weight:bold;
+    font-size:17px;
+}
+
+.controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+.control-right{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.text-answer{
+    display:grid;
+    gap:12px;
+}
+
+.enumeration-inputs{
+    display:grid;
+    gap:10px;
+}
+
+.enum-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.enum-number{
+    width:30px;
+    font-weight:bold;
+}
+
+.result-score{
+    font-size:52px;
+    font-weight:800;
+    color:var(--primary);
+}
+
+.result-percent{
+    font-size:22px;
+    margin:10px 0 25px;
+}
+
+.review-item{
+    border-top:1px solid var(--border);
+    padding:18px 0;
+    line-height:1.6;
+}
+
+.review-status{
+    font-weight:bold;
+}
+
+.review-status.correct{
+    color:var(--success);
+}
+
+.review-status.incorrect{
+    color:var(--danger);
+}
+
+.review-status.skipped{
+    color:var(--warning);
+}
+
+.hidden{
+    display:none!important;
+}
+
+.notice{
+    background:#f8fafc;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    color:var(--muted);
+    line-height:1.5;
+    margin-top:18px;
+}
+
+@media(max-width:750px){
+    .settings{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .question{
+        font-size:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- ========================= START SCREEN ========================= -->
+
+<section id="startScreen" class="card">
+
+<h1>Sales Management — Chapter 1 Quiz</h1>
+
+<p class="subtitle">
+Test your understanding of Chapter 1 using different question types
+and question styles.
+</p>
+
+<div class="settings">
+
+<div class="field">
+<label for="questionType">Question Type</label>
+
+<select id="questionType">
+    <option value="mc">Multiple Choice</option>
+    <option value="identification">Identification</option>
+    <option value="tf">True / False</option>
+    <option value="enumeration">Enumeration</option>
+</select>
+</div>
+
+<div class="field">
+<label for="questionStyle">Question Style</label>
+
+<select id="questionStyle">
+    <option value="direct">Direct</option>
+    <option value="situational">Situational</option>
+</select>
+</div>
+
+<div class="field">
+<label for="questionOrder">Question Order</label>
+
+<select id="questionOrder">
+    <option value="ordered">In Order</option>
+    <option value="random">Randomized</option>
+</select>
+</div>
+
+</div>
+
+<div class="notice">
+<b>Question count:</b>
+Multiple Choice, Identification, and True/False contain
+49 questions per style. Enumeration uses only the lists that
+naturally fit the chapter content.
+</div>
+
+<br>
+
+<button class="primary" onclick="startQuiz()">
+Start Quiz
+</button>
+
+</section>
+
+
+<!-- ========================= QUIZ SCREEN ========================= -->
+
+<section id="quizScreen" class="card hidden">
+
+<div class="quiz-header">
+
+<div>
+<b id="questionCounter">Question 1 of 49</b>
+</div>
+
+<div>
+<b id="scoreDisplay">Score: 0</b>
+</div>
+
+</div>
+
+<div class="progress-container">
+<div id="progressBar" class="progress"></div>
+</div>
+
+<div class="badges">
+<span id="typeBadge" class="badge"></span>
+<span id="styleBadge" class="badge"></span>
+</div>
+
+<br>
+
+<div id="questionText" class="question"></div>
+
+<div id="answerArea"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div class="controls">
+
+<button
+id="backButton"
+class="secondary"
+onclick="goBack()">
+← Back
+</button>
+
+<div class="control-right">
+
+<button
+id="skipButton"
+class="secondary"
+onclick="skipQuestion()">
+Skip
+</button>
+
+<button
+class="danger"
+onclick="restartQuiz()">
+Restart
+</button>
+
+<button
+id="nextButton"
+class="primary hidden"
+onclick="nextQuestion()">
+Next →
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ========================= RESULT SCREEN ========================= -->
+
+<section id="resultScreen" class="card hidden">
+
+<h1>Quiz Complete!</h1>
+
+<div id="resultScore" class="result-score">
+0 / 49
+</div>
+
+<div id="resultPercent" class="result-percent">
+0%
+</div>
+
+<p id="resultMessage" class="subtitle"></p>
+
+<div class="controls">
+
+<button
+class="primary"
+onclick="showReview()">
+Review Answers
+</button>
+
+<button
+class="danger"
+onclick="restartQuiz()">
+Restart Quiz
+</button>
+
+</div>
+
+<div id="reviewArea" class="hidden"></div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* ================================================================
+   CHAPTER 1 SOURCE DATA
+   ================================================================
+
+   The facts below are based on the uploaded Chapter-1-SM (2).pptx.
+
+   Each fact has:
+   - term
+   - definition / source wording
+   - category
+
+   The quiz creates:
+   - Direct questions from the source wording
+   - Situational questions from the same source concept
+
+   ================================================================ */
+
+const FACTS = [
+
+/* 1 */
+{
+    term:"Sales Management",
+    definition:"making the best use of the benefits in a company and its customers obtain from the hard work of its sales force.",
+    category:"definition"
+},
+
+/* 2 */
+{
+    term:"Sales Management",
+    definition:"The attainment of sales force goals in an effective and efficient manner through planning, staffing, training, directing, and evaluating organizational resources.",
+    category:"definition"
+},
+
+/* 3 */
+{
+    term:"Estimate demand and prepare sales forecast",
+    definition:"estimate demand and prepare sales forecast",
+    category:"sales manager responsibility"
+},
+
+/* 4 */
+{
+    term:"Establish sales force objectives and quotas",
+    definition:"establish sales force objectives and quotas",
+    category:"sales manager responsibility"
+},
+
+/* 5 */
+{
+    term:"Prepare sales plans and budgets",
+    definition:"prepare sales plans and budgets",
+    category:"sales manager responsibility"
+},
+
+/* 6 */
+{
+    term:"Establish the size and organization of the sales force",
+    definition:"establish the size and organization of the sales force",
+    category:"sales manager responsibility"
+},
+
+/* 7 */
+{
+    term:"Recruit, select, and train the sales force",
+    definition:"recruit, select, and train the sales force",
+    category:"sales manager responsibility"
+},
+
+/* 8 */
+{
+    term:"Compensate the sales force",
+    definition:"compensate the sales force",
+    category:"sales manager responsibility"
+},
+
+/* 9 */
+{
+    term:"Control and evaluate sales performances",
+    definition:"control and evaluate sales performances",
+    category:"sales manager responsibility"
+},
+
+/* 10 */
+{
+    term:"Economic growth",
+    definition:"one of the basic goals for national development of selling activities",
+    category:"benefit"
+},
+
+/* 11 */
+{
+    term:"Maximum employment",
+    definition:"one of the basic goals for national development of selling activities",
+    category:"benefit"
+},
+
+/* 12 */
+{
+    term:"Economic Stimuli",
+    definition:"salespeople are supposed to encourage action",
+    category:"benefit"
+},
+
+/* 13 */
+{
+    term:"Diffusion of Innovation",
+    definition:"the process of distributing new products, services, and ideas to the members of the society",
+    category:"benefit"
+},
+
+/* 14 */
+{
+    term:"Customer product knowledge",
+    definition:"major uses, limitations and benefits of the product they sell as they compare it with competitors",
+    category:"customer benefit"
+},
+
+/* 15 */
+{
+    term:"Customer market knowledge",
+    definition:"market opportunities and pertinent trends that may affect the business of their customers",
+    category:"customer benefit"
+},
+
+/* 16 */
+{
+    term:"Planning",
+    definition:"Each salesperson has to see for the future, in a planned way like what must be done and who will do it.",
+    category:"element"
+},
+
+/* 17 */
+{
+    term:"Coordination",
+    definition:"It is all encompassing and part of every function in the management process",
+    category:"element"
+},
+
+/* 18 */
+{
+    term:"Controlling",
+    definition:"The sales manager guides, leads, and motivates the subordinates in order to accomplish the goals planned for the business.",
+    category:"element"
+},
+
+/* 19 */
+{
+    term:"Motivating",
+    definition:"Motivation is a human resource concept. It aims to connect together unique personalities into a resourceful team.",
+    category:"element"
+},
+
+/* 20 */
+{
+    term:"Measurable and quantitative",
+    definition:"objectives of sales management are to be expressed, as far as possible, in measurable and quantitative terms",
+    category:"objective characteristic"
+},
+
+/* 21 */
+{
+    term:"Realistic",
+    definition:"objectives should also be realistic",
+    category:"objective characteristic"
+},
+
+/* 22 */
+{
+    term:"Achievable",
+    definition:"objectives should also be achievable",
+    category:"objective characteristic"
+},
+
+/* 23 */
+{
+    term:"Time bound",
+    definition:"objectives should also be time bound",
+    category:"objective characteristic"
+},
+
+/* 24 */
+{
+    term:"Grass-root involvement",
+    definition:"the setting of objectives should not be based merely on the judgement of the top management and should involve salespeople at the grass-root level",
+    category:"objective"
+},
+
+/* 25 */
+{
+    term:"Sales Volume",
+    definition:"usual objective of sales management",
+    category:"objective"
+},
+
+/* 26 */
+{
+    term:"Profitability",
+    definition:"usual objective of sales management",
+    category:"objective"
+},
+
+/* 27 */
+{
+    term:"Market Share",
+    definition:"usual objective of sales management",
+    category:"objective"
+},
+
+/* 28 */
+{
+    term:"Growth",
+    definition:"usual objective of sales management",
+    category:"objective"
+},
+
+/* 29 */
+{
+    term:"Corporate Image",
+    definition:"usual objective of sales management",
+    category:"objective"
+},
+
+/* 30 */
+{
+    term:"Selling Process",
+    definition:"a process which consists of the interaction between a possible buyer and a representative hired by a company to vend its products to possible buyers",
+    category:"selling process"
+},
+
+/* 31 */
+{
+    term:"Prospecting and Qualifying",
+    definition:"first step of the Selling Process",
+    category:"selling step"
+},
+
+/* 32 */
+{
+    term:"Pre-approach",
+    definition:"second step of the Selling Process",
+    category:"selling step"
+},
+
+/* 33 */
+{
+    term:"Approach",
+    definition:"third step of the Selling Process",
+    category:"selling step"
+},
+
+/* 34 */
+{
+    term:"Presentation",
+    definition:"fourth step of the Selling Process",
+    category:"selling step"
+},
+
+/* 35 */
+{
+    term:"Handling Objections",
+    definition:"fifth step of the Selling Process",
+    category:"selling step"
+},
+
+/* 36 */
+{
+    term:"Closing",
+    definition:"sixth step of the Selling Process",
+    category:"selling step"
+},
+
+/* 37 */
+{
+    term:"Follow-up",
+    definition:"seventh step of the Selling Process",
+    category:"selling step"
+},
+
+/* 38 */
+{
+    term:"Formulation of a Sales Program",
+    definition:"one of the three interconnected sets of decisions or processes in the Sales Management Process",
+    category:"sales management process"
+},
+
+/* 39 */
+{
+    term:"Implementation of the Sales Program",
+    definition:"one of the three interconnected sets of decisions or processes in the Sales Management Process",
+    category:"sales management process"
+},
+
+/* 40 */
+{
+    term:"Evaluation and Control of the Sales Program",
+    definition:"one of the three interconnected sets of decisions or processes in the Sales Management Process",
+    category:"sales management process"
+},
+
+/* 41 */
+{
+    term:"External environment",
+    definition:"factors beyond the control of the individual manager",
+    category:"environment"
+},
+
+/* 42 */
+{
+    term:"Economic",
+    definition:"one broad category of variables in the external environment",
+    category:"external environment"
+},
+
+/* 43 */
+{
+    term:"Legal and Political",
+    definition:"one broad category of variables in the external environment",
+    category:"external environment"
+},
+
+/* 44 */
+{
+    term:"Technological",
+    definition:"one broad category of variables in the external environment",
+    category:"external environment"
+},
+
+/* 45 */
+{
+    term:"Social and Cultural",
+    definition:"one broad category of variables in the external environment",
+    category:"external environment"
+},
+
+/* 46 */
+{
+    term:"Natural",
+    definition:"one broad category of variables in the external environment",
+    category:"external environment"
+},
+
+/* 47 */
+{
+    term:"Goals, Objectives, and Culture",
+    definition:"one broad category of variables in the internal environment",
+    category:"internal environment"
+},
+
+/* 48 */
+{
+    term:"Human Resources",
+    definition:"one broad category of variables in the internal environment",
+    category:"internal environment"
+},
+
+/* 49 */
+{
+    term:"Financial Resources",
+    definition:"one broad category of variables in the internal environment",
+    category:"internal environment"
+}
+
+];
+
+
+/* ================================================================
+   EXTRA SOURCE CONCEPTS
+   Used to make the 49-question banks more varied.
+
+   These are also directly supported by the presentation.
+   ================================================================ */
+
+const EXTRA = [
+
+{
+    term:"Product and Supply Chain Capabilities",
+    definition:"one broad category of variables in the internal environment"
+},
+
+{
+    term:"Service Capabilities",
+    definition:"one broad category of variables in the internal environment"
+},
+
+{
+    term:"Research and Development and Technological Capabilities",
+    definition:"one broad category of variables in the internal environment"
+},
+
+{
+    term:"Do not understand selling",
+    definition:"a common mistake in sales"
+},
+
+{
+    term:"Expecting things to improve by themselves",
+    definition:"a common mistake in sales"
+},
+
+{
+    term:"Talking excessively and not listening enough",
+    definition:"a common mistake in sales"
+},
+
+{
+    term:"Saying words that kill sales",
+    definition:"a common mistake in sales"
+},
+
+{
+    term:"Do not know when to close the sale",
+    definition:"a common mistake in sales"
+},
+
+{
+    term:"Do not know how to close the sale",
+    definition:"a common mistake in sales"
+},
+
+{
+    term:"No sincerity",
+    definition:"a common mistake in sales"
+},
+
+{
+    term:"Not paying adequate interest to details",
+    definition:"a common mistake in sales"
+},
+
+{
+    term:"Letting oneself slump",
+    definition:"a common mistake in sales"
+},
+
+{
+    term:"Not keeping connected",
+    definition:"a common mistake in sales"
+}
+
+];
+
+
+/* ================================================================
+   ENUMERATION DATA
+
+   These are ONLY lists naturally presented in the chapter.
+   ================================================================ */
+
+const ENUMERATION = [
+
+{
+    q:"Enumerate the two basic goals for national development of selling activities.",
+    answers:[
+        "Economic growth",
+        "Maximum employment"
+    ],
+    explanation:"The presentation identifies economic growth and maximum employment as the two basic goals."
+},
+
+{
+    q:"Enumerate the two basic ways that sales activities through salespeople contribute to a nation's economic growth.",
+    answers:[
+        "Economic Stimuli",
+        "Diffusion of Innovation"
+    ],
+    explanation:"The presentation identifies Economic Stimuli and Diffusion of Innovation."
+},
+
+{
+    q:"Enumerate the four basic elements of Sales Management.",
+    answers:[
+        "Planning",
+        "Coordination",
+        "Controlling",
+        "Motivating"
+    ],
+    explanation:"These are the four elements presented in the chapter."
+},
+
+{
+    q:"Enumerate the five usual objectives of Sales Management.",
+    answers:[
+        "Sales Volume",
+        "Profitability",
+        "Market Share",
+        "Growth",
+        "Corporate Image"
+    ],
+    explanation:"These are the usual objectives listed in the presentation."
+},
+
+{
+    q:"Enumerate the seven steps of the Selling Process in order.",
+    answers:[
+        "Prospecting and Qualifying",
+        "Pre-approach",
+        "Approach",
+        "Presentation",
+        "Handling Objections",
+        "Closing",
+        "Follow-up"
+    ],
+    explanation:"These are the seven Selling Process steps shown in the presentation."
+},
+
+{
+    q:"Enumerate the three interconnected processes in the Sales Management Process.",
+    answers:[
+        "Formulation of a Sales Program",
+        "Implementation of the Sales Program",
+        "Evaluation and Control of the Sales Program"
+    ],
+    explanation:"The Sales Management Process consists of these three interconnected processes."
+},
+
+{
+    q:"Enumerate the five broad categories of the external environment.",
+    answers:[
+        "Economic",
+        "Legal and Political",
+        "Technological",
+        "Social and Cultural",
+        "Natural"
+    ],
+    explanation:"The presentation groups external-environment variables into these five categories."
+},
+
+{
+    q:"Enumerate the six broad categories of the internal environment.",
+    answers:[
+        "Goals, Objectives, and Culture",
+        "Human Resources",
+        "Financial Resources",
+        "Product and Supply Chain Capabilities",
+        "Service Capabilities",
+        "Research and Development and Technological Capabilities"
+    ],
+    explanation:"The presentation identifies six broad internal-environment categories."
+},
+
+{
+    q:"Enumerate the common mistakes in sales listed in the presentation.",
+    answers:[
+        "Do not understand selling",
+        "Expecting things to improve by themselves",
+        "Talking excessively and not listening enough",
+        "Saying words that kill sales",
+        "Do not know when to close the sale",
+        "Do not know how to close the sale",
+        "No sincerity",
+        "Not paying adequate interest to details",
+        "Letting oneself slump",
+        "Not keeping connected"
+    ],
+    explanation:"These are the common mistakes listed in the Chapter 1 presentation."
+}
+
+];
+
+
+/* ================================================================
+   SITUATIONAL SCENARIOS
+
+   Original scenarios created from concepts in the presentation.
+   ================================================================ */
+
+const SCENARIOS = [
+
+{
+    term:"Sales Management",
+    scenario:"A sales manager coordinates the team's activities, develops plans, trains salespeople, directs their work, and evaluates their performance."
+},
+
+{
+    term:"Estimate demand and prepare sales forecast",
+    scenario:"Before launching a sales campaign, a manager studies expected customer demand and prepares a forecast."
+},
+
+{
+    term:"Establish sales force objectives and quotas",
+    scenario:"A manager gives each salesperson a specific sales target that must be achieved during the period."
+},
+
+{
+    term:"Prepare sales plans and budgets",
+    scenario:"A sales manager prepares a detailed sales plan and determines the budget needed to carry it out."
+},
+
+{
+    term:"Establish the size and organization of the sales force",
+    scenario:"A company determines how many salespeople it needs and how those salespeople should be organized."
+},
+
+{
+    term:"Recruit, select, and train the sales force",
+    scenario:"A company hires new salespeople, chooses suitable applicants, and provides them with training."
+},
+
+{
+    term:"Compensate the sales force",
+    scenario:"A company determines how its salespeople will be compensated for their work."
+},
+
+{
+    term:"Control and evaluate sales performances",
+    scenario:"A manager checks sales results and evaluates whether the salespeople are meeting expectations."
+},
+
+{
+    term:"Economic Stimuli",
+    scenario:"A salesperson encourages customers and businesses to take action that supports business survival and growth."
+},
+
+{
+    term:"Diffusion of Innovation",
+    scenario:"A salesperson helps introduce a new service to members of the community who have never used it before."
+},
+
+{
+    term:"Customer product knowledge",
+    scenario:"A salesperson explains a product's uses, limitations, and benefits while comparing it with competing products."
+},
+
+{
+    term:"Customer market knowledge",
+    scenario:"A salesperson studies market opportunities and trends that could affect a customer's business."
+},
+
+{
+    term:"Planning",
+    scenario:"A salesperson looks ahead and determines what needs to be done and who will do each task."
+},
+
+{
+    term:"Coordination",
+    scenario:"A sales manager makes sure different activities work together across the management process."
+},
+
+{
+    term:"Controlling",
+    scenario:"A sales manager guides and motivates subordinates so that planned business goals can be accomplished."
+},
+
+{
+    term:"Motivating",
+    scenario:"A manager works to bring people with different personalities together into a resourceful team."
+},
+
+{
+    term:"Measurable and quantitative",
+    scenario:"Instead of saying that sales should improve, a manager establishes an objective that can be expressed using a specific measurable figure."
+},
+
+{
+    term:"Realistic",
+    scenario:"A sales manager avoids setting an impossible target and establishes an objective that is realistic."
+},
+
+{
+    term:"Achievable",
+    scenario:"A manager checks whether the sales team can actually accomplish the objective before setting it."
+},
+
+{
+    term:"Time bound",
+    scenario:"A manager gives the sales team a deadline by which the objective must be accomplished."
+},
+
+{
+    term:"Grass-root involvement",
+    scenario:"Instead of allowing only top management to decide the objectives, the company asks salespeople at the grass-root level to participate."
+},
+
+{
+    term:"Sales Volume",
+    scenario:"A company sets an objective focused on the amount of sales it wants its sales force to generate."
+},
+
+{
+    term:"Profitability",
+    scenario:"A company evaluates an objective based on the returns it expects to earn from its sales activities."
+},
+
+{
+    term:"Market Share",
+    scenario:"A company creates an objective focused on improving its position within the market."
+},
+
+{
+    term:"Growth",
+    scenario:"A company establishes a sales objective focused on expanding its business."
+},
+
+{
+    term:"Corporate Image",
+    scenario:"A company establishes a sales objective concerned with how the organization is perceived."
+},
+
+{
+    term:"Prospecting and Qualifying",
+    scenario:"A salesperson begins the selling process by looking for possible buyers and determining which prospects are qualified."
+},
+
+{
+    term:"Pre-approach",
+    scenario:"Before contacting a potential buyer, a salesperson prepares by gathering information and planning the interaction."
+},
+
+{
+    term:"Approach",
+    scenario:"The salesperson makes the initial contact with the potential buyer."
+},
+
+{
+    term:"Presentation",
+    scenario:"The salesperson explains the product and presents its value to the potential buyer."
+},
+
+{
+    term:"Handling Objections",
+    scenario:"The potential buyer raises concerns about the product, so the salesperson addresses those concerns."
+},
+
+{
+    term:"Closing",
+    scenario:"After discussing the product and addressing concerns, the salesperson attempts to obtain the buyer's decision."
+},
+
+{
+    term:"Follow-up",
+    scenario:"After the sale, the salesperson contacts the customer again to maintain the relationship and address any further needs."
+},
+
+{
+    term:"Formulation of a Sales Program",
+    scenario:"A company develops the sales program that will guide the sales force."
+},
+
+{
+    term:"Implementation of the Sales Program",
+    scenario:"After developing the sales program, the company puts it into action."
+},
+
+{
+    term:"Evaluation and Control of the Sales Program",
+    scenario:"A company reviews performance and modifies the sales program when performance is unacceptable."
+},
+
+{
+    term:"External environment",
+    scenario:"A sales manager has to deal with factors affecting sales that are beyond the manager's individual control."
+},
+
+{
+    term:"Economic",
+    scenario:"Changes in economic conditions begin affecting the firm's sales activities."
+},
+
+{
+    term:"Legal and Political",
+    scenario:"Changes involving government and laws begin affecting how the firm conducts its sales activities."
+},
+
+{
+    term:"Technological",
+    scenario:"New technology changes the way customers and salespeople interact."
+},
+
+{
+    term:"Social and Cultural",
+    scenario:"Changes in society and culture begin influencing customer behavior."
+},
+
+{
+    term:"Natural",
+    scenario:"Natural conditions begin affecting the firm's sales environment."
+},
+
+{
+    term:"Goals, Objectives, and Culture",
+    scenario:"A manager considers the company's goals, objectives, and organizational culture when evaluating its internal environment."
+},
+
+{
+    term:"Human Resources",
+    scenario:"A manager evaluates the people and employees available inside the firm."
+},
+
+{
+    term:"Financial Resources",
+    scenario:"A sales manager evaluates the firm's available financial resources before making a decision."
+},
+
+{
+    term:"Product and Supply Chain Capabilities",
+    scenario:"A manager evaluates whether the firm has the product and supply-chain capabilities needed to support sales."
+},
+
+{
+    term:"Service Capabilities",
+    scenario:"A company evaluates whether it has the internal ability to provide the services required by customers."
+},
+
+{
+    term:"Research and Development and Technological Capabilities",
+    scenario:"A firm evaluates its ability to conduct research and development and use technological capabilities."
+}
+
+];
+
+
+/* ================================================================
+   COMMON SALES MISTAKES
+   ================================================================ */
+
+const MISTAKES = [
+"Do not understand selling",
+"Expecting things to improve by themselves",
+"Talking excessively and not listening enough",
+"Saying words that kill sales",
+"Do not know when to close the sale",
+"Do not know how to close the sale",
+"No sincerity",
+"Not paying adequate interest to details",
+"Letting oneself slump",
+"Not keeping connected"
+];
+
+
+/* ================================================================
+   STATE
+   ================================================================ */
+
+let quizQuestions = [];
+let currentQuestion = 0;
+let score = 0;
+let answers = [];
+let selectedType = "";
+let selectedStyle = "";
+let selectedOrder = "";
+
+
+/* ================================================================
+   HELPERS
+   ================================================================ */
+
+function shuffle(array){
+
+    const copy = [...array];
+
+    for(let i=copy.length-1;i>0;i--){
+
+        const j =
+            Math.floor(
+                Math.random() * (i+1)
+            );
+
+        [copy[i],copy[j]] =
+        [copy[j],copy[i]];
+    }
+
+    return copy;
+}
+
+
+function normalize(text){
+
+    return String(text)
+        .toLowerCase()
+        .replace(/[.,!?;:()"']/g,"")
+        .replace(/\s+/g," ")
+        .trim();
+}
+
+
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+function similarity(a,b){
+
+    const x = normalize(a);
+    const y = normalize(b);
+
+    if(x === y) return 1;
+
+    return 0;
+}
+
+
+/* ================================================================
+   QUESTION GENERATION
+   ================================================================ */
+
+/*
+   We need exactly 49 questions for:
+   - MC Direct
+   - MC Situational
+   - Identification Direct
+   - Identification Situational
+   - True/False Direct
+   - True/False Situational
+
+   The source concepts are reused in different question forms,
+   rather than adding unrelated material.
+*/
+
+
+const ALL_CONCEPTS = [
+    ...FACTS,
+    ...EXTRA
+];
+
+
+/* Make exactly 49 concepts */
+function get49Concepts(){
+
+    let concepts = [...ALL_CONCEPTS];
+
+    /*
+       Remove duplicate term/definition combinations.
+    */
+
+    const seen = new Set();
+
+    concepts = concepts.filter(item=>{
+
+        const key =
+            normalize(item.term) +
+            "|" +
+            normalize(item.definition);
+
+        if(seen.has(key)) return false;
+
+        seen.add(key);
+
+        return true;
+    });
+
+
+    /*
+       We need 49 source-grounded concepts.
+       If there are more than 49, select a balanced group.
+    */
+
+    return concepts.slice(0,49);
+}
+
+
+/* ================================================================
+   MULTIPLE CHOICE — DIRECT
+   ================================================================ */
+
+function generateMCDirect(){
+
+    const concepts =
+        get49Concepts();
+
+    return concepts.map((item,index)=>{
+
+        let distractors =
+            shuffle(
+                concepts.filter(
+                    x =>
+                    normalize(x.term) !==
+                    normalize(item.term)
+                )
+            )
+            .slice(0,3)
+            .map(x=>x.term);
+
+
+        let choices =
+            shuffle([
+                item.term,
+                ...distractors
+            ]);
+
+
+        return {
+            id:"mc-direct-"+index,
+            type:"Multiple Choice",
+            style:"Direct",
+
+            question:
+                `What term is described by the following information?\n\n"${item.definition}"`,
+
+            choices:choices,
+
+            correct:
+                choices.indexOf(item.term),
+
+            correctText:item.term,
+
+            explanation:
+                `The correct answer is ${item.term}. The presentation associates this term with the stated information.`
+        };
+
+    });
+
+}
+
+
+/* ================================================================
+   MULTIPLE CHOICE — SITUATIONAL
+   ================================================================ */
+
+function generateMCSituational(){
+
+    /*
+       Use original scenarios.
+       Add the common mistakes to reach 49 concepts if needed.
+    */
+
+    let scenarios = [...SCENARIOS];
+
+    MISTAKES.forEach(m=>{
+
+        scenarios.push({
+
+            term:m,
+
+            scenario:
+                `During a sales interaction, the salesperson demonstrates the following behavior: "${m}".`
+
+        });
+
+    });
+
+
+    /*
+       Remove duplicates.
+    */
+
+    const seen = new Set();
+
+    scenarios =
+        scenarios.filter(s=>{
+
+            if(seen.has(s.term))
+                return false;
+
+            seen.add(s.term);
+
+            return true;
+
+        });
+
+
+    scenarios =
+        scenarios.slice(0,49);
+
+
+    return scenarios.map((item,index)=>{
+
+        let distractors =
+            shuffle(
+                scenarios.filter(
+                    x =>
+                    x.term !== item.term
+                )
+            )
+            .slice(0,3)
+            .map(x=>x.term);
+
+
+        let choices =
+            shuffle([
+                item.term,
+                ...distractors
+            ]);
+
+
+        return {
+
+            id:"mc-situational-"+index,
+
+            type:"Multiple Choice",
+
+            style:"Situational",
+
+            question:
+                `${item.scenario}\n\nWhich Chapter 1 concept is being demonstrated?`,
+
+            choices:choices,
+
+            correct:
+                choices.indexOf(item.term),
+
+            correctText:item.term,
+
+            explanation:
+                `The scenario demonstrates ${item.term}, which is a concept included in Chapter 1.`
+        };
+
+    });
+
+}
+
+
+/* ================================================================
+   IDENTIFICATION — DIRECT
+   ================================================================ */
+
+function generateIdentificationDirect(){
+
+    const concepts =
+        get49Concepts();
+
+    return concepts.map((item,index)=>{
+
+        return {
+
+            id:"id-direct-"+index,
+
+            type:"Identification",
+
+            style:"Direct",
+
+            question:
+                `Identify the term described by the following information:\n\n"${item.definition}"`,
+
+            correctText:item.term,
+
+            explanation:
+                `The correct term is ${item.term}.`
+        };
+
+    });
+
+}
+
+
+/* ================================================================
+   IDENTIFICATION — SITUATIONAL
+   ================================================================ */
+
+function generateIdentificationSituational(){
+
+    let scenarios = [...SCENARIOS];
+
+    MISTAKES.forEach(m=>{
+
+        scenarios.push({
+
+            term:m,
+
+            scenario:
+                `A salesperson demonstrates the following behavior: "${m}".`
+
+        });
+
+    });
+
+
+    const seen = new Set();
+
+    scenarios =
+        scenarios.filter(s=>{
+
+            if(seen.has(s.term))
+                return false;
+
+            seen.add(s.term);
+
+            return true;
+
+        });
+
+
+    scenarios =
+        scenarios.slice(0,49);
+
+
+    return scenarios.map((item,index)=>{
+
+        return {
+
+            id:"id-situational-"+index,
+
+            type:"Identification",
+
+            style:"Situational",
+
+            question:
+                `${item.scenario}\n\nWhat Chapter 1 concept is being demonstrated?`,
+
+            correctText:item.term,
+
+            explanation:
+                `The situation demonstrates ${item.term}.`
+        };
+
+    });
+
+}
+
+
+/* ================================================================
+   TRUE / FALSE — DIRECT
+   ================================================================ */
+
+function generateTFDirect(){
+
+    const concepts =
+        get49Concepts();
+
+
+    return concepts.map((item,index)=>{
+
+        /*
+           Roughly half true and half false.
+
+           False statements are created by intentionally
+           changing the concept being associated with the
+           source definition.
+        */
+
+        const makeFalse =
+            index % 2 === 1;
+
+
+        if(!makeFalse){
+
+            return {
+
+                id:"tf-direct-"+index,
+
+                type:"True/False",
+
+                style:"Direct",
+
+                question:
+                    `"${item.definition}" describes ${item.term}.`,
+
+                correctText:"True",
+
+                correctBoolean:true,
+
+                explanation:
+                    `This is True. The presentation associates "${item.definition}" with ${item.term}.`
+            };
+
+        }
+
+
+        /*
+           Pick another source term for a misleading
+           but source-grounded false statement.
+        */
+
+        const other =
+            concepts[
+                (index + 7) %
+                concepts.length
+            ];
+
+
+        return {
+
+            id:"tf-direct-"+index,
+
+            type:"True/False",
+
+            style:"Direct",
+
+            question:
+                `"${item.definition}" describes ${other.term}.`,
+
+            correctText:"False",
+
+            correctBoolean:false,
+
+            explanation:
+                `This is False. The description belongs to ${item.term}, not ${other.term}.`
+        };
+
+    });
+
+}
+
+
+/* ================================================================
+   TRUE / FALSE — SITUATIONAL
+   ================================================================ */
+
+function generateTFSituational(){
+
+    let scenarios = [...SCENARIOS];
+
+    MISTAKES.forEach(m=>{
+
+        scenarios.push({
+
+            term:m,
+
+            scenario:
+                `A salesperson demonstrates the following behavior: "${m}".`
+
+        });
+
+    });
+
+
+    const seen = new Set();
+
+    scenarios =
+        scenarios.filter(s=>{
+
+            if(seen.has(s.term))
+                return false;
+
+            seen.add(s.term);
+
+            return true;
+
+        });
+
+
+    scenarios =
+        scenarios.slice(0,49);
+
+
+    return scenarios.map((item,index)=>{
+
+        const makeFalse =
+            index % 2 === 1;
+
+
+        if(!makeFalse){
+
+            return {
+
+                id:"tf-situational-"+index,
+
+                type:"True/False",
+
+                style:"Situational",
+
+                question:
+                    `${item.scenario}\n\nThis situation demonstrates ${item.term}.`,
+
+                correctText:"True",
+
+                correctBoolean:true,
+
+                explanation:
+                    `This is True. The scenario was designed around the Chapter 1 concept ${item.term}.`
+            };
+
+        }
+
+
+        const other =
+            scenarios[
+                (index + 9) %
+                scenarios.length
+            ];
+
+
+        return {
+
+            id:"tf-situational-"+index,
+
+            type:"True/False",
+
+            style:"Situational",
+
+            question:
+                `${item.scenario}\n\nThis situation demonstrates ${other.term}.`,
+
+            correctText:"False",
+
+            correctBoolean:false,
+
+            explanation:
+                `This is False. The situation demonstrates ${item.term}, not ${other.term}.`
+        };
+
+    });
+
+}
+
+
+/* ================================================================
+   ENUMERATION
+   ================================================================ */
+
+function generateEnumeration(){
+
+    /*
+       Enumeration is deliberately NOT forced to 49.
+
+       The number of questions is based on actual lists
+       present in the Chapter 1 presentation.
+    */
+
+    return ENUMERATION.map((item,index)=>{
+
+        return {
+
+            id:"enum-"+index,
+
+            type:"Enumeration",
+
+            style:selectedStyle,
+
+            question:item.q,
+
+            answers:item.answers,
+
+            correctText:item.answers.join(" | "),
+
+            explanation:item.explanation
+        };
+
+    });
+
+}
+
+
+/* ================================================================
+   BUILD QUIZ
+   ================================================================ */
+
+function buildQuiz(){
+
+    if(
+        selectedType === "mc" &&
+        selectedStyle === "direct"
+    ){
+
+        return generateMCDirect();
+
+    }
+
+
+    if(
+        selectedType === "mc" &&
+        selectedStyle === "situational"
+    ){
+
+        return generateMCSituational();
+
+    }
+
+
+    if(
+        selectedType === "identification" &&
+        selectedStyle === "direct"
+    ){
+
+        return generateIdentificationDirect();
+
+    }
+
+
+    if(
+        selectedType === "identification" &&
+        selectedStyle === "situational"
+    ){
+
+        return generateIdentificationSituational();
+
+    }
+
+
+    if(
+        selectedType === "tf" &&
+        selectedStyle === "direct"
+    ){
+
+        return generateTFDirect();
+
+    }
+
+
+    if(
+        selectedType === "tf" &&
+        selectedStyle === "situational"
+    ){
+
+        return generateTFSituational();
+
+    }
+
+
+    if(
+        selectedType === "enumeration"
+    ){
+
+        return generateEnumeration();
+
+    }
+
+}
+
+
+/* ================================================================
+   START
+   ================================================================ */
+
+function startQuiz(){
+
+    selectedType =
+        document.getElementById(
+            "questionType"
+        ).value;
+
+
+    selectedStyle =
+        document.getElementById(
+            "questionStyle"
+        ).value;
+
+
+    selectedOrder =
+        document.getElementById(
+            "questionOrder"
+        ).value;
+
+
+    quizQuestions =
+        buildQuiz();
+
+
+    /*
+       Shuffle question order only when Randomized
+    */
+
+    if(selectedOrder === "random"){
+
+        quizQuestions =
+            shuffle(quizQuestions);
+
+    }
+
+
+    currentQuestion = 0;
+    score = 0;
+
+    answers =
+        Array(
+            quizQuestions.length
+        ).fill(null);
+
+
+    document
+        .getElementById("startScreen")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("resultScreen")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("quizScreen")
+        .classList
+        .remove("hidden");
+
+
+    renderQuestion();
+
+}
+
+
+/* ================================================================
+   RENDER QUESTION
+   ================================================================ */
+
+function renderQuestion(){
+
+    const q =
+        quizQuestions[currentQuestion];
+
+
+    document.getElementById(
+        "questionCounter"
+    ).textContent =
+        `Question ${currentQuestion + 1} of ${quizQuestions.length}`;
+
+
+    document.getElementById(
+        "scoreDisplay"
+    ).textContent =
+        `Score: ${score}`;
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        `${(
+            currentQuestion /
+            quizQuestions.length
+        ) * 100}%`;
+
+
+    document.getElementById(
+        "typeBadge"
+    ).textContent =
+        q.type;
+
+
+    document.getElementById(
+        "styleBadge"
+    ).textContent =
+        q.style;
+
+
+    /*
+       Preserve line breaks in scenarios.
+    */
+
+    document.getElementById(
+        "questionText"
+    ).innerHTML =
+        escapeHTML(q.question)
+        .replace(/\n/g,"<br>");
+
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    feedback.className =
+        "feedback";
+
+
+    feedback.innerHTML =
+        "";
+
+
+    document.getElementById(
+        "nextButton"
+    ).classList
+    .add("hidden");
+
+
+    document.getElementById(
+        "backButton"
+    ).disabled =
+        currentQuestion === 0;
+
+
+    document.getElementById(
+        "skipButton"
+    ).disabled =
+        !!answers[currentQuestion];
+
+
+    renderAnswerArea(q);
+
+
+    /*
+       If this question was previously answered,
+       restore its state.
+    */
+
+    if(answers[currentQuestion]){
+
+        restoreAnswer();
+
+    }
+
+}
+
+
+/* ================================================================
+   ANSWER AREA
+   ================================================================ */
+
+function renderAnswerArea(q){
+
+    const area =
+        document.getElementById(
+            "answerArea"
+        );
+
+
+    area.innerHTML = "";
+
+
+    /* ================= MULTIPLE CHOICE ================= */
+
+    if(q.type === "Multiple Choice"){
+
+        const choices =
+            document.createElement(
+                "div"
+            );
+
+
+        choices.className =
+            "choices";
+
+
+        /*
+           IMPORTANT:
+           Choices are shuffled every time
+           the question is rendered.
+
+           This changes the A/B/C/D position.
+        */
+
+        let indexedChoices =
+            q.choices.map(
+                (text,index)=>({
+                    text,
+                    originalIndex:index
+                })
+            );
+
+
+        indexedChoices =
+            shuffle(indexedChoices);
+
+
+        indexedChoices.forEach(
+            (choice,displayIndex)=>{
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                button.className =
+                    "choice";
+
+
+                const letter =
+                    String.fromCharCode(
+                        65 + displayIndex
+                    );
+
+
+                button.innerHTML =
+                    `
+                    <span class="choice-letter">
+                        ${letter}
+                    </span>
+                    ${escapeHTML(choice.text)}
+                    `;
+
+
+                button.dataset.originalIndex =
+                    choice.originalIndex;
+
+
+                button.onclick =
+                    ()=>answerMultipleChoice(
+                        choice.originalIndex,
+                        button
+                    );
+
+
+                choices.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        area.appendChild(
+            choices
+        );
+
+    }
+
+
+    /* ================= TRUE / FALSE ================= */
+
+    else if(q.type === "True/False"){
+
+        const choices =
+            document.createElement(
+                "div"
+            );
+
+
+        choices.className =
+            "choices";
+
+
+        /*
+           DO NOT shuffle True/False.
+           The correct answer comes from
+           the actual statement.
+        */
+
+        ["True","False"].forEach(
+            value=>{
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                button.className =
+                    "choice";
+
+
+                button.textContent =
+                    value;
+
+
+                button.onclick =
+                    ()=>answerTrueFalse(
+                        value
+                    );
+
+
+                choices.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        area.appendChild(
+            choices
+        );
+
+    }
+
+
+    /* ================= IDENTIFICATION ================= */
+
+    else if(q.type === "Identification"){
+
+        const wrapper =
+            document.createElement(
+                "div"
+            );
+
+
+        wrapper.className =
+            "text-answer";
+
+
+        const input =
+            document.createElement(
+                "input"
+            );
+
+
+        input.type =
+            "text";
+
+
+        input.id =
+            "identificationInput";
+
+
+        input.placeholder =
+            "Type your answer here...";
+
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+
+        button.className =
+            "primary";
+
+
+        button.textContent =
+            "Submit Answer";
+
+
+        button.onclick =
+            submitIdentification;
+
+
+        wrapper.appendChild(
+            input
+        );
+
+
+        wrapper.appendChild(
+            button
+        );
+
+
+        area.appendChild(
+            wrapper
+        );
+
+    }
+
+
+    /* ================= ENUMERATION ================= */
+
+    else if(q.type === "Enumeration"){
+
+        const wrapper =
+            document.createElement(
+                "div"
+            );
+
+
+        wrapper.className =
+            "enumeration-inputs";
+
+
+        q.answers.forEach(
+            (_,index)=>{
+
+                const row =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                row.className =
+                    "enum-row";
+
+
+                const number =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                number.className =
+                    "enum-number";
+
+
+                number.textContent =
+                    `${index + 1}.`;
+
+
+                const input =
+                    document.createElement(
+                        "input"
+                    );
+
+
+                input.type =
+                    "text";
+
+
+                input.id =
+                    `enumInput${index}`;
+
+
+                input.placeholder =
+                    `Item ${index + 1}`;
+
+
+                row.appendChild(
+                    number
+                );
+
+
+                row.appendChild(
+                    input
+                );
+
+
+                wrapper.appendChild(
+                    row
+                );
+
+            }
+        );
+
+
+        const submit =
+            document.createElement(
+                "button"
+            );
+
+
+        submit.className =
+            "primary";
+
+
+        submit.textContent =
+            "Submit Answer";
+
+
+        submit.onclick =
+            submitEnumeration;
+
+
+        wrapper.appendChild(
+            submit
+        );
+
+
+        area.appendChild(
+            wrapper
+        );
+
+    }
+
+}
+
+
+/* ================================================================
+   MULTIPLE CHOICE ANSWER
+   ================================================================ */
+
+function answerMultipleChoice(
+    originalIndex,
+    clickedButton
+){
+
+    if(answers[currentQuestion])
+        return;
+
+
+    const q =
+        quizQuestions[currentQuestion];
+
+
+    const correct =
+        originalIndex === q.correct;
+
+
+    if(correct)
+        score++;
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        answer:
+            q.choices[originalIndex],
+
+        correct:correct
+
+    };
+
+
+    document
+        .querySelectorAll(
+            "#answerArea .choice"
+        )
+        .forEach(button=>{
+
+            button.disabled = true;
+
+
+            const index =
+                Number(
+                    button.dataset.originalIndex
+                );
+
+
+            if(index === q.correct){
+
+                button.classList
+                    .add("correct");
+
+            }
+
+        });
+
+
+    if(!correct){
+
+        clickedButton.classList
+            .add("wrong");
+
+    }
+
+
+    showFeedback(
+        correct,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* ================================================================
+   TRUE / FALSE ANSWER
+   ================================================================ */
+
+function answerTrueFalse(value){
+
+    if(answers[currentQuestion])
+        return;
+
+
+    const q =
+        quizQuestions[currentQuestion];
+
+
+    const correct =
+        (
+            value ===
+            q.correctText
+        );
+
+
+    if(correct)
+        score++;
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        answer:value,
+
+        correct:correct
+
+    };
+
+
+    document
+        .querySelectorAll(
+            "#answerArea .choice"
+        )
+        .forEach(button=>{
+
+            button.disabled = true;
+
+
+            if(
+                button.textContent ===
+                q.correctText
+            ){
+
+                button.classList
+                    .add("correct");
+
+            }
+
+        });
+
+
+    if(!correct){
+
+        document
+            .querySelectorAll(
+                "#answerArea .choice"
+            )
+            .forEach(button=>{
+
+                if(
+                    button.textContent ===
+                    value
+                ){
+
+                    button.classList
+                        .add("wrong");
+
+                }
+
+            });
+
+    }
+
+
+    showFeedback(
+        correct,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* ================================================================
+   IDENTIFICATION
+   ================================================================ */
+
+function submitIdentification(){
+
+    if(answers[currentQuestion])
+        return;
+
+
+    const q =
+        quizQuestions[currentQuestion];
+
+
+    const input =
+        document.getElementById(
+            "identificationInput"
+        );
+
+
+    const value =
+        input.value.trim();
+
+
+    if(!value){
+
+        alert(
+            "Please enter an answer."
+        );
+
+        return;
+
+    }
+
+
+    const correct =
+        normalize(value) ===
+        normalize(q.correctText);
+
+
+    if(correct)
+        score++;
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        answer:value,
+
+        correct:correct
+
+    };
+
+
+    input.disabled = true;
+
+
+    document
+        .querySelectorAll(
+            "#answerArea button"
+        )
+        .forEach(
+            button =>
+            button.disabled = true
+        );
+
+
+    showFeedback(
+        correct,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* ================================================================
+   ENUMERATION
+   ================================================================ */
+
+function submitEnumeration(){
+
+    if(answers[currentQuestion])
+        return;
+
+
+    const q =
+        quizQuestions[currentQuestion];
+
+
+    const entered = [];
+
+
+    for(
+        let i=0;
+        i<q.answers.length;
+        i++
+    ){
+
+        const input =
+            document.getElementById(
+                `enumInput${i}`
+            );
+
+
+        entered.push(
+            input.value.trim()
+        );
+
+    }
+
+
+    if(
+        entered.some(
+            value => !value
+        )
+    ){
+
+        alert(
+            "Please answer all enumeration items."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Enumeration is order-sensitive when
+       the source itself is an ordered list
+       such as the seven Selling Process steps.
+
+       For ordinary lists, the comparison
+       can accept the same set regardless
+       of capitalization.
+    */
+
+    const correct =
+        entered.length ===
+        q.answers.length &&
+
+        entered.every(
+            (value,index)=>
+                normalize(value) ===
+                normalize(q.answers[index])
+        );
+
+
+    if(correct)
+        score++;
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        answer:
+            entered.join(" | "),
+
+        correct:correct
+
+    };
+
+
+    document
+        .querySelectorAll(
+            "#answerArea input"
+        )
+        .forEach(
+            input =>
+            input.disabled = true
+        );
+
+
+    document
+        .querySelectorAll(
+            "#answerArea button"
+        )
+        .forEach(
+            button =>
+            button.disabled = true
+        );
+
+
+    showFeedback(
+        correct,
+        q.explanation,
+        q.answers.join("; ")
+    );
+
+}
+
+
+/* ================================================================
+   FEEDBACK
+   ================================================================ */
+
+function showFeedback(
+    correct,
+    explanation,
+    correctAnswer
+){
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    feedback.className =
+        "feedback show " +
+        (
+            correct
+                ? "correct"
+                : "incorrect"
+        );
+
+
+    feedback.innerHTML =
+        `
+        <div class="feedback-title">
+            ${correct ? "✓ Correct!" : "✗ Incorrect"}
+        </div>
+
+        <div>
+            ${escapeHTML(explanation)}
+        </div>
+
+        <div style="margin-top:8px;">
+            <b>Correct answer:</b>
+            ${escapeHTML(correctAnswer)}
+        </div>
+        `;
+
+
+    document.getElementById(
+        "scoreDisplay"
+    ).textContent =
+        `Score: ${score}`;
+
+
+    document.getElementById(
+        "skipButton"
+    ).disabled = true;
+
+
+    document.getElementById(
+        "nextButton"
+    ).classList
+    .remove("hidden");
+
+}
+
+
+/* ================================================================
+   RESTORE PREVIOUS ANSWER
+   ================================================================ */
+
+function restoreAnswer(){
+
+    const saved =
+        answers[currentQuestion];
+
+
+    if(!saved)
+        return;
+
+
+    const q =
+        quizQuestions[currentQuestion];
+
+
+    if(q.type === "Multiple Choice"){
+
+        document
+            .querySelectorAll(
+                "#answerArea .choice"
+            )
+            .forEach(button=>{
+
+                button.disabled = true;
+
+
+                const index =
+                    Number(
+                        button.dataset.originalIndex
+                    );
+
+
+                if(
+                    index === q.correct
+                ){
+
+                    button.classList
+                        .add("correct");
+
+                }
+
+
+                if(
+                    q.choices[index] ===
+                    saved.answer &&
+                    !saved.correct
+                ){
+
+                    button.classList
+                        .add("wrong");
+
+                }
+
+            });
+
+    }
+
+
+    else if(
+        q.type === "True/False"
+    ){
+
+        document
+            .querySelectorAll(
+                "#answerArea .choice"
+            )
+            .forEach(button=>{
+
+                button.disabled = true;
+
+
+                if(
+                    button.textContent ===
+                    q.correctText
+                ){
+
+                    button.classList
+                        .add("correct");
+
+                }
+
+
+                if(
+                    button.textContent ===
+                    saved.answer &&
+                    !saved.correct
+                ){
+
+                    button.classList
+                        .add("wrong");
+
+                }
+
+            });
+
+    }
+
+
+    else if(
+        q.type === "Identification"
+    ){
+
+        const input =
+            document.getElementById(
+                "identificationInput"
+            );
+
+
+        input.value =
+            saved.answer;
+
+
+        input.disabled = true;
+
+
+        document
+            .querySelectorAll(
+                "#answerArea button"
+            )
+            .forEach(
+                button =>
+                button.disabled = true
+            );
+
+    }
+
+
+    else if(
+        q.type === "Enumeration"
+    ){
+
+        const values =
+            saved.answer.split(" | ");
+
+
+        values.forEach(
+            (value,index)=>{
+
+                const input =
+                    document.getElementById(
+                        `enumInput${index}`
+                    );
+
+
+                if(input){
+
+                    input.value =
+                        value;
+
+                    input.disabled =
+                        true;
+
+                }
+
+            }
+        );
+
+
+        document
+            .querySelectorAll(
+                "#answerArea button"
+            )
+            .forEach(
+                button =>
+                button.disabled = true
+            );
+
+    }
+
+
+    showFeedback(
+        saved.correct,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* ================================================================
+   NEXT
+   ================================================================ */
+
+function nextQuestion(){
+
+    if(
+        currentQuestion <
+        quizQuestions.length - 1
+    ){
+
+        currentQuestion++;
+
+        renderQuestion();
+
+    }
+
+    else{
+
+        finishQuiz();
+
+    }
+
+}
+
+
+/* ================================================================
+   BACK
+   ================================================================ */
+
+function goBack(){
+
+    if(currentQuestion <= 0)
+        return;
+
+
+    currentQuestion--;
+
+    renderQuestion();
+
+}
+
+
+/* ================================================================
+   SKIP
+   ================================================================ */
+
+function skipQuestion(){
+
+    if(answers[currentQuestion])
+        return;
+
+
+    const q =
+        quizQuestions[currentQuestion];
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:true,
+
+        answer:"Skipped",
+
+        correct:false
+
+    };
+
+
+    showFeedback(
+        false,
+        "You skipped this question. No point was awarded.",
+        q.correctText
+    );
+
+}
+
+
+/* ================================================================
+   FINISH
+   ================================================================ */
+
+function finishQuiz(){
+
+    document
+        .getElementById(
+            "quizScreen"
+        )
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById(
+            "resultScreen"
+        )
+        .classList
+        .remove("hidden");
+
+
+    const total =
+        quizQuestions.length;
+
+
+    const percentage =
+        Math.round(
+            (score / total) * 100
+        );
+
+
+    document.getElementById(
+        "resultScore"
+    ).textContent =
+        `${score} / ${total}`;
+
+
+    document.getElementById(
+        "resultPercent"
+    ).textContent =
+        `${percentage}%`;
+
+
+    let message;
+
+
+    if(percentage >= 90){
+
+        message =
+            "Excellent work! You have a strong understanding of the chapter.";
+
+    }
+
+    else if(percentage >= 75){
+
+        message =
+            "Good job! You have a solid understanding of the chapter.";
+
+    }
+
+    else if(percentage >= 60){
+
+        message =
+            "Not bad. Review the chapter and try the quiz again.";
+
+    }
+
+    else{
+
+        message =
+            "Keep studying. Reviewing the chapter before trying again may help.";
+
+    }
+
+
+    document.getElementById(
+        "resultMessage"
+    ).textContent =
+        message;
+
+}
+
+
+/* ================================================================
+   REVIEW
+   ================================================================ */
+
+function showReview(){
+
+    const review =
+        document.getElementById(
+            "reviewArea"
+        );
+
+
+    if(!review.classList.contains("hidden")){
+
+        review.classList.add("hidden");
+
+        return;
+
+    }
+
+
+    review.classList.remove("hidden");
+
+
+    let html =
+        "<h2>Answer Review</h2>";
+
+
+    quizQuestions.forEach(
+        (q,index)=>{
+
+            const result =
+                answers[index];
+
+
+            let status =
+                "Not answered";
+
+
+            let statusClass =
+                "skipped";
+
+
+            let userAnswer =
+                "Not answered";
+
+
+            if(result){
+
+                userAnswer =
+                    result.answer;
+
+
+                if(result.skipped){
+
+                    status =
+                        "Skipped";
+
+                    statusClass =
+                        "skipped";
+
+                }
+
+                else if(result.correct){
+
+                    status =
+                        "Correct";
+
+                    statusClass =
+                        "correct";
+
+                }
+
+                else{
+
+                    status =
+                        "Incorrect";
+
+                    statusClass =
+                        "incorrect";
+
+                }
+
+            }
+
+
+            html +=
+                `
+                <div class="review-item">
+
+                    <b>
+                        ${index + 1}.
+                        ${escapeHTML(q.question)}
+                    </b>
+
+                    <br><br>
+
+                    <b>Your answer:</b>
+                    ${escapeHTML(userAnswer)}
+
+                    <br>
+
+                    <b>Correct answer:</b>
+                    ${escapeHTML(q.correctText)}
+
+                    <br>
+
+                    <span class="review-status ${statusClass}">
+                        ${status}
+                    </span>
+
+                </div>
+                `;
+
+        }
+    );
+
+
+    review.innerHTML =
+        html;
+
+}
+
+
+/* ================================================================
+   RESTART
+   ================================================================ */
+
+function restartQuiz(){
+
+    document
+        .getElementById(
+            "quizScreen"
+        )
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById(
+            "resultScreen"
+        )
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById(
+            "reviewArea"
+        )
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById(
+            "startScreen"
+        )
+        .classList
+        .remove("hidden");
+
+
+    quizQuestions = [];
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answers = [];
+
+}
+
+</script>
+
+</body>
+</html>
