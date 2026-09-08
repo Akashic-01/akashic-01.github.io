@@ -22,6 +22,9 @@ window.CHAPTER_TITLES = {
   'sales-5': 'Staffing the Sales Force: Recruitment and Selection',
   'sales-6': 'Salespeople Motivation, Compensation, and Reward',
   'sales-7': 'Sales Leadership and Supervision',
+  'sales-8': 'Controlling and Evaluating the Salesperson Performance',
+  'sales-9': '',
+  'sales-10': '',
   'entrepreneurial-1': '',
   'entrepreneurial-2': '',
   'entrepreneurial-3': '',
@@ -552,7 +555,101 @@ window.CHAPTER_CONTENT = {
       <li><strong>Sexual harassment</strong> &mdash; it is vital to take action right away if a sexual harassment problem occurs in the sales organization.</li>
     </ol>
   `,
-  'sales-8': '',
+  'sales-8': `
+    <p>Controlling and evaluating the salesperson's performance is how sales management confirms that the sales plan is actually working &mdash; and corrects course when it isn't. It closes the loop on everything else sales management sets out to do.</p>
+
+    <h3>Objectives</h3>
+    <ol>
+      <li>Understand the concept of controlling the salespeople;</li>
+      <li>Discuss the standards of performance in sales;</li>
+      <li>Identify quantitative standards used in measuring levels of performance of salespeople;</li>
+      <li>Explain different reports from salespeople; and</li>
+      <li>Enumerate techniques for salespeople's evaluation of performance.</li>
+    </ol>
+
+    <h3>Controlling the Salespeople and Their Performance</h3>
+    <p>Salespeople control consists of substantiating salespersons' performance and making curative actions, if considered necessary. Salespeople control includes appraising salespeople performance, weighing it against standards, discovering divergence and its foundations, and, if essential, making remedial actions so that the plan is successfully executed.</p>
+
+    <h3>The Management Control Cycle</h3>
+    <p>Four steps make up this cycle, often referred to as the &ldquo;management cycle&rdquo;:</p>
+    <ol>
+      <li><strong>Establishing Performance Standards</strong> &mdash; deciding what level of performance is expected.</li>
+      <li><strong>Recording Performance</strong> &mdash; collecting information on what salespeople actually did.</li>
+      <li><strong>Evaluating Performance Against Standards</strong> &mdash; comparing the two to spot any divergence.</li>
+      <li><strong>Taking Action</strong> &mdash; making remedial or corrective moves where needed, before the cycle repeats.</li>
+    </ol>
+
+    <h3>Standards of Performance</h3>
+    <p>The nature of the selling job requires setting standards of performance. Simply, sales job analysis is required to decide on job objectives, duties and responsibilities, and the like. Performance standards are planned to evaluate the most important performance activities considered by the company.</p>
+    <p>Extensive market knowledge is necessary in formulating sales performance standards. It is essential to recognize the entire sales potential and the fraction that each sales territory is able to produce. Sales planning is re-evaluated to guarantee that it is the best feasible under the circumstances, and the policies and procedures that bring the personal-selling part of the marketing program into play are examined for suitability.</p>
+
+    <h3>Purposes of a Salesperson's Performance Evaluation</h3>
+    <ol>
+      <li>To make certain that compensation and other reward disbursements are constant with real salesperson performance,</li>
+      <li>To spot the salespeople that may be promoted,</li>
+      <li>To name salespeople who should be terminated from employment and to furnish proof to carry the necessity for termination,</li>
+      <li>To decide the exact training and counseling requirements of the individual salesperson and the whole salesforce,</li>
+      <li>To offer information for helpful human resource planning,</li>
+      <li>To name criteria that can be applied in recruiting and selecting salespeople in the future,</li>
+      <li>To counsel salespeople of work expectations,</li>
+      <li>To inspire salespeople,</li>
+      <li>To assist salespeople and formulate career goals, and</li>
+      <li>To advance salesperson performance.</li>
+    </ol>
+
+    <h3>Quantitative Performance Standards</h3>
+    <p>Quantitative performance standards are being used by a good number of companies. The selected specific blend of standards differs with the company and its marketing conditions. Quantitative standards provide the descriptions of what management expects &mdash; each salesperson must have definitions of the performance parts to be measured and the measurement units. It is widespread practice to assign multiple quantitative performance standards, and a company can assign different quantitative standards for a salesperson.</p>
+    <ul>
+      <li><strong>Quota</strong> &mdash; an objective expressed quantitatively and basically assigned to a particular marketing unit.</li>
+      <li><strong>Selling Expense Ratio</strong> &mdash; used by sales managers as a standard to control the relation between selling expenses and sales volume.</li>
+      <li><strong>Territorial Net Profit or Gross Margin Ratio</strong> &mdash; centers salespeople's attention on the need for selling a balanced line and considering the relative profitability of different products and individual customers, using target ratios of net profit or gross margin to sales.</li>
+      <li><strong>Call-Frequency Ratio</strong> &mdash; computed by dividing the number of sales calls on a particular class of customers by the number of customers in that class.</li>
+      <li><strong>Calls per Day</strong> &mdash; a standard for the number of calls each day, advantageous especially for companies selling consumer products where salespeople contact large numbers of customers.</li>
+      <li><strong>Order Call Ratio</strong> &mdash; determines the effectiveness of salespeople in obtaining and securing orders, computed by dividing the number of orders secured by the number of calls completed.</li>
+      <li><strong>Average Cost per Call</strong> &mdash; a target set to highlight the value of making profitable calls; standards are created for every category of account once a significant difference is present in the cost of calling on different sizes or groups of accounts.</li>
+      <li><strong>Non-Selling Activities</strong> &mdash; activities like getting dealer displays and cooperative advertising contracts, training distributors' staff, and goodwill calls on distributors' customers are also assigned quantitative performance standards by some companies.</li>
+    </ul>
+
+    <h3>Qualitative Measures of Performance</h3>
+    <p>The application of some qualitative criteria is often necessary in areas of job performance like personal effectiveness in managing customer relations problems, since no precise measurement is available. Qualitative criteria are utilized in evaluating the performance characteristics that impact sales outcomes in the long term, although their level of quality can only be subjectively assessed. More and more companies are assessing their salespeople on the basis of the attainment of customer satisfaction. Among the usual dimensions applied are:</p>
+    <ol>
+      <li><strong>Sales Skills</strong> &mdash; rated using sub-factors such as managing the opening and developing rapport, naming the customer's needs, questioning ability, quality of sales presentation, use of visual aids, ability to overcome objections, and the knack for closing the sale.</li>
+      <li><strong>Customer Relationships</strong> &mdash; how well is the salesperson accommodated? Are customers fully satisfied with the service, advice, and reliability of the salesperson, or are there many criticisms and complaints?</li>
+      <li><strong>Self-Organisation</strong> &mdash; how well does the salesperson set up calls, manage routing to reduce unproductive travelling, keep customer records updated, make market information available to headquarters, and perform self-analysis of performance to overcome weaknesses?</li>
+      <li><strong>Product Knowledge</strong> &mdash; how well informed is the salesperson about their own products and their customer benefits and uses, rival products and their benefits and uses, and the comparative strengths and weaknesses of their own versus competitive offerings?</li>
+      <li><strong>Cooperation and Attitudes</strong> &mdash; to what extent does the salesperson act on the objectives set by management to improve performance (such as increasing prospecting rate), cooperate with suggestions formulated during field training, and make use of their own initiative?</li>
+    </ol>
+
+    <h3>The Actual Performance</h3>
+    <p>The next task of sales management is to measure real performance. Basically, the highlight in overseeing actual performance is to collect performance information &mdash; it is necessary to identify information needs, choose the information sources, and collect the information. There are two fundamental sources of performance information: sales and expense records, and reports of different kinds.</p>
+
+    <h3>System of Field Sales Reports</h3>
+    <p>The basic intention of field sales reports is to give control information. Excellent communications necessitate contact between the persons preparing and the persons receiving reports. A good field sales reporting system is beneficial for communication from the field to headquarters as well as from headquarters to the field.</p>
+    <p>A good field sales reporting system also helps salespeople in their self-improvement programs &mdash; recording achievements in black and white form obliges individuals to test their own work.</p>
+
+    <h3>Six Types of Field Sales Reports</h3>
+    <ol>
+      <li><strong>Progress or Call Report</strong> &mdash; the majority of companies has a progress or call report. It is prepared by each individual salesperson for each call, or collectively, covering all calls completed daily or weekly.</li>
+      <li><strong>Expense Report</strong> &mdash; because most sales personnel are reimbursed for expenses and itemized expense records are required for income tax purposes, most companies have an expense report.</li>
+      <li><strong>Sales Work Plan</strong> &mdash; the salesperson submits a work plan giving details such as accounts and prospects to be called upon, products and other matters to be discussed, routes to be toured, and hotels or motels for a future period, typically a week or a month.</li>
+      <li><strong>New-Business or Potential New-Business Report</strong> &mdash; tells management about accounts freshly gained and prospects who may turn into sources of new business.</li>
+      <li><strong>Lost-Sales Report</strong> &mdash; gives information to help assess a salesperson's lost customers and how the company is faring against competition.</li>
+      <li><strong>Report of Complaint and/or Adjustment</strong> &mdash; offers information for examining complaints originating from a salesperson's work, complaints by group of customers, and the cost of correcting them.</li>
+    </ol>
+
+    <h3>Salesperson Performance Evaluation</h3>
+    <p>Salespeople's evaluation completes the job of sales managers. It is vital to establish whether the sales function is reaching its quantitative objectives &mdash; the sales manager needs to figure out the reasons if it is not.</p>
+    <p>Many techniques of performance evaluation have evolved over the years, and so far no single perfect technique has been considered ideal for all organizations. A number of universally employed techniques are essays, rating scales, rankings, management by objectives, and behaviorally anchored rating scales. Habitual observation and appraisal of salespeople's activities are also indispensable to make certain that organizational activities support the sales plan &mdash; from time to time, each manager is provided with performance appraisal forms for assessing every salesperson.</p>
+
+    <h3>Ways to Appraise Salespeople's Performance</h3>
+    <ol>
+      <li><strong>Graphical Appraisal Scales</strong> &mdash; the most frequently utilized form for appraising a salesperson's performance; the manager fills out a form evaluating a salesperson's selling skills.</li>
+      <li><strong>Descriptive Statements</strong> &mdash; a method of performance appraisal obliging the manager to give a comprehensive, written narrative of each salesperson's performance.</li>
+      <li><strong>Management by Objectives</strong> &mdash; an outcome-based evaluation program; salespeople are given objectives and their real results are compared against those objectives to appraise their performance.</li>
+      <li><strong>Behaviorally Anchored Rating Scales</strong> &mdash; usually referred to as BARS, representing an attempt to improve evaluation by using descriptive cues or adjectives.</li>
+      <li><strong>360 Degree Feedback</strong> &mdash; managers acquire feedback from a salesperson's peers, assistants, customers, and even the sales manager's own supervisors in preparing a performance review.</li>
+    </ol>
+  `,
   'sales-9': '',
   'sales-10': '',
   'entrepreneurial-1': '',
