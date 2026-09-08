@@ -1,0 +1,3522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sales Management - Chapter 8 Quiz</title>
+
+<style>
+:root{
+    --primary:#172554;
+    --primary2:#1e3a8a;
+    --light:#f5f7fb;
+    --border:#d9deea;
+    --text:#172033;
+    --muted:#667085;
+    --success:#15803d;
+    --successBg:#ecfdf3;
+    --danger:#b91c1c;
+    --dangerBg:#fef2f2;
+    --warning:#b45309;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--light);
+    color:var(--text);
+}
+
+.container{
+    width:min(1000px,94%);
+    margin:35px auto;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+h1,h2,h3{
+    margin-top:0;
+}
+
+.subtitle{
+    color:var(--muted);
+    line-height:1.6;
+}
+
+.settings{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin:25px 0;
+}
+
+.field label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+select,
+input[type="text"]{
+    width:100%;
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+}
+
+select:focus,
+input[type="text"]:focus{
+    border-color:var(--primary2);
+}
+
+button{
+    border:none;
+    border-radius:10px;
+    padding:12px 18px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.15s;
+}
+
+button:hover:not(:disabled){
+    transform:translateY(-1px);
+}
+
+button:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.primary{
+    background:var(--primary);
+    color:white;
+}
+
+.secondary{
+    background:#e9edf5;
+    color:var(--text);
+}
+
+.danger{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.quiz-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.badges{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.badge{
+    background:#eef2ff;
+    color:#3730a3;
+    padding:7px 11px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.progress-container{
+    height:9px;
+    background:#e5e7eb;
+    border-radius:50px;
+    overflow:hidden;
+    margin:20px 0 30px;
+}
+
+.progress{
+    height:100%;
+    width:0;
+    background:var(--primary);
+    transition:.25s;
+}
+
+.question{
+    font-size:23px;
+    line-height:1.5;
+    margin-bottom:22px;
+    white-space:pre-line;
+}
+
+.choices{
+    display:grid;
+    gap:12px;
+}
+
+.choice{
+    width:100%;
+    text-align:left;
+    background:white;
+    border:2px solid var(--border);
+    color:var(--text);
+    padding:15px 17px;
+}
+
+.choice:hover:not(:disabled){
+    border-color:var(--primary2);
+    background:#f8faff;
+}
+
+.choice.correct{
+    border-color:var(--success);
+    background:var(--successBg);
+    color:#166534;
+}
+
+.choice.wrong{
+    border-color:var(--danger);
+    background:var(--dangerBg);
+    color:#991b1b;
+}
+
+.choice-letter{
+    display:inline-flex;
+    width:30px;
+    height:30px;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#edf0f5;
+    margin-right:10px;
+    font-weight:bold;
+}
+
+.feedback{
+    display:none;
+    margin-top:22px;
+    padding:17px;
+    border-radius:12px;
+    line-height:1.6;
+}
+
+.feedback.show{
+    display:block;
+}
+
+.feedback.correct{
+    background:var(--successBg);
+    color:#166534;
+}
+
+.feedback.incorrect{
+    background:var(--dangerBg);
+    color:#991b1b;
+}
+
+.feedback-title{
+    font-weight:bold;
+    font-size:17px;
+    margin-bottom:5px;
+}
+
+.controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+.control-right{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.text-answer{
+    display:grid;
+    gap:12px;
+}
+
+.enumeration-inputs{
+    display:grid;
+    gap:10px;
+}
+
+.enum-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.enum-number{
+    width:30px;
+    font-weight:bold;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.notice{
+    background:#f8fafc;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    color:var(--muted);
+    line-height:1.5;
+}
+
+.result-score{
+    font-size:52px;
+    font-weight:800;
+    color:var(--primary);
+}
+
+.result-percent{
+    font-size:22px;
+    margin:10px 0 25px;
+}
+
+.review-item{
+    border-top:1px solid var(--border);
+    padding:18px 0;
+    line-height:1.6;
+}
+
+.review-status{
+    font-weight:bold;
+}
+
+.review-status.correct{
+    color:var(--success);
+}
+
+.review-status.incorrect{
+    color:var(--danger);
+}
+
+.review-status.skipped{
+    color:var(--warning);
+}
+
+@media(max-width:750px){
+
+    .settings{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .question{
+        font-size:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- =====================================================
+     START SCREEN
+     ===================================================== -->
+
+<section id="startScreen" class="card">
+
+    <h1>Sales Management — Chapter 8 Quiz</h1>
+
+    <p class="subtitle">
+        Test your understanding of Chapter 8 (Controlling and Evaluating Salesperson Performance) using different question types and question styles.
+    </p>
+
+    <div class="settings">
+
+        <div class="field">
+
+            <label for="questionType">
+                Question Type
+            </label>
+
+            <select id="questionType">
+
+                <option value="mc">
+                    Multiple Choice
+                </option>
+
+                <option value="identification">
+                    Identification
+                </option>
+
+                <option value="tf">
+                    True / False
+                </option>
+
+                <option value="enumeration">
+                    Enumeration
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="questionStyle">
+                Question Style
+            </label>
+
+            <select id="questionStyle">
+
+                <option value="direct">
+                    Direct
+                </option>
+
+                <option value="situational">
+                    Situational
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="questionOrder">
+                Question Order
+            </label>
+
+            <select id="questionOrder">
+
+                <option value="ordered">
+                    In Order
+                </option>
+
+                <option value="random">
+                    Randomized
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div class="notice">
+
+        <b>Question count:</b>
+        Multiple Choice, Identification, and True/False contain
+        <span id="standardCount">0</span> questions per style.
+        Enumeration uses only the lists that naturally fit the chapter content.
+
+    </div>
+
+    <br>
+
+    <button
+        id="startButton"
+        class="primary">
+
+        Start Quiz
+
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     QUIZ SCREEN
+     ===================================================== -->
+
+<section id="quizScreen" class="card hidden">
+
+    <div class="quiz-header">
+
+        <div>
+            <b id="questionCounter">
+                Question 1 of 28
+            </b>
+        </div>
+
+        <div>
+            <b id="scoreDisplay">
+                Score: 0
+            </b>
+        </div>
+
+    </div>
+
+
+    <div class="progress-container">
+
+        <div
+            id="progressBar"
+            class="progress">
+        </div>
+
+    </div>
+
+
+    <div class="badges">
+
+        <span
+            id="typeBadge"
+            class="badge">
+        </span>
+
+        <span
+            id="styleBadge"
+            class="badge">
+        </span>
+
+    </div>
+
+    <br>
+
+
+    <div
+        id="questionText"
+        class="question">
+    </div>
+
+
+    <div id="answerArea">
+    </div>
+
+
+    <div
+        id="feedback"
+        class="feedback">
+    </div>
+
+
+    <div class="controls">
+
+        <button
+            id="backButton"
+            class="secondary">
+
+            ← Back
+
+        </button>
+
+
+        <div class="control-right">
+
+            <button
+                id="skipButton"
+                class="secondary">
+
+                Skip
+
+            </button>
+
+
+            <button
+                id="restartButton"
+                class="danger">
+
+                Restart
+
+            </button>
+
+
+            <button
+                id="nextButton"
+                class="primary hidden">
+
+                Next →
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RESULT SCREEN
+     ===================================================== -->
+
+<section id="resultScreen" class="card hidden">
+
+    <h1>
+        Quiz Complete!
+    </h1>
+
+    <div
+        id="resultScore"
+        class="result-score">
+
+        0 / 0
+
+    </div>
+
+
+    <div
+        id="resultPercent"
+        class="result-percent">
+
+        0%
+
+    </div>
+
+
+    <p
+        id="resultMessage"
+        class="subtitle">
+    </p>
+
+
+    <div class="controls">
+
+        <button
+            id="reviewButton"
+            class="primary">
+
+            Review Answers
+
+        </button>
+
+
+        <button
+            id="resultRestartButton"
+            class="danger">
+
+            Restart Quiz
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="reviewArea"
+        class="hidden">
+    </div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CHAPTER 4 — SOURCE CONTENT
+   Based on Sales-Management-Chapter-8.docx — Controlling and Evaluating the Salesperson's Performance
+   ========================================================= */
+
+
+/* =========================================================
+   CORE CONCEPTS / FACTS
+   ========================================================= */
+
+const FACTS = [
+
+    {
+        term: "Salespeople control",
+        definition: "Consists of substantiating salespersons' performance and making curative actions if considered necessary; includes appraising performance, weighing it against standards, discovering divergence and its foundations, and making remedial actions so the plan is successfully executed.",
+        category: "Controlling the Salespeople"
+    },
+
+    {
+        term: "Management Control Cycle",
+        definition: "Four steps often referred to as the management cycle: Establishing Performance Standards, Recording Performance, Evaluating Performance Against Standards, and Taking Action.",
+        category: "Management Control Cycle"
+    },
+
+    {
+        term: "Establishing Performance Standards",
+        definition: "The first step of the management control cycle: deciding what level of performance is expected.",
+        category: "Management Control Cycle"
+    },
+
+    {
+        term: "Recording Performance",
+        definition: "The second step of the management control cycle: collecting information on what salespeople actually did.",
+        category: "Management Control Cycle"
+    },
+
+    {
+        term: "Evaluating Performance Against Standards",
+        definition: "The third step of the management control cycle: comparing actual performance to standards to spot any divergence.",
+        category: "Management Control Cycle"
+    },
+
+    {
+        term: "Taking Action",
+        definition: "The fourth step of the management control cycle: making remedial or corrective moves where needed before the cycle repeats.",
+        category: "Management Control Cycle"
+    },
+
+    {
+        term: "Standards of Performance",
+        definition: "Planned to evaluate the most important performance activities considered by the company; require sales job analysis to decide on job objectives, duties, and responsibilities, plus extensive market knowledge.",
+        category: "Standards of Performance"
+    },
+
+    {
+        term: "Quota",
+        definition: "An objective expressed quantitatively and basically assigned to a particular marketing unit.",
+        category: "Quantitative Performance Standards"
+    },
+
+    {
+        term: "Selling Expense Ratio",
+        definition: "Used by sales managers as a standard to control the relation between selling expenses and sales volume.",
+        category: "Quantitative Performance Standards"
+    },
+
+    {
+        term: "Territorial Net Profit or Gross Margin Ratio",
+        definition: "Centers salespeople's attention on the need for selling a balanced line and considering the relative profitability of different products and individual customers, using target ratios of net profit or gross margin to sales.",
+        category: "Quantitative Performance Standards"
+    },
+
+    {
+        term: "Call-Frequency Ratio",
+        definition: "Computed by dividing the number of sales calls on a particular class of customers by the number of customers in that class.",
+        category: "Quantitative Performance Standards"
+    },
+
+    {
+        term: "Calls per Day",
+        definition: "A standard for the number of calls each day, advantageous especially for companies selling consumer products where salespeople contact large numbers of customers.",
+        category: "Quantitative Performance Standards"
+    },
+
+    {
+        term: "Order Call Ratio",
+        definition: "Determines the effectiveness of salespeople in obtaining and securing orders, computed by dividing the number of orders secured by the number of calls completed.",
+        category: "Quantitative Performance Standards"
+    },
+
+    {
+        term: "Average Cost per Call",
+        definition: "A target set to highlight the value of making profitable calls; standards are created for every category of account once a significant difference is present in the cost of calling on different sizes or groups of accounts.",
+        category: "Quantitative Performance Standards"
+    },
+
+    {
+        term: "Non-Selling Activities",
+        definition: "Activities like getting dealer displays and cooperative advertising contracts, training distributors' staff, and goodwill calls on distributors' customers that some companies assign quantitative performance standards to.",
+        category: "Quantitative Performance Standards"
+    },
+
+    {
+        term: "Sales Skills",
+        definition: "A qualitative measure rated using sub-factors such as managing the opening and developing rapport, naming the customer's needs, questioning ability, quality of sales presentation, use of visual aids, ability to overcome objections, and the knack for closing the sale.",
+        category: "Qualitative Measures"
+    },
+
+    {
+        term: "Customer Relationships",
+        definition: "A qualitative measure concerned with how well the salesperson is accommodated, whether customers are fully satisfied with service, advice, and reliability, or whether there are many criticisms and complaints.",
+        category: "Qualitative Measures"
+    },
+
+    {
+        term: "Self-Organisation",
+        definition: "A qualitative measure of how well the salesperson sets up calls, manages routing to reduce unproductive travelling, keeps customer records updated, makes market information available to headquarters, and performs self-analysis of performance.",
+        category: "Qualitative Measures"
+    },
+
+    {
+        term: "Product Knowledge",
+        definition: "A qualitative measure of how well informed the salesperson is about their own products and customer benefits, rival products, and the comparative strengths and weaknesses of their own versus competitive offerings.",
+        category: "Qualitative Measures"
+    },
+
+    {
+        term: "Cooperation and Attitudes",
+        definition: "A qualitative measure of the extent to which the salesperson acts on management objectives to improve performance, cooperates with field training suggestions, and uses personal initiative.",
+        category: "Qualitative Measures"
+    },
+
+    {
+        term: "Progress or Call Report",
+        definition: "Prepared by each individual salesperson for each call, or collectively covering all calls completed daily or weekly; the majority of companies use this type of field sales report.",
+        category: "Field Sales Reports"
+    },
+
+    {
+        term: "Expense Report",
+        definition: "Required because most sales personnel are reimbursed for expenses and itemized expense records are needed for income tax purposes.",
+        category: "Field Sales Reports"
+    },
+
+    {
+        term: "Sales Work Plan",
+        definition: "The salesperson submits a work plan giving details such as accounts and prospects to be called upon, products and matters to be discussed, routes to be toured, and hotels for a future period, typically a week or a month.",
+        category: "Field Sales Reports"
+    },
+
+    {
+        term: "New-Business or Potential New-Business Report",
+        definition: "Tells management about accounts freshly gained and prospects who may turn into sources of new business.",
+        category: "Field Sales Reports"
+    },
+
+    {
+        term: "Lost-Sales Report",
+        definition: "Gives information to help assess a salesperson's lost customers and how the company is faring against competition.",
+        category: "Field Sales Reports"
+    },
+
+    {
+        term: "Report of Complaint and/or Adjustment",
+        definition: "Offers information for examining complaints originating from a salesperson's work, complaints by group of customers, and the cost of correcting them.",
+        category: "Field Sales Reports"
+    },
+
+    {
+        term: "Graphical Appraisal Scales",
+        definition: "The most frequently utilized form for appraising a salesperson's performance; the manager fills out a form evaluating a salesperson's selling skills.",
+        category: "Ways to Appraise Performance"
+    },
+
+    {
+        term: "Descriptive Statements",
+        definition: "A method of performance appraisal obliging the manager to give a comprehensive, written narrative of each salesperson's performance.",
+        category: "Ways to Appraise Performance"
+    },
+
+    {
+        term: "Management by Objectives",
+        definition: "An outcome-based evaluation program; salespeople are given objectives and their real results are compared against those objectives to appraise their performance.",
+        category: "Ways to Appraise Performance"
+    },
+
+    {
+        term: "Behaviorally Anchored Rating Scales",
+        definition: "Usually referred to as BARS; an attempt to improve evaluation by using descriptive cues or adjectives.",
+        category: "Ways to Appraise Performance"
+    },
+
+    {
+        term: "360 Degree Feedback",
+        definition: "Managers acquire feedback from a salesperson's peers, assistants, customers, and even the sales manager's own supervisors in preparing a performance review.",
+        category: "Ways to Appraise Performance"
+    },
+
+    {
+        term: "Purposes of Performance Evaluation",
+        definition: "Include ensuring compensation matches real performance, spotting candidates for promotion or termination, determining training needs, supporting human resource planning, setting recruiting criteria, counseling on expectations, inspiring salespeople, assisting career goals, and advancing performance.",
+        category: "Purposes of Evaluation"
+    },
+
+    {
+        term: "Quantitative Performance Standards",
+        definition: "Provide descriptions of what management expects; each salesperson must have definitions of the performance parts to be measured and the measurement units; companies often assign multiple quantitative standards.",
+        category: "Quantitative Performance Standards"
+    },
+
+    {
+        term: "Qualitative Measures of Performance",
+        definition: "Used in evaluating performance characteristics that impact sales outcomes in the long term when no precise measurement is available; often applied to areas such as managing customer relations problems and customer satisfaction.",
+        category: "Qualitative Measures"
+    },
+
+    {
+        term: "System of Field Sales Reports",
+        definition: "Gives control information; excellent communications require contact between those preparing and receiving reports; helps both field-to-headquarters communication and salesperson self-improvement.",
+        category: "Field Sales Reports"
+    },
+
+    {
+        term: "Actual Performance measurement",
+        definition: "The task of measuring real performance by collecting performance information; involves identifying information needs, choosing information sources, and collecting the information from sales and expense records and various reports.",
+        category: "The Actual Performance"
+    },
+
+    {
+        term: "Salesperson Performance Evaluation",
+        definition: "Completes the job of sales managers; vital to establish whether the sales function is reaching its quantitative objectives and to figure out the reasons if it is not.",
+        category: "Salesperson Performance Evaluation"
+    },
+
+    {
+        term: "Controlling and evaluating performance",
+        definition: "How sales management confirms that the sales plan is actually working and corrects course when it is not; it closes the loop on everything else sales management sets out to do.",
+        category: "Overview"
+    },
+
+    {
+        term: "Market knowledge for standards",
+        definition: "Extensive market knowledge is necessary in formulating sales performance standards; it is essential to recognize the entire sales potential and the fraction that each sales territory is able to produce.",
+        category: "Standards of Performance"
+    },
+
+    {
+        term: "Customer satisfaction assessment",
+        definition: "More and more companies are assessing their salespeople on the basis of the attainment of customer satisfaction as a qualitative dimension.",
+        category: "Qualitative Measures"
+    }
+
+];
+
+
+/* =========================================================
+   SITUATIONAL QUESTIONS
+   ========================================================= */
+
+const SITUATIONS = [
+
+    {
+        term: "Salespeople control",
+        situation: "Management reviews salespersons' results, compares them with expectations, finds gaps, and takes corrective steps so the sales plan stays on track."
+    },
+
+    {
+        term: "Management Control Cycle",
+        situation: "A sales organization repeatedly sets standards, records what salespeople do, compares results to standards, and then takes corrective action."
+    },
+
+    {
+        term: "Establishing Performance Standards",
+        situation: "Before measuring anyone, the company decides exactly what level of performance it expects from each salesperson."
+    },
+
+    {
+        term: "Recording Performance",
+        situation: "The company gathers data on the calls, sales, and activities that salespeople actually completed."
+    },
+
+    {
+        term: "Evaluating Performance Against Standards",
+        situation: "Managers compare recorded results with the previously set standards to identify any gaps or divergences."
+    },
+
+    {
+        term: "Taking Action",
+        situation: "After spotting gaps, management implements remedial or corrective moves and then the control cycle starts again."
+    },
+
+    {
+        term: "Standards of Performance",
+        situation: "The firm uses job analysis and market knowledge to define the key activities and expected levels against which salespeople will be judged."
+    },
+
+    {
+        term: "Quota",
+        situation: "A marketing unit is given a specific numerical sales target that it is expected to achieve."
+    },
+
+    {
+        term: "Selling Expense Ratio",
+        situation: "A manager monitors the relationship between selling costs and the sales volume produced to keep expenses under control."
+    },
+
+    {
+        term: "Territorial Net Profit or Gross Margin Ratio",
+        situation: "Salespeople are guided to sell a balanced product line and to pay attention to the relative profitability of different products and customers."
+    },
+
+    {
+        term: "Call-Frequency Ratio",
+        situation: "The number of calls on a certain class of customers is divided by the number of customers in that class to set a calling standard."
+    },
+
+    {
+        term: "Calls per Day",
+        situation: "Especially in consumer-product selling, management sets an expected number of customer contacts each salesperson should complete daily."
+    },
+
+    {
+        term: "Order Call Ratio",
+        situation: "Effectiveness in securing orders is measured by dividing the number of orders obtained by the number of calls made."
+    },
+
+    {
+        term: "Average Cost per Call",
+        situation: "Targets are set for the cost of each call, with different standards for different sizes or types of accounts."
+    },
+
+    {
+        term: "Non-Selling Activities",
+        situation: "Quantitative standards are also applied to tasks such as arranging dealer displays, securing cooperative advertising, training distributor staff, and making goodwill calls."
+    },
+
+    {
+        term: "Sales Skills",
+        situation: "A salesperson is rated on opening and rapport, identifying needs, questioning, presentation quality, visual aids, handling objections, and closing ability."
+    },
+
+    {
+        term: "Customer Relationships",
+        situation: "Evaluation focuses on whether customers are satisfied with the salesperson's service, advice, and reliability, or whether there are frequent complaints."
+    },
+
+    {
+        term: "Self-Organisation",
+        situation: "Managers assess how well the salesperson plans calls, routes travel efficiently, keeps records current, feeds market information to headquarters, and analyzes personal weaknesses."
+    },
+
+    {
+        term: "Product Knowledge",
+        situation: "The salesperson is judged on knowledge of own products and benefits, competitors' products, and the comparative strengths and weaknesses of both."
+    },
+
+    {
+        term: "Cooperation and Attitudes",
+        situation: "Evaluation considers whether the salesperson follows management improvement goals, accepts field-training suggestions, and shows personal initiative."
+    },
+
+    {
+        term: "Progress or Call Report",
+        situation: "Each salesperson prepares a report for every call or a daily/weekly summary of all calls completed."
+    },
+
+    {
+        term: "Expense Report",
+        situation: "Salespeople submit itemized records of expenses because they are reimbursed and because the records are needed for tax purposes."
+    },
+
+    {
+        term: "Sales Work Plan",
+        situation: "Before a week or month begins, the salesperson submits planned accounts, topics to discuss, routes, and lodging details."
+    },
+
+    {
+        term: "New-Business or Potential New-Business Report",
+        situation: "A report informs management about newly won accounts and prospects that may become future sources of business."
+    },
+
+    {
+        term: "Lost-Sales Report",
+        situation: "Information is provided so management can understand which customers were lost and how the company is performing against competitors."
+    },
+
+    {
+        term: "Report of Complaint and/or Adjustment",
+        situation: "Details are collected on complaints linked to a salesperson's work, patterns by customer group, and the cost of fixing the problems."
+    },
+
+    {
+        term: "Graphical Appraisal Scales",
+        situation: "The manager completes a form that rates the salesperson's selling skills on a scale; this is the most common appraisal form used."
+    },
+
+    {
+        term: "Descriptive Statements",
+        situation: "The manager writes a full narrative description of each salesperson's performance rather than using only numerical ratings."
+    },
+
+    {
+        term: "Management by Objectives",
+        situation: "Salespeople receive clear objectives and are later evaluated by comparing their actual results against those objectives."
+    },
+
+    {
+        term: "Behaviorally Anchored Rating Scales",
+        situation: "Evaluation uses descriptive behavioral cues or adjectives (BARS) to make ratings more precise and meaningful."
+    },
+
+    {
+        term: "360 Degree Feedback",
+        situation: "Feedback for a performance review is gathered from peers, subordinates, customers, and the manager's own supervisors."
+    },
+
+    {
+        term: "Purposes of Performance Evaluation",
+        situation: "Evaluation is used to align pay with results, identify people for promotion or termination, determine training needs, support HR planning, set recruiting criteria, clarify expectations, motivate, guide careers, and improve performance."
+    },
+
+    {
+        term: "Quantitative Performance Standards",
+        situation: "Management assigns clear numerical definitions of the performance dimensions to be measured and the units of measurement for each salesperson."
+    },
+
+    {
+        term: "Qualitative Measures of Performance",
+        situation: "When precise numbers are unavailable, managers subjectively assess longer-term factors such as customer-relations skill and overall customer satisfaction."
+    },
+
+    {
+        term: "System of Field Sales Reports",
+        situation: "A reporting system supplies control data, supports two-way communication between field and headquarters, and helps salespeople improve by recording their own work."
+    },
+
+    {
+        term: "Actual Performance measurement",
+        situation: "Managers identify what information is needed, choose sources such as sales and expense records and various reports, and then collect the data."
+    },
+
+    {
+        term: "Salesperson Performance Evaluation",
+        situation: "The sales manager determines whether quantitative objectives are being met and investigates the reasons when they are not."
+    },
+
+    {
+        term: "Controlling and evaluating performance",
+        situation: "Sales management checks that the sales plan is working in practice and adjusts course when results diverge from the plan."
+    },
+
+    {
+        term: "Market knowledge for standards",
+        situation: "When setting performance standards, the company studies total sales potential and the share each territory can reasonably produce."
+    },
+
+    {
+        term: "Customer satisfaction assessment",
+        situation: "Increasingly, companies include the level of customer satisfaction achieved as a qualitative criterion in salesperson evaluation."
+    }
+
+];
+
+
+/* =========================================================
+   TRUE / FALSE DIRECT
+   ========================================================= */
+
+const TF_DIRECT = [
+
+    ["Salespeople control consists of substantiating salespersons' performance and making curative actions if necessary.", true],
+
+    ["The Management Control Cycle has four steps: Establishing Performance Standards, Recording Performance, Evaluating Performance Against Standards, and Taking Action.", true],
+
+    ["Establishing Performance Standards means deciding what level of performance is expected.", true],
+
+    ["Recording Performance means collecting information on what salespeople actually did.", true],
+
+    ["Evaluating Performance Against Standards involves comparing actual results to standards to spot divergence.", true],
+
+    ["Taking Action is the final step of making remedial or corrective moves before the cycle repeats.", true],
+
+    ["Performance standards require sales job analysis and extensive market knowledge of sales potential by territory.", true],
+
+    ["A Quota is an objective expressed quantitatively and assigned to a particular marketing unit.", true],
+
+    ["The Selling Expense Ratio is used to control the relation between selling expenses and sales volume.", true],
+
+    ["Territorial Net Profit or Gross Margin Ratio focuses attention on selling a balanced line and relative profitability of products and customers.", true],
+
+    ["Call-Frequency Ratio is computed by dividing the number of sales calls on a class of customers by the number of customers in that class.", true],
+
+    ["Calls per Day is especially useful for companies selling consumer products where salespeople contact large numbers of customers.", true],
+
+    ["Order Call Ratio is computed by dividing the number of orders secured by the number of calls completed.", true],
+
+    ["Average Cost per Call standards are created for every category of account when costs differ significantly by account size or group.", true],
+
+    ["Non-Selling Activities such as dealer displays, cooperative advertising, and training distributors' staff may also receive quantitative standards.", true],
+
+    ["Sales Skills as a qualitative measure includes opening and rapport, identifying needs, questioning, presentation quality, visual aids, overcoming objections, and closing.", true],
+
+    ["Customer Relationships evaluation asks whether customers are fully satisfied with service, advice, and reliability or whether there are many complaints.", true],
+
+    ["Self-Organisation includes setting up calls, managing routing, keeping records updated, providing market information, and self-analysis of performance.", true],
+
+    ["Product Knowledge covers only the salesperson's own products and ignores competitor products.", false],
+
+    ["Cooperation and Attitudes includes acting on management objectives, cooperating with field training suggestions, and using personal initiative.", true],
+
+    ["The Progress or Call Report is prepared for each call or collectively for all calls completed daily or weekly.", true],
+
+    ["Expense Reports are used because most sales personnel are reimbursed for expenses and records are needed for income tax purposes.", true],
+
+    ["A Sales Work Plan details accounts to call on, topics to discuss, routes, and lodging for a future period such as a week or month.", true],
+
+    ["The New-Business Report tells management about accounts freshly gained and prospects that may become new business sources.", true],
+
+    ["The Lost-Sales Report helps assess lost customers and how the company is faring against competition.", true],
+
+    ["The Report of Complaint and/or Adjustment examines complaints from a salesperson's work and the cost of correcting them.", true],
+
+    ["Graphical Appraisal Scales are the most frequently utilized form for appraising a salesperson's performance.", true],
+
+    ["Descriptive Statements require the manager to give a comprehensive written narrative of each salesperson's performance.", true],
+
+    ["Management by Objectives is an outcome-based program that compares real results against given objectives.", true],
+
+    ["Behaviorally Anchored Rating Scales (BARS) attempt to improve evaluation by using descriptive cues or adjectives.", true],
+
+    ["360 Degree Feedback gathers input only from the salesperson's direct manager and no one else.", false],
+
+    ["One purpose of performance evaluation is to make certain that compensation is consistent with real salesperson performance.", true],
+
+    ["Performance evaluation can help spot salespeople who may be promoted or who should be terminated.", true],
+
+    ["Performance evaluation is not useful for determining training and counseling requirements.", false],
+
+    ["Quantitative performance standards provide descriptions of what management expects and define the units of measurement.", true],
+
+    ["Qualitative measures are used when no precise measurement is available and often address long-term factors such as customer relations.", true],
+
+    ["A good field sales reporting system supports communication both from the field to headquarters and from headquarters to the field.", true],
+
+    ["Field sales reports also help salespeople in self-improvement by obliging them to record their own work.", true],
+
+    ["Controlling and evaluating performance closes the loop on everything else sales management sets out to do.", true],
+
+    ["More and more companies are assessing salespeople on the basis of the attainment of customer satisfaction.", true]
+
+];
+
+
+/* =========================================================
+   TRUE / FALSE SITUATIONAL
+   ========================================================= */
+
+const TF_SITUATIONAL = [
+
+    ["Management reviews results, finds gaps, and takes corrective steps so the sales plan stays on track. This is Salespeople control.", true],
+
+    ["The company repeatedly sets standards, records activity, compares results, and takes corrective action. This is the Management Control Cycle.", true],
+
+    ["Before measuring anyone, the firm decides the expected level of performance. This is Establishing Performance Standards.", true],
+
+    ["Data are gathered on calls, sales, and activities actually completed. This is Recording Performance.", true],
+
+    ["Recorded results are compared with standards to identify gaps. This is Evaluating Performance Against Standards.", true],
+
+    ["Remedial moves are implemented after gaps are found. This is Taking Action.", true],
+
+    ["Job analysis and market knowledge of territorial potential are used to define expected performance levels. This concerns Standards of Performance.", true],
+
+    ["A marketing unit is given a specific numerical sales target. This is a Quota.", true],
+
+    ["The relationship between selling costs and sales volume is monitored. This uses the Selling Expense Ratio.", true],
+
+    ["Salespeople are guided to sell a balanced line and consider relative profitability. This uses Territorial Net Profit or Gross Margin Ratio.", true],
+
+    ["Calls on a customer class are divided by the number of customers in that class. This is the Call-Frequency Ratio.", true],
+
+    ["An expected number of daily customer contacts is set, especially in consumer-product selling. This is Calls per Day.", true],
+
+    ["Orders obtained are divided by calls made to measure order-getting effectiveness. This is the Order Call Ratio.", true],
+
+    ["Cost-per-call targets differ by account size or type. This concerns Average Cost per Call.", true],
+
+    ["Standards are applied to dealer displays, cooperative advertising, and training distributor staff. These are Non-Selling Activities standards.", true],
+
+    ["A salesperson is rated on opening, needs identification, questioning, presentation, objections, and closing. This evaluates Sales Skills.", true],
+
+    ["Evaluation focuses on customer satisfaction with service, advice, and reliability. This concerns Customer Relationships.", true],
+
+    ["Call planning, efficient routing, record-keeping, and self-analysis are assessed. This is Self-Organisation.", true],
+
+    ["Knowledge of own products, competitor products, and comparative strengths is judged. This is Product Knowledge.", true],
+
+    ["Following improvement goals, accepting training suggestions, and showing initiative are considered. This is Cooperation and Attitudes.", true],
+
+    ["A report is prepared for each call or as a daily/weekly summary of calls. This is a Progress or Call Report.", true],
+
+    ["Itemized expense records are submitted for reimbursement and tax purposes. This is an Expense Report.", true],
+
+    ["Planned accounts, topics, routes, and lodging are submitted in advance. This is a Sales Work Plan.", true],
+
+    ["Newly won accounts and promising prospects are reported to management. This is a New-Business Report.", true],
+
+    ["Information on lost customers and competitive standing is provided. This is a Lost-Sales Report.", true],
+
+    ["Complaints linked to a salesperson's work and correction costs are examined. This is a Report of Complaint and/or Adjustment.", true],
+
+    ["The most common appraisal form rates selling skills on a scale. This is Graphical Appraisal Scales.", true],
+
+    ["The manager writes a full narrative of each salesperson's performance. This is Descriptive Statements.", true],
+
+    ["Results are compared against previously set objectives. This is Management by Objectives.", true],
+
+    ["Descriptive behavioral cues or adjectives are used to improve ratings. This is Behaviorally Anchored Rating Scales (BARS).", true],
+
+    ["Feedback is gathered only from the direct manager. This correctly describes 360 Degree Feedback.", false],
+
+    ["Evaluation helps align pay with real results. This is one of the Purposes of Performance Evaluation.", true],
+
+    ["Evaluation can identify candidates for promotion or termination. This is a purpose of performance evaluation.", true],
+
+    ["Evaluation is useless for determining training needs. This contradicts the chapter.", false],
+
+    ["Clear numerical definitions of performance dimensions and measurement units are assigned. These are Quantitative Performance Standards.", true],
+
+    ["Longer-term factors such as customer-relations skill are assessed subjectively. These are Qualitative Measures of Performance.", true],
+
+    ["A reporting system supports two-way field-headquarters communication and self-improvement. This is the System of Field Sales Reports.", true],
+
+    ["Recording one's own work helps the salesperson improve. This is a benefit of field sales reports.", true],
+
+    ["Checking that the plan is working and adjusting course closes the management loop. This is Controlling and evaluating performance.", true],
+
+    ["Customer satisfaction is increasingly used as a qualitative evaluation criterion. This matches the chapter.", true]
+
+];
+
+
+/* =========================================================
+   ENUMERATION
+   ========================================================= */
+
+const ENUMERATION = [
+
+    {
+        question: "Enumerate the four steps of the Management Control Cycle.",
+        answers: [
+            "Establishing Performance Standards",
+            "Recording Performance",
+            "Evaluating Performance Against Standards",
+            "Taking Action"
+        ],
+        explanation: "The four steps are Establishing Performance Standards, Recording Performance, Evaluating Performance Against Standards, and Taking Action."
+    },
+
+    {
+        question: "Enumerate the purposes of a salesperson's performance evaluation.",
+        answers: [
+            "To make certain that compensation and other reward disbursements are constant with real salesperson performance",
+            "To spot the salespeople that may be promoted",
+            "To name salespeople who should be terminated from employment and to furnish proof to carry the necessity for termination",
+            "To decide the exact training and counseling requirements of the individual salesperson and the whole salesforce",
+            "To offer information for helpful human resource planning",
+            "To name criteria that can be applied in recruiting and selecting salespeople in the future",
+            "To counsel salespeople of work expectations",
+            "To inspire salespeople",
+            "To assist salespeople and formulate career goals",
+            "To advance salesperson performance"
+        ],
+        explanation: "The chapter lists ten purposes of salesperson performance evaluation covering compensation, promotion, termination, training, HR planning, recruiting criteria, expectations, inspiration, career goals, and advancing performance."
+    },
+
+    {
+        question: "Enumerate the quantitative performance standards discussed in Chapter 8.",
+        answers: [
+            "Quota",
+            "Selling Expense Ratio",
+            "Territorial Net Profit or Gross Margin Ratio",
+            "Call-Frequency Ratio",
+            "Calls per Day",
+            "Order Call Ratio",
+            "Average Cost per Call",
+            "Non-Selling Activities"
+        ],
+        explanation: "The quantitative standards are Quota, Selling Expense Ratio, Territorial Net Profit or Gross Margin Ratio, Call-Frequency Ratio, Calls per Day, Order Call Ratio, Average Cost per Call, and Non-Selling Activities."
+    },
+
+    {
+        question: "Enumerate the five usual qualitative dimensions applied in salesperson evaluation.",
+        answers: [
+            "Sales Skills",
+            "Customer Relationships",
+            "Self-Organisation",
+            "Product Knowledge",
+            "Cooperation and Attitudes"
+        ],
+        explanation: "The five qualitative dimensions are Sales Skills, Customer Relationships, Self-Organisation, Product Knowledge, and Cooperation and Attitudes."
+    },
+
+    {
+        question: "Enumerate the six types of field sales reports.",
+        answers: [
+            "Progress or Call Report",
+            "Expense Report",
+            "Sales Work Plan",
+            "New-Business or Potential New-Business Report",
+            "Lost-Sales Report",
+            "Report of Complaint and/or Adjustment"
+        ],
+        explanation: "The six types are Progress or Call Report, Expense Report, Sales Work Plan, New-Business or Potential New-Business Report, Lost-Sales Report, and Report of Complaint and/or Adjustment."
+    },
+
+    {
+        question: "Enumerate the five ways to appraise salespeople's performance.",
+        answers: [
+            "Graphical Appraisal Scales",
+            "Descriptive Statements",
+            "Management by Objectives",
+            "Behaviorally Anchored Rating Scales",
+            "360 Degree Feedback"
+        ],
+        explanation: "The five methods are Graphical Appraisal Scales, Descriptive Statements, Management by Objectives, Behaviorally Anchored Rating Scales (BARS), and 360 Degree Feedback."
+    },
+
+    {
+        question: "Enumerate the sub-factors used when rating Sales Skills.",
+        answers: [
+            "Managing the opening and developing rapport",
+            "Naming the customer's needs",
+            "Questioning ability",
+            "Quality of sales presentation",
+            "Use of visual aids",
+            "Ability to overcome objections",
+            "Knack for closing the sale"
+        ],
+        explanation: "Sales Skills sub-factors include managing the opening and developing rapport, naming the customer's needs, questioning ability, quality of sales presentation, use of visual aids, ability to overcome objections, and the knack for closing the sale."
+    }
+
+];
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let quizQuestions = [];
+
+let currentQuestion = 0;
+
+let score = 0;
+
+let answers = [];
+
+let selectedType = "mc";
+
+let selectedStyle = "direct";
+
+let selectedOrder = "ordered";
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
+
+const startScreen =
+    document.getElementById("startScreen");
+
+const quizScreen =
+    document.getElementById("quizScreen");
+
+const resultScreen =
+    document.getElementById("resultScreen");
+
+const questionType =
+    document.getElementById("questionType");
+
+const questionStyle =
+    document.getElementById("questionStyle");
+
+const questionOrder =
+    document.getElementById("questionOrder");
+
+const startButton =
+    document.getElementById("startButton");
+
+const backButton =
+    document.getElementById("backButton");
+
+const skipButton =
+    document.getElementById("skipButton");
+
+const restartButton =
+    document.getElementById("restartButton");
+
+const nextButton =
+    document.getElementById("nextButton");
+
+const reviewButton =
+    document.getElementById("reviewButton");
+
+const resultRestartButton =
+    document.getElementById("resultRestartButton");
+
+
+/* =========================================================
+   SHUFFLE
+   ========================================================= */
+
+function shuffle(array){
+
+    const result = [...array];
+
+    for(
+        let i = result.length - 1;
+        i > 0;
+        i--
+    ){
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [
+            result[i],
+            result[j]
+        ] =
+        [
+            result[j],
+            result[i]
+        ];
+
+    }
+
+    return result;
+}
+
+
+/* =========================================================
+   NORMALIZE ANSWER
+   ========================================================= */
+
+function normalize(text){
+
+    return String(text)
+        .toLowerCase()
+        .replace(/[.,!?;:'"()]/g,"")
+        .replace(/\s+/g," ")
+        .trim();
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   BUILD MULTIPLE CHOICE — DIRECT
+   ========================================================= */
+
+function buildMCDirect(){
+
+    return FACTS.map(
+        (fact,index)=>{
+
+            const otherAnswers =
+                shuffle(
+                    FACTS.filter(
+                        item =>
+                            item.term !==
+                            fact.term
+                    )
+                )
+                .slice(0,3)
+                .map(
+                    item =>
+                        item.term
+                );
+
+            const choices =
+                shuffle([
+                    fact.term,
+                    ...otherAnswers
+                ]);
+
+            return {
+
+                id:
+                    "mc-direct-" + index,
+
+                type:
+                    "Multiple Choice",
+
+                style:
+                    "Direct",
+
+                question:
+                    `Which of the following is described by this definition?\n\n"${fact.definition}"`,
+
+                choices:
+                    choices,
+
+                correctIndex:
+                    choices.indexOf(
+                        fact.term
+                    ),
+
+                correctText:
+                    fact.term,
+
+                explanation:
+                    `${fact.term} is the concept described by the definition.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BUILD MULTIPLE CHOICE — SITUATIONAL
+   ========================================================= */
+
+function buildMCSituational(){
+
+    return SITUATIONS.map(
+        (item,index)=>{
+
+            const distractors =
+                shuffle(
+                    SITUATIONS.filter(
+                        x =>
+                            x.term !==
+                            item.term
+                    )
+                )
+                .slice(0,3)
+                .map(
+                    x =>
+                        x.term
+                );
+
+            const choices =
+                shuffle([
+                    item.term,
+                    ...distractors
+                ]);
+
+            return {
+
+                id:
+                    "mc-situational-" + index,
+
+                type:
+                    "Multiple Choice",
+
+                style:
+                    "Situational",
+
+                question:
+                    `${item.situation}\n\nWhich Chapter 8 concept is being demonstrated?`,
+
+                choices:
+                    choices,
+
+                correctIndex:
+                    choices.indexOf(
+                        item.term
+                    ),
+
+                correctText:
+                    item.term,
+
+                explanation:
+                    `The situation demonstrates ${item.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION — DIRECT
+   ========================================================= */
+
+function buildIdentificationDirect(){
+
+    return FACTS.map(
+        (fact,index)=>{
+
+            return {
+
+                id:
+                    "id-direct-" + index,
+
+                type:
+                    "Identification",
+
+                style:
+                    "Direct",
+
+                question:
+                    `Identify the concept described below.\n\n"${fact.definition}"`,
+
+                correctText:
+                    fact.term,
+
+                explanation:
+                    `The correct answer is ${fact.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION — SITUATIONAL
+   ========================================================= */
+
+function buildIdentificationSituational(){
+
+    return SITUATIONS.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "id-situational-" + index,
+
+                type:
+                    "Identification",
+
+                style:
+                    "Situational",
+
+                question:
+                    `${item.situation}\n\nIdentify the Chapter 8 concept being demonstrated.`,
+
+                correctText:
+                    item.term,
+
+                explanation:
+                    `The correct concept is ${item.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE — DIRECT
+   ========================================================= */
+
+function buildTFDirect(){
+
+    return TF_DIRECT.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "tf-direct-" + index,
+
+                type:
+                    "True / False",
+
+                style:
+                    "Direct",
+
+                question:
+                    item[0],
+
+                correct:
+                    item[1],
+
+                correctText:
+                    item[1]
+                        ? "True"
+                        : "False",
+
+                explanation:
+                    item[1]
+                        ? "The statement agrees with the Chapter 8 presentation."
+                        : "The statement is misleading or contradicts the Chapter 8 presentation."
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE — SITUATIONAL
+   ========================================================= */
+
+function buildTFSituational(){
+
+    return TF_SITUATIONAL.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "tf-situational-" + index,
+
+                type:
+                    "True / False",
+
+                style:
+                    "Situational",
+
+                question:
+                    item[0],
+
+                correct:
+                    item[1],
+
+                correctText:
+                    item[1]
+                        ? "True"
+                        : "False",
+
+                explanation:
+                    item[1]
+                        ? "The situation correctly represents the Chapter 8 concept."
+                        : "The situation does not correctly represent the Chapter 8 concept."
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ENUMERATION
+   ========================================================= */
+
+function buildEnumeration(){
+
+    return ENUMERATION.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "enumeration-" + index,
+
+                type:
+                    "Enumeration",
+
+                style:
+                    "Direct",
+
+                question:
+                    item.question,
+
+                answers:
+                    item.answers,
+
+                correctText:
+                    item.answers.join("; "),
+
+                explanation:
+                    item.explanation
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BUILD SELECTED QUIZ
+   ========================================================= */
+
+function buildQuiz(){
+
+    if(
+        selectedType === "mc"
+    ){
+
+        if(
+            selectedStyle === "direct"
+        ){
+
+            return buildMCDirect();
+
+        }
+
+        return buildMCSituational();
+
+    }
+
+
+    if(
+        selectedType === "identification"
+    ){
+
+        if(
+            selectedStyle === "direct"
+        ){
+
+            return buildIdentificationDirect();
+
+        }
+
+        return buildIdentificationSituational();
+
+    }
+
+
+    if(
+        selectedType === "tf"
+    ){
+
+        if(
+            selectedStyle === "direct"
+        ){
+
+            return buildTFDirect();
+
+        }
+
+        return buildTFSituational();
+
+    }
+
+
+    if(
+        selectedType === "enumeration"
+    ){
+
+        return buildEnumeration();
+
+    }
+
+
+    return [];
+
+}
+
+
+/* =========================================================
+   UPDATE NOTICE COUNT
+   ========================================================= */
+
+function updateNoticeCount(){
+
+    const count = FACTS.length;
+    const el = document.getElementById("standardCount");
+    if(el){
+        el.textContent = count;
+    }
+
+}
+
+
+/* =========================================================
+   START QUIZ
+   ========================================================= */
+
+function startQuiz(){
+
+    selectedType =
+        questionType.value;
+
+    selectedStyle =
+        questionStyle.value;
+
+    selectedOrder =
+        questionOrder.value;
+
+
+    quizQuestions =
+        buildQuiz();
+
+
+    if(
+        selectedOrder === "random"
+    ){
+
+        quizQuestions =
+            shuffle(
+                quizQuestions
+            );
+
+    }
+
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answers = [];
+
+
+    startScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.add(
+        "hidden"
+    );
+
+    quizScreen.classList.remove(
+        "hidden"
+    );
+
+
+    renderQuestion();
+
+}
+
+
+/* =========================================================
+   RENDER QUESTION
+   ========================================================= */
+
+function renderQuestion(){
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    if(!q){
+
+        finishQuiz();
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "questionCounter"
+    ).textContent =
+        `Question ${currentQuestion + 1} of ${quizQuestions.length}`;
+
+
+    document.getElementById(
+        "scoreDisplay"
+    ).textContent =
+        `Score: ${score}`;
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        `${((currentQuestion + 1) / quizQuestions.length) * 100}%`;
+
+
+    document.getElementById(
+        "typeBadge"
+    ).textContent =
+        q.type;
+
+
+    document.getElementById(
+        "styleBadge"
+    ).textContent =
+        q.style;
+
+
+    document.getElementById(
+        "questionText"
+    ).textContent =
+        q.question;
+
+
+    const answerArea =
+        document.getElementById(
+            "answerArea"
+        );
+
+
+    answerArea.innerHTML = "";
+
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    feedback.className =
+        "feedback";
+
+
+    feedback.innerHTML =
+        "";
+
+
+    nextButton.classList.add(
+        "hidden"
+    );
+
+
+    backButton.disabled =
+        currentQuestion === 0;
+
+
+    skipButton.disabled =
+        false;
+
+
+    /* =====================================================
+       MULTIPLE CHOICE
+       ===================================================== */
+
+    if(
+        q.type === "Multiple Choice"
+    ){
+
+        const choices =
+            document.createElement(
+                "div"
+            );
+
+        choices.className =
+            "choices";
+
+
+        q.choices.forEach(
+            (choice,index)=>{
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.className =
+                    "choice";
+
+
+                button.innerHTML =
+                    `
+                    <span class="choice-letter">
+                        ${String.fromCharCode(65 + index)}
+                    </span>
+                    ${escapeHTML(choice)}
+                    `;
+
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        answerMultipleChoice(
+                            index
+                        );
+
+                    }
+                );
+
+
+                choices.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        answerArea.appendChild(
+            choices
+        );
+
+    }
+
+
+    /* =====================================================
+       TRUE / FALSE
+       ===================================================== */
+
+    else if(
+        q.type === "True / False"
+    ){
+
+        const choices =
+            document.createElement(
+                "div"
+            );
+
+        choices.className =
+            "choices";
+
+
+        ["True","False"]
+        .forEach(
+            value=>{
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.className =
+                    "choice";
+
+                button.textContent =
+                    value;
+
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        answerTrueFalse(
+                            value === "True"
+                        );
+
+                    }
+                );
+
+
+                choices.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        answerArea.appendChild(
+            choices
+        );
+
+    }
+
+
+    /* =====================================================
+       IDENTIFICATION
+       ===================================================== */
+
+    else if(
+        q.type === "Identification"
+    ){
+
+        answerArea.innerHTML =
+            `
+            <div class="text-answer">
+
+                <input
+                    type="text"
+                    id="textAnswer"
+                    placeholder="Type your answer here..."
+                    autocomplete="off"
+                >
+
+                <button
+                    id="submitIdentification"
+                    class="primary">
+
+                    Submit Answer
+
+                </button>
+
+            </div>
+            `;
+
+
+        document
+            .getElementById(
+                "submitIdentification"
+            )
+            .addEventListener(
+                "click",
+                answerIdentification
+            );
+
+
+        document
+            .getElementById(
+                "textAnswer"
+            )
+            .addEventListener(
+                "keydown",
+                function(event){
+
+                    if(
+                        event.key === "Enter"
+                    ){
+
+                        answerIdentification();
+
+                    }
+
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       ENUMERATION
+       ===================================================== */
+
+    else if(
+        q.type === "Enumeration"
+    ){
+
+        let html =
+            `<div class="enumeration-inputs">`;
+
+
+        q.answers.forEach(
+            (answer,index)=>{
+
+                html +=
+                    `
+                    <div class="enum-row">
+
+                        <div class="enum-number">
+                            ${index + 1}.
+                        </div>
+
+                        <input
+                            type="text"
+                            id="enumInput${index}"
+                            placeholder="Enter answer ${index + 1}"
+                        >
+
+                    </div>
+                    `;
+
+            }
+        );
+
+
+        html +=
+            `
+            </div>
+
+            <br>
+
+            <button
+                id="submitEnumeration"
+                class="primary">
+
+                Submit Answers
+
+            </button>
+            `;
+
+
+        answerArea.innerHTML =
+            html;
+
+
+        document
+            .getElementById(
+                "submitEnumeration"
+            )
+            .addEventListener(
+                "click",
+                answerEnumeration
+            );
+
+    }
+
+
+    restoreSavedAnswer();
+
+}
+
+
+/* =========================================================
+   MULTIPLE CHOICE ANSWER
+   ========================================================= */
+
+function answerMultipleChoice(index){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const isCorrect =
+        index === q.correctIndex;
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            q.choices[index],
+
+        correct:
+            isCorrect
+
+    };
+
+
+    const buttons =
+        document.querySelectorAll(
+            "#answerArea .choice"
+        );
+
+
+    buttons.forEach(
+        (button,i)=>{
+
+            button.disabled =
+                true;
+
+
+            if(
+                i === q.correctIndex
+            ){
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+
+            if(
+                i === index &&
+                !isCorrect
+            ){
+
+                button.classList.add(
+                    "wrong"
+                );
+
+            }
+
+        }
+    );
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE ANSWER
+   ========================================================= */
+
+function answerTrueFalse(value){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const isCorrect =
+        value === q.correct;
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            value
+                ? "True"
+                : "False",
+
+        correct:
+            isCorrect
+
+    };
+
+
+    const buttons =
+        document.querySelectorAll(
+            "#answerArea .choice"
+        );
+
+
+    buttons.forEach(
+        button=>{
+
+            button.disabled =
+                true;
+
+
+            if(
+                button.textContent ===
+                q.correctText
+            ){
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+
+            if(
+                button.textContent ===
+                (
+                    value
+                        ? "True"
+                        : "False"
+                ) &&
+                !isCorrect
+            ){
+
+                button.classList.add(
+                    "wrong"
+                );
+
+            }
+
+        }
+    );
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION ANSWER
+   ========================================================= */
+
+function answerIdentification(){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "textAnswer"
+        );
+
+
+    const entered =
+        input.value.trim();
+
+
+    if(!entered){
+
+        alert(
+            "Please enter an answer."
+        );
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const isCorrect =
+        normalize(entered) ===
+        normalize(q.correctText);
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            entered,
+
+        correct:
+            isCorrect
+
+    };
+
+
+    input.disabled =
+        true;
+
+
+    document
+        .getElementById(
+            "submitIdentification"
+        )
+        .disabled =
+            true;
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   ENUMERATION ANSWER
+   ========================================================= */
+
+function answerEnumeration(){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const entered = [];
+
+
+    for(
+        let i = 0;
+        i < q.answers.length;
+        i++
+    ){
+
+        const input =
+            document.getElementById(
+                `enumInput${i}`
+            );
+
+
+        if(
+            !input.value.trim()
+        ){
+
+            alert(
+                "Please answer all items."
+            );
+
+            return;
+
+        }
+
+
+        entered.push(
+            input.value.trim()
+        );
+
+    }
+
+
+    /*
+       Enumeration checking: order is flexible
+       for most lists unless the chapter requires
+       a specific sequence (e.g., the 5-step process).
+       We accept answers in any order by sorting
+       normalized versions for comparison, except
+       for the ordered 5-step process.
+    */
+
+    let isCorrect = true;
+
+    const requireOrder =
+        q.id === "enumeration-5" || // five-step process
+        q.question.toLowerCase().includes("five steps") ||
+        q.question.toLowerCase().includes("five-step");
+
+
+    if(
+        entered.length !==
+        q.answers.length
+    ){
+
+        isCorrect = false;
+
+    }
+    else if(requireOrder){
+
+        for(
+            let i = 0;
+            i < q.answers.length;
+            i++
+        ){
+
+            if(
+                normalize(entered[i]) !==
+                normalize(q.answers[i])
+            ){
+
+                isCorrect = false;
+                break;
+
+            }
+
+        }
+
+    }
+    else{
+
+        const normalizedEntered =
+            entered.map(normalize).sort();
+
+        const normalizedCorrect =
+            q.answers.map(normalize).sort();
+
+        for(
+            let i = 0;
+            i < normalizedCorrect.length;
+            i++
+        ){
+
+            if(
+                normalizedEntered[i] !==
+                normalizedCorrect[i]
+            ){
+
+                isCorrect = false;
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            entered.join(" | "),
+
+        correct:
+            isCorrect
+
+    };
+
+
+    document
+        .querySelectorAll(
+            "#answerArea input"
+        )
+        .forEach(
+            input =>
+                input.disabled = true
+        );
+
+
+    document
+        .getElementById(
+            "submitEnumeration"
+        )
+        .disabled =
+            true;
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   SHOW FEEDBACK
+   ========================================================= */
+
+function showFeedback(
+    isCorrect,
+    explanation,
+    correctAnswer
+){
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    feedback.className =
+        "feedback show " +
+        (
+            isCorrect
+                ? "correct"
+                : "incorrect"
+        );
+
+
+    feedback.innerHTML =
+        `
+        <div class="feedback-title">
+
+            ${
+                isCorrect
+                    ? "✓ Correct!"
+                    : "✗ Incorrect"
+            }
+
+        </div>
+
+        <div>
+            ${escapeHTML(
+                explanation
+            )}
+        </div>
+
+        <div style="margin-top:8px;">
+
+            <b>Correct answer:</b>
+            ${escapeHTML(
+                correctAnswer
+            )}
+
+        </div>
+        `;
+
+
+    document.getElementById(
+        "scoreDisplay"
+    ).textContent =
+        `Score: ${score}`;
+
+
+    skipButton.disabled =
+        true;
+
+
+    nextButton.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   SKIP
+   ========================================================= */
+
+function skipQuestion(){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:true,
+
+        answer:"Skipped",
+
+        correct:false
+
+    };
+
+
+    showFeedback(
+        false,
+        "You skipped this question. No point was awarded.",
+        q.correctText ||
+        (
+            q.answers
+                ? q.answers.join("; ")
+                : ""
+        )
+    );
+
+}
+
+
+/* =========================================================
+   NEXT
+   ========================================================= */
+
+function nextQuestion(){
+
+    if(
+        currentQuestion <
+        quizQuestions.length - 1
+    ){
+
+        currentQuestion++;
+
+        renderQuestion();
+
+    }
+    else{
+
+        finishQuiz();
+
+    }
+
+}
+
+
+/* =========================================================
+   BACK
+   ========================================================= */
+
+function goBack(){
+
+    if(
+        currentQuestion <= 0
+    ){
+
+        return;
+
+    }
+
+
+    currentQuestion--;
+
+    renderQuestion();
+
+}
+
+
+/* =========================================================
+   RESTORE PREVIOUS ANSWER
+   ========================================================= */
+
+function restoreSavedAnswer(){
+
+    const saved =
+        answers[currentQuestion];
+
+
+    if(!saved){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    /* =====================================================
+       MULTIPLE CHOICE
+       ===================================================== */
+
+    if(
+        q.type === "Multiple Choice"
+    ){
+
+        const buttons =
+            document.querySelectorAll(
+                "#answerArea .choice"
+            );
+
+
+        buttons.forEach(
+            (button,index)=>{
+
+                button.disabled =
+                    true;
+
+
+                if(
+                    index ===
+                    q.correctIndex
+                ){
+
+                    button.classList.add(
+                        "correct"
+                    );
+
+                }
+
+
+                if(
+                    button.textContent
+                        .replace(/^[A-D]\s*/,"")
+                        .trim() ===
+                    saved.answer &&
+                    !saved.correct
+                ){
+
+                    button.classList.add(
+                        "wrong"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       TRUE / FALSE
+       ===================================================== */
+
+    else if(
+        q.type === "True / False"
+    ){
+
+        const buttons =
+            document.querySelectorAll(
+                "#answerArea .choice"
+            );
+
+
+        buttons.forEach(
+            button=>{
+
+                button.disabled =
+                    true;
+
+
+                if(
+                    button.textContent ===
+                    q.correctText
+                ){
+
+                    button.classList.add(
+                        "correct"
+                    );
+
+                }
+
+
+                if(
+                    button.textContent ===
+                    saved.answer &&
+                    !saved.correct
+                ){
+
+                    button.classList.add(
+                        "wrong"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       IDENTIFICATION
+       ===================================================== */
+
+    else if(
+        q.type === "Identification"
+    ){
+
+        const input =
+            document.getElementById(
+                "textAnswer"
+            );
+
+
+        if(input){
+
+            input.value =
+                saved.answer;
+
+            input.disabled =
+                true;
+
+        }
+
+
+        const submit =
+            document.getElementById(
+                "submitIdentification"
+            );
+
+
+        if(submit){
+
+            submit.disabled =
+                true;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ENUMERATION
+       ===================================================== */
+
+    else if(
+        q.type === "Enumeration"
+    ){
+
+        const values =
+            saved.answer.split(
+                " | "
+            );
+
+
+        values.forEach(
+            (value,index)=>{
+
+                const input =
+                    document.getElementById(
+                        `enumInput${index}`
+                    );
+
+
+                if(input){
+
+                    input.value =
+                        value;
+
+                    input.disabled =
+                        true;
+
+                }
+
+            }
+        );
+
+
+        const submit =
+            document.getElementById(
+                "submitEnumeration"
+            );
+
+
+        if(submit){
+
+            submit.disabled =
+                true;
+
+        }
+
+    }
+
+
+    showFeedback(
+        saved.correct,
+        q.explanation,
+        q.correctText ||
+        (
+            q.answers
+                ? q.answers.join("; ")
+                : ""
+        )
+    );
+
+}
+
+
+/* =========================================================
+   FINISH QUIZ
+   ========================================================= */
+
+function finishQuiz(){
+
+    quizScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.remove(
+        "hidden"
+    );
+
+
+    const total =
+        quizQuestions.length;
+
+
+    const percentage =
+        total === 0
+            ? 0
+            : Math.round(
+                (score / total) * 100
+            );
+
+
+    document.getElementById(
+        "resultScore"
+    ).textContent =
+        `${score} / ${total}`;
+
+
+    document.getElementById(
+        "resultPercent"
+    ).textContent =
+        `${percentage}%`;
+
+
+    let message;
+
+
+    if(
+        percentage >= 90
+    ){
+
+        message =
+            "Excellent work! You have a strong understanding of Chapter 8.";
+
+    }
+    else if(
+        percentage >= 75
+    ){
+
+        message =
+            "Good job! You have a solid understanding of the chapter.";
+
+    }
+    else if(
+        percentage >= 60
+    ){
+
+        message =
+            "Not bad. Review the chapter and try again.";
+
+    }
+    else{
+
+        message =
+            "Keep studying. Review Chapter 8 and try the quiz again.";
+
+    }
+
+
+    document.getElementById(
+        "resultMessage"
+    ).textContent =
+        message;
+
+}
+
+
+/* =========================================================
+   REVIEW ANSWERS
+   ========================================================= */
+
+function showReview(){
+
+    const area =
+        document.getElementById(
+            "reviewArea"
+        );
+
+
+    if(
+        !area.classList.contains(
+            "hidden"
+        )
+    ){
+
+        area.classList.add(
+            "hidden"
+        );
+
+        return;
+
+    }
+
+
+    area.classList.remove(
+        "hidden"
+    );
+
+
+    let html =
+        "<h2>Answer Review</h2>";
+
+
+    quizQuestions.forEach(
+        (q,index)=>{
+
+            const result =
+                answers[index];
+
+
+            let status =
+                "Not answered";
+
+
+            let statusClass =
+                "skipped";
+
+
+            let userAnswer =
+                "Not answered";
+
+
+            if(result){
+
+                userAnswer =
+                    result.answer;
+
+
+                if(
+                    result.skipped
+                ){
+
+                    status =
+                        "Skipped";
+
+                    statusClass =
+                        "skipped";
+
+                }
+                else if(
+                    result.correct
+                ){
+
+                    status =
+                        "Correct";
+
+                    statusClass =
+                        "correct";
+
+                }
+                else{
+
+                    status =
+                        "Incorrect";
+
+                    statusClass =
+                        "incorrect";
+
+                }
+
+            }
+
+
+            const correctAnswer =
+                q.correctText ||
+                (
+                    q.answers
+                        ? q.answers.join("; ")
+                        : ""
+                );
+
+
+            html +=
+                `
+                <div class="review-item">
+
+                    <b>
+                        ${index + 1}.
+                        ${escapeHTML(
+                            q.question
+                        )}
+                    </b>
+
+                    <br><br>
+
+                    <b>Your answer:</b>
+                    ${escapeHTML(
+                        userAnswer
+                    )}
+
+                    <br>
+
+                    <b>Correct answer:</b>
+                    ${escapeHTML(
+                        correctAnswer
+                    )}
+
+                    <br><br>
+
+                    <span class="review-status ${statusClass}">
+
+                        ${status}
+
+                    </span>
+
+                </div>
+                `;
+
+        }
+    );
+
+
+    area.innerHTML =
+        html;
+
+}
+
+
+/* =========================================================
+   RESTART
+   ========================================================= */
+
+function restartQuiz(){
+
+    quizQuestions = [];
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answers = [];
+
+
+    quizScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.add(
+        "hidden"
+    );
+
+
+    document
+        .getElementById(
+            "reviewArea"
+        )
+        .classList
+        .add("hidden");
+
+
+    startScreen.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   BUTTON EVENTS
+   ========================================================= */
+
+startButton.addEventListener(
+    "click",
+    startQuiz
+);
+
+
+backButton.addEventListener(
+    "click",
+    goBack
+);
+
+
+skipButton.addEventListener(
+    "click",
+    skipQuestion
+);
+
+
+restartButton.addEventListener(
+    "click",
+    restartQuiz
+);
+
+
+nextButton.addEventListener(
+    "click",
+    nextQuestion
+);
+
+
+reviewButton.addEventListener(
+    "click",
+    showReview
+);
+
+
+resultRestartButton.addEventListener(
+    "click",
+    restartQuiz
+);
+
+
+/* Update the displayed standard question count on load */
+updateNoticeCount();
+
+</script>
+
+</body>
+</html>
