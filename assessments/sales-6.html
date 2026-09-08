@@ -1,0 +1,3533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sales Management - Chapter 6 Quiz</title>
+
+<style>
+:root{
+    --primary:#172554;
+    --primary2:#1e3a8a;
+    --light:#f5f7fb;
+    --border:#d9deea;
+    --text:#172033;
+    --muted:#667085;
+    --success:#15803d;
+    --successBg:#ecfdf3;
+    --danger:#b91c1c;
+    --dangerBg:#fef2f2;
+    --warning:#b45309;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--light);
+    color:var(--text);
+}
+
+.container{
+    width:min(1000px,94%);
+    margin:35px auto;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+h1,h2,h3{
+    margin-top:0;
+}
+
+.subtitle{
+    color:var(--muted);
+    line-height:1.6;
+}
+
+.settings{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin:25px 0;
+}
+
+.field label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+select,
+input[type="text"]{
+    width:100%;
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+}
+
+select:focus,
+input[type="text"]:focus{
+    border-color:var(--primary2);
+}
+
+button{
+    border:none;
+    border-radius:10px;
+    padding:12px 18px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.15s;
+}
+
+button:hover:not(:disabled){
+    transform:translateY(-1px);
+}
+
+button:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.primary{
+    background:var(--primary);
+    color:white;
+}
+
+.secondary{
+    background:#e9edf5;
+    color:var(--text);
+}
+
+.danger{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.quiz-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.badges{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.badge{
+    background:#eef2ff;
+    color:#3730a3;
+    padding:7px 11px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.progress-container{
+    height:9px;
+    background:#e5e7eb;
+    border-radius:50px;
+    overflow:hidden;
+    margin:20px 0 30px;
+}
+
+.progress{
+    height:100%;
+    width:0;
+    background:var(--primary);
+    transition:.25s;
+}
+
+.question{
+    font-size:23px;
+    line-height:1.5;
+    margin-bottom:22px;
+    white-space:pre-line;
+}
+
+.choices{
+    display:grid;
+    gap:12px;
+}
+
+.choice{
+    width:100%;
+    text-align:left;
+    background:white;
+    border:2px solid var(--border);
+    color:var(--text);
+    padding:15px 17px;
+}
+
+.choice:hover:not(:disabled){
+    border-color:var(--primary2);
+    background:#f8faff;
+}
+
+.choice.correct{
+    border-color:var(--success);
+    background:var(--successBg);
+    color:#166534;
+}
+
+.choice.wrong{
+    border-color:var(--danger);
+    background:var(--dangerBg);
+    color:#991b1b;
+}
+
+.choice-letter{
+    display:inline-flex;
+    width:30px;
+    height:30px;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#edf0f5;
+    margin-right:10px;
+    font-weight:bold;
+}
+
+.feedback{
+    display:none;
+    margin-top:22px;
+    padding:17px;
+    border-radius:12px;
+    line-height:1.6;
+}
+
+.feedback.show{
+    display:block;
+}
+
+.feedback.correct{
+    background:var(--successBg);
+    color:#166534;
+}
+
+.feedback.incorrect{
+    background:var(--dangerBg);
+    color:#991b1b;
+}
+
+.feedback-title{
+    font-weight:bold;
+    font-size:17px;
+    margin-bottom:5px;
+}
+
+.controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+.control-right{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.text-answer{
+    display:grid;
+    gap:12px;
+}
+
+.enumeration-inputs{
+    display:grid;
+    gap:10px;
+}
+
+.enum-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.enum-number{
+    width:30px;
+    font-weight:bold;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.notice{
+    background:#f8fafc;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    color:var(--muted);
+    line-height:1.5;
+}
+
+.result-score{
+    font-size:52px;
+    font-weight:800;
+    color:var(--primary);
+}
+
+.result-percent{
+    font-size:22px;
+    margin:10px 0 25px;
+}
+
+.review-item{
+    border-top:1px solid var(--border);
+    padding:18px 0;
+    line-height:1.6;
+}
+
+.review-status{
+    font-weight:bold;
+}
+
+.review-status.correct{
+    color:var(--success);
+}
+
+.review-status.incorrect{
+    color:var(--danger);
+}
+
+.review-status.skipped{
+    color:var(--warning);
+}
+
+@media(max-width:750px){
+
+    .settings{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .question{
+        font-size:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- =====================================================
+     START SCREEN
+     ===================================================== -->
+
+<section id="startScreen" class="card">
+
+    <h1>Sales Management — Chapter 6 Quiz</h1>
+
+    <p class="subtitle">
+        Test your understanding of Chapter 6 (Salespeople Motivation, Compensation, and Reward) using different question types and question styles.
+    </p>
+
+    <div class="settings">
+
+        <div class="field">
+
+            <label for="questionType">
+                Question Type
+            </label>
+
+            <select id="questionType">
+
+                <option value="mc">
+                    Multiple Choice
+                </option>
+
+                <option value="identification">
+                    Identification
+                </option>
+
+                <option value="tf">
+                    True / False
+                </option>
+
+                <option value="enumeration">
+                    Enumeration
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="questionStyle">
+                Question Style
+            </label>
+
+            <select id="questionStyle">
+
+                <option value="direct">
+                    Direct
+                </option>
+
+                <option value="situational">
+                    Situational
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="questionOrder">
+                Question Order
+            </label>
+
+            <select id="questionOrder">
+
+                <option value="ordered">
+                    In Order
+                </option>
+
+                <option value="random">
+                    Randomized
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div class="notice">
+
+        <b>Question count:</b>
+        Multiple Choice, Identification, and True/False contain
+        <span id="standardCount">0</span> questions per style.
+        Enumeration uses only the lists that naturally fit the chapter content.
+
+    </div>
+
+    <br>
+
+    <button
+        id="startButton"
+        class="primary">
+
+        Start Quiz
+
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     QUIZ SCREEN
+     ===================================================== -->
+
+<section id="quizScreen" class="card hidden">
+
+    <div class="quiz-header">
+
+        <div>
+            <b id="questionCounter">
+                Question 1 of 28
+            </b>
+        </div>
+
+        <div>
+            <b id="scoreDisplay">
+                Score: 0
+            </b>
+        </div>
+
+    </div>
+
+
+    <div class="progress-container">
+
+        <div
+            id="progressBar"
+            class="progress">
+        </div>
+
+    </div>
+
+
+    <div class="badges">
+
+        <span
+            id="typeBadge"
+            class="badge">
+        </span>
+
+        <span
+            id="styleBadge"
+            class="badge">
+        </span>
+
+    </div>
+
+    <br>
+
+
+    <div
+        id="questionText"
+        class="question">
+    </div>
+
+
+    <div id="answerArea">
+    </div>
+
+
+    <div
+        id="feedback"
+        class="feedback">
+    </div>
+
+
+    <div class="controls">
+
+        <button
+            id="backButton"
+            class="secondary">
+
+            ← Back
+
+        </button>
+
+
+        <div class="control-right">
+
+            <button
+                id="skipButton"
+                class="secondary">
+
+                Skip
+
+            </button>
+
+
+            <button
+                id="restartButton"
+                class="danger">
+
+                Restart
+
+            </button>
+
+
+            <button
+                id="nextButton"
+                class="primary hidden">
+
+                Next →
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RESULT SCREEN
+     ===================================================== -->
+
+<section id="resultScreen" class="card hidden">
+
+    <h1>
+        Quiz Complete!
+    </h1>
+
+    <div
+        id="resultScore"
+        class="result-score">
+
+        0 / 0
+
+    </div>
+
+
+    <div
+        id="resultPercent"
+        class="result-percent">
+
+        0%
+
+    </div>
+
+
+    <p
+        id="resultMessage"
+        class="subtitle">
+    </p>
+
+
+    <div class="controls">
+
+        <button
+            id="reviewButton"
+            class="primary">
+
+            Review Answers
+
+        </button>
+
+
+        <button
+            id="resultRestartButton"
+            class="danger">
+
+            Restart Quiz
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="reviewArea"
+        class="hidden">
+    </div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CHAPTER 4 — SOURCE CONTENT
+   Based on Group5-Chapter6.pptx — Salespeople Motivation, Compensation, and Reward
+   ========================================================= */
+
+
+/* =========================================================
+   CORE CONCEPTS / FACTS
+   ========================================================= */
+
+const FACTS = [
+
+    {
+        term: "Motivation",
+        definition: "In sales management, the amount of effort the salesperson wants to spend on the activities related with the sales jobs like calling on possible accounts, preparing sales presentations, and writing sales reports.",
+        category: "Nature of Motivation"
+    },
+
+    {
+        term: "Goal-directed behavior",
+        definition: "Motivation is goal-directed behavior which is essentially based on certain needs or desires.",
+        category: "Nature of Motivation"
+    },
+
+    {
+        term: "Intrinsic nature of the sales job",
+        definition: "The sales job involves difficult clients, stiff competition, refusals, high quotas, and substantial time away from home, which can discourage salespeople and create a need for additional motivation.",
+        category: "Salespeople Motivation"
+    },
+
+    {
+        term: "Salesperson's role conflicts",
+        definition: "The salesperson is expected to satisfy equally the people within the company such as his own sales department and outside who are the customers of the organization, leading to role conflicts.",
+        category: "Aspects Affecting Performance"
+    },
+
+    {
+        term: "Tendency toward apathy",
+        definition: "Year after year salespeople serve the same territory and almost identical customers and often lose interest and enthusiasm, requiring additional motivation to sustain long-term eagerness.",
+        category: "Aspects Affecting Performance"
+    },
+
+    {
+        term: "Maintaining a feeling of group identity",
+        definition: "Working individually, the salesperson finds it not easy to develop and preserve a sense of group identity with other salespeople; added motivation helps develop and maintain team spirit.",
+        category: "Aspects Affecting Performance"
+    },
+
+    {
+        term: "Hierarchy of Needs",
+        definition: "Abraham H. Maslow's theory based on the idea that an individual seeks to fulfill personal needs based on a ladder of importance: Physiological, Security, Social, Esteem, and Self-actualization.",
+        category: "Motivation Theories"
+    },
+
+    {
+        term: "Physiological needs",
+        definition: "Needs for shelter, hunger, thirst, sex, and other physical needs; the base of Maslow's hierarchy.",
+        category: "Hierarchy of Needs"
+    },
+
+    {
+        term: "Security needs",
+        definition: "Needs for protection and safety from emotional and physical harm in Maslow's hierarchy.",
+        category: "Hierarchy of Needs"
+    },
+
+    {
+        term: "Social needs",
+        definition: "Needs like friendship, accompany, and acquisitions in Maslow's hierarchy.",
+        category: "Hierarchy of Needs"
+    },
+
+    {
+        term: "Esteem needs",
+        definition: "Internal factors such as self-respect, autonomy, and achievement, and external factors composed of status, recognition, and attention.",
+        category: "Hierarchy of Needs"
+    },
+
+    {
+        term: "Self-actualization",
+        definition: "What compels one to become what he is competent of becoming, which includes growth and self-fulfillment; the top of Maslow's hierarchy.",
+        category: "Hierarchy of Needs"
+    },
+
+    {
+        term: "Motivation-Hygiene Theory",
+        definition: "Frederick Herzberg's theory that job dissatisfaction is not the reverse of job satisfaction; hygiene needs relate to dissatisfaction while motivation factors relate to satisfaction.",
+        category: "Motivation Theories"
+    },
+
+    {
+        term: "Hygiene needs",
+        definition: "Needs whose deficiencies lead to job dissatisfaction; satisfying them only achieves a neutral point (a fair day's work) and does not create job satisfaction.",
+        category: "Motivation-Hygiene Theory"
+    },
+
+    {
+        term: "Motivation factors",
+        definition: "Needs that, when satisfied, could lead to job satisfaction, including opportunities for achievement, recognition, responsibility, and advancement.",
+        category: "Motivation-Hygiene Theory"
+    },
+
+    {
+        term: "Achievement-Motivation Theory",
+        definition: "David McClelland's theory focusing on the need for achievement (nAch); people with high nAch think about doing their job better, completing something remarkable, or advancing their career.",
+        category: "Motivation Theories"
+    },
+
+    {
+        term: "Need for achievement (nAch)",
+        definition: "A motivation to surpass some standard of quality in personal behavior; people with high nAch like problem situations where they take personal responsibility, plan reachable goals, and want feedback.",
+        category: "Achievement-Motivation Theory"
+    },
+
+    {
+        term: "Expectancy Theory",
+        definition: "Victor Vroom's theory that focuses on outcomes rather than needs, involving valence, expectancy, and instrumentality.",
+        category: "Motivation Theories"
+    },
+
+    {
+        term: "Valence",
+        definition: "The importance linked by an individual concerning the expected outcome in expectancy theory.",
+        category: "Expectancy Theory"
+    },
+
+    {
+        term: "Expectancy",
+        definition: "The belief that improved efforts have the consequence of a better performance.",
+        category: "Expectancy Theory"
+    },
+
+    {
+        term: "Instrumentality",
+        definition: "The trust that there is a convincing outcome if an individual performs well.",
+        category: "Expectancy Theory"
+    },
+
+    {
+        term: "Effort-performance relationship",
+        definition: "The chance that the individual's effort is acknowledged in his performance appraisal.",
+        category: "Expectancy Theory"
+    },
+
+    {
+        term: "Performance-reward relationship",
+        definition: "The level in which the employee considers that obtaining an excellent performance appraisal leads to organizational rewards.",
+        category: "Expectancy Theory"
+    },
+
+    {
+        term: "Rewards-personal goals relationship",
+        definition: "The attractiveness or appeal of the reward to the individual.",
+        category: "Expectancy Theory"
+    },
+
+    {
+        term: "Quotas",
+        definition: "Standards set for factors such as the number of calls made per day, expenses consumed per month, or the number of new customers added annually, against which salespeople can measure success.",
+        category: "Salesforce Compensation"
+    },
+
+    {
+        term: "Straight-salary plan",
+        definition: "The simplest compensation plan in which salespersons receive a fixed amount of money on regular intervals, usually every two weeks, which represents the total payments for their services.",
+        category: "Types of Financial Compensation"
+    },
+
+    {
+        term: "Straight-commission plan",
+        definition: "A compensation plan based on the theory that individual salespeople should be compensated based on productivity.",
+        category: "Types of Financial Compensation"
+    },
+
+    {
+        term: "Combination of salary and commission",
+        definition: "A common compensation structure in which employees obtain a definite base salary amount and also take home an undefined sum of commission depending on the total sales they make.",
+        category: "Types of Financial Compensation"
+    },
+
+    {
+        term: "Bonus",
+        definition: "An amount rewarded for completing a definite sales task such as attaining a sales quota, doing promotional activities, gaining new accounts, making follow-up on leads, planning displays, or performing other assignments.",
+        category: "Bonuses and Fringe Benefits"
+    },
+
+    {
+        term: "Fringe benefits",
+        definition: "Benefits that do not really have direct relationships to job performance; some are compulsory by law (e.g., social security), others are provided for competitiveness, loyalty, or employee expectations.",
+        category: "Bonuses and Fringe Benefits"
+    },
+
+    {
+        term: "Recognition",
+        definition: "One of the easiest yet most powerful non-financial ways to reward salespeople for their achievements.",
+        category: "Non-Financial Compensation"
+    },
+
+    {
+        term: "Gifts and Prizes",
+        definition: "Non-financial incentives such as trips, jewelry, gift certificates, gas cards, and dinner vouchers that can motivate salespeople to over-achieve.",
+        category: "Non-Financial Compensation"
+    },
+
+    {
+        term: "Flex Hours",
+        definition: "When salespeople have met or exceeded target sales, they are often given the opportunity to work flexible hours or take some time off.",
+        category: "Non-Financial Compensation"
+    },
+
+    {
+        term: "Training as non-financial reward",
+        definition: "Gives an exceptional opportunity for motivated salespeople to progress in their careers; experience as a trainer or mentor may make the salesperson more competitive for promotion.",
+        category: "Non-Financial Compensation"
+    },
+
+    {
+        term: "Status",
+        definition: "Formal achievement awards for sales achievement including profit, customer wins, and customer service awards that motivate optimistic behavior.",
+        category: "Non-Financial Compensation"
+    },
+
+    {
+        term: "Affiliation",
+        definition: "An association with the company's reputation and its products' image; salespeople often desire their own values to equal those of the companies they work for.",
+        category: "Non-Financial Compensation"
+    },
+
+    {
+        term: "Positive Feedback",
+        definition: "Praises from superiors that lead to short-term improvements in morale and are considered more effective than money in some cases.",
+        category: "Non-Financial Compensation"
+    },
+
+    {
+        term: "Trade selling jobs",
+        definition: "Jobs in which the bulk of the selling amounts are merely from order taking; straight-salary plans are normally used for compensating salespeople seriously engaged in these jobs, common in wholesale and manufacturing fields.",
+        category: "Straight-Salary Plan"
+    },
+
+    {
+        term: "Disincentive of straight salary",
+        definition: "The major disadvantage of a straight-salary system is that there is no opportunity for salespeople's incentive to excel, decreasing the possibility of sales improvement.",
+        category: "Straight-Salary Plan"
+    },
+
+    {
+        term: "Reward for performance (commission)",
+        definition: "The key advantage of commission pay is that it rewards those employees that do their job well.",
+        category: "Straight-Commission Plan"
+    }
+
+];
+
+
+/* =========================================================
+   SITUATIONAL QUESTIONS
+   ========================================================= */
+
+const SITUATIONS = [
+
+    {
+        term: "Motivation",
+        situation: "A sales manager focuses on how much effort a salesperson is willing to put into calling on accounts, preparing presentations, and writing reports."
+    },
+
+    {
+        term: "Goal-directed behavior",
+        situation: "A salesperson's actions are driven by specific needs or desires that point toward particular goals."
+    },
+
+    {
+        term: "Intrinsic nature of the sales job",
+        situation: "Salespeople face difficult clients, heavy competition, frequent refusals, high quotas, and long periods away from home, which can leave them discouraged and in need of extra motivation."
+    },
+
+    {
+        term: "Salesperson's role conflicts",
+        situation: "A salesperson must satisfy both internal company expectations and the demands of external customers, creating conflicting pressures."
+    },
+
+    {
+        term: "Tendency toward apathy",
+        situation: "After years of covering the same territory and the same customers, a salesperson loses interest and enthusiasm for the work."
+    },
+
+    {
+        term: "Maintaining a feeling of group identity",
+        situation: "Because salespeople often work alone, it is hard for them to feel part of a team, so management adds motivation to build team spirit."
+    },
+
+    {
+        term: "Hierarchy of Needs",
+        situation: "A manager applies Maslow's ladder of needs, from physiological and security needs up through social, esteem, and self-actualization, when designing motivational programs."
+    },
+
+    {
+        term: "Physiological needs",
+        situation: "Basic needs such as food, shelter, and other physical requirements are addressed first in the motivational hierarchy."
+    },
+
+    {
+        term: "Security needs",
+        situation: "Salespeople are motivated by a desire for protection and safety from emotional and physical harm."
+    },
+
+    {
+        term: "Social needs",
+        situation: "Friendship, belonging, and companionship are important motivators for salespeople according to Maslow's hierarchy."
+    },
+
+    {
+        term: "Esteem needs",
+        situation: "Salespeople seek self-respect, achievement, status, and recognition from others."
+    },
+
+    {
+        term: "Self-actualization",
+        situation: "A salesperson is driven to grow and become everything they are capable of becoming."
+    },
+
+    {
+        term: "Motivation-Hygiene Theory",
+        situation: "A manager separates factors that prevent dissatisfaction from factors that create true satisfaction, following Herzberg's approach."
+    },
+
+    {
+        term: "Hygiene needs",
+        situation: "When certain basic job conditions are missing, salespeople become dissatisfied, but fixing them only brings performance to a neutral point."
+    },
+
+    {
+        term: "Motivation factors",
+        situation: "Providing achievement, recognition, responsibility, and advancement opportunities leads salespeople beyond a neutral level of performance into genuine satisfaction."
+    },
+
+    {
+        term: "Achievement-Motivation Theory",
+        situation: "Management looks for people who constantly think about doing better work, achieving something significant, or advancing their careers."
+    },
+
+    {
+        term: "Need for achievement (nAch)",
+        situation: "A salesperson takes personal responsibility for solving problems, sets reachable goals, and wants clear feedback on progress."
+    },
+
+    {
+        term: "Expectancy Theory",
+        situation: "A manager focuses on how salespeople value outcomes, believe effort leads to performance, and trust that performance will produce rewards."
+    },
+
+    {
+        term: "Valence",
+        situation: "A salesperson places high personal importance on a particular reward that is expected from strong performance."
+    },
+
+    {
+        term: "Expectancy",
+        situation: "A salesperson believes that putting in more effort will actually result in better measured performance."
+    },
+
+    {
+        term: "Instrumentality",
+        situation: "A salesperson is confident that good performance will lead to a meaningful organizational outcome or reward."
+    },
+
+    {
+        term: "Effort-performance relationship",
+        situation: "The salesperson believes that the effort put into the job will be recognized in the performance appraisal."
+    },
+
+    {
+        term: "Performance-reward relationship",
+        situation: "The salesperson believes that an excellent performance appraisal will lead to organizational rewards."
+    },
+
+    {
+        term: "Rewards-personal goals relationship",
+        situation: "The reward offered by the company is attractive and personally meaningful to the individual salesperson."
+    },
+
+    {
+        term: "Quotas",
+        situation: "Management sets targets for daily calls, monthly expenses, or annual new customers so salespeople have a clear standard of success."
+    },
+
+    {
+        term: "Straight-salary plan",
+        situation: "Salespeople receive a fixed amount of pay at regular intervals with no variable component based on sales results."
+    },
+
+    {
+        term: "Straight-commission plan",
+        situation: "Salespeople are paid solely according to the sales they produce, reflecting a pay-for-productivity philosophy."
+    },
+
+    {
+        term: "Combination of salary and commission",
+        situation: "Salespeople receive a fixed base salary plus a variable commission that depends on the sales they generate."
+    },
+
+    {
+        term: "Bonus",
+        situation: "A salesperson receives an extra payment for hitting a quota, opening new accounts, or completing a specific promotional assignment."
+    },
+
+    {
+        term: "Fringe benefits",
+        situation: "The company provides benefits such as social security contributions or other non-performance-linked perks to remain competitive and encourage loyalty."
+    },
+
+    {
+        term: "Recognition",
+        situation: "Management publicly acknowledges a salesperson's achievements as a powerful and low-cost form of reward."
+    },
+
+    {
+        term: "Gifts and Prizes",
+        situation: "Top performers receive trips, jewelry, gift certificates, or similar prizes as incentives to over-achieve."
+    },
+
+    {
+        term: "Flex Hours",
+        situation: "After meeting or exceeding targets, a salesperson is allowed more flexible working hours or time off."
+    },
+
+    {
+        term: "Training as non-financial reward",
+        situation: "High-performing salespeople are offered training or mentoring opportunities that help them advance their careers."
+    },
+
+    {
+        term: "Status",
+        situation: "Formal awards for profit contribution, customer wins, or service excellence are used to raise a salesperson's standing."
+    },
+
+    {
+        term: "Affiliation",
+        situation: "Salespeople feel motivated when their personal values align with the company's reputation and product image."
+    },
+
+    {
+        term: "Positive Feedback",
+        situation: "Praise from a supervisor produces short-term improvements in morale and is sometimes more effective than money."
+    },
+
+    {
+        term: "Trade selling jobs",
+        situation: "Sales roles that consist mainly of order-taking in wholesale or manufacturing settings are typically compensated with straight salary."
+    },
+
+    {
+        term: "Disincentive of straight salary",
+        situation: "Because pay does not rise with higher sales, salespeople under a pure salary plan have little incentive to push for greater results."
+    },
+
+    {
+        term: "Reward for performance (commission)",
+        situation: "Under a commission system, higher-performing salespeople automatically earn more because they generate more sales."
+    }
+
+];
+
+
+/* =========================================================
+   TRUE / FALSE DIRECT
+   ========================================================= */
+
+const TF_DIRECT = [
+
+    ["Motivation in sales management is the amount of effort the salesperson wants to spend on activities related to the sales job.", true],
+
+    ["Motivation is goal-directed behavior based on certain needs or desires.", true],
+
+    ["The intrinsic nature of the sales job often includes difficult clients, stiff competition, refusals, high quotas, and time away from home.", true],
+
+    ["Salesperson's role conflicts arise because the salesperson must satisfy both internal company people and external customers.", true],
+
+    ["Salespeople who serve the same territory and customers year after year never lose interest or enthusiasm.", false],
+
+    ["Maintaining a feeling of group identity is easy for salespeople because they normally work in close teams every day.", false],
+
+    ["Abraham H. Maslow developed the Hierarchy of Needs theory of motivation.", true],
+
+    ["In Maslow's hierarchy, Physiological needs include shelter, hunger, thirst, and other physical needs.", true],
+
+    ["Security needs in Maslow's hierarchy are needs for protection and safety from emotional and physical harm.", true],
+
+    ["Esteem needs include only external factors such as status and recognition, never internal factors.", false],
+
+    ["Self-actualization is the drive to become what one is capable of becoming, including growth and self-fulfillment.", true],
+
+    ["Frederick Herzberg contributed the Motivation-Hygiene Theory.", true],
+
+    ["According to Herzberg, job dissatisfaction is simply the reverse of job satisfaction.", false],
+
+    ["Satisfying hygiene needs leads to job satisfaction rather than merely reaching a neutral point.", false],
+
+    ["Motivation factors such as achievement, recognition, responsibility, and advancement can lead to job satisfaction.", true],
+
+    ["David McClelland created the Achievement-Motivation Theory focusing on need for achievement (nAch).", true],
+
+    ["People with high nAch like problem situations where they take personal responsibility and want feedback on how they are doing.", true],
+
+    ["Victor Vroom proposed the Expectancy Theory, which focuses on outcomes rather than needs.", true],
+
+    ["In Expectancy Theory, valence is the importance an individual links to an expected outcome.", true],
+
+    ["Expectancy is the belief that improved efforts result in better performance.", true],
+
+    ["Instrumentality is the trust that good performance will produce a convincing outcome.", true],
+
+    ["The effort-performance relationship concerns whether the individual's effort is acknowledged in the performance appraisal.", true],
+
+    ["Quotas give salespeople a standard against which they can measure success.", true],
+
+    ["The straight-salary plan pays salespersons a fixed amount at regular intervals as total payment for their services.", true],
+
+    ["Straight-salary plans are normally used for compensating salespeople engaged in trade selling that is largely order-taking.", true],
+
+    ["A major disadvantage of the straight-salary plan is that it provides strong incentive for salespeople to excel.", false],
+
+    ["The straight-commission plan is based on the theory that salespeople should be compensated according to productivity.", true],
+
+    ["Under a combination of salary and commission, employees receive a base salary plus a variable commission based on sales.", true],
+
+    ["A bonus is an amount rewarded for completing a definite sales task such as attaining a quota or gaining new accounts.", true],
+
+    ["Fringe benefits always have a direct relationship to individual job performance.", false],
+
+    ["Recognition is one of the easiest yet most powerful non-financial ways to reward salespeople.", true],
+
+    ["Gifts and prizes such as trips, jewelry, and gift certificates can motivate salespeople to over-achieve.", true],
+
+    ["Flex hours may be offered when salespeople have met or exceeded target sales.", true],
+
+    ["Training as a non-financial reward can help motivated salespeople progress in their careers.", true],
+
+    ["Status awards for profit, customer wins, and service can motivate optimistic behavior.", true],
+
+    ["Affiliation means an association with the company's reputation and its products' image.", true],
+
+    ["Positive feedback from superiors can lead to short-term improvements in morale and may be more effective than money.", true],
+
+    ["Work content, including challenges, variety, quality of feedback, and meaning, is the second most significant basis of motivation after compensation.", true],
+
+    ["Most approaches to salesforce compensation utilize a combination of salary and commission or salary and bonus.", true],
+
+    ["Three elements affecting motivation within the organizational environment are the individual salesperson, the sales job, and the organization environment.", true]
+
+];
+
+
+/* =========================================================
+   TRUE / FALSE SITUATIONAL
+   ========================================================= */
+
+const TF_SITUATIONAL = [
+
+    ["A manager measures how much effort a salesperson is willing to put into calls, presentations, and reports. This concerns Motivation.", true],
+
+    ["A salesperson's actions are driven by needs or desires aimed at specific goals. This describes Goal-directed behavior.", true],
+
+    ["Difficult clients, competition, refusals, and time away from home discourage salespeople. This reflects the Intrinsic nature of the sales job.", true],
+
+    ["A salesperson must please both the internal sales department and external customers. This creates Salesperson's role conflicts.", true],
+
+    ["After years in the same territory, a salesperson still has undiminished enthusiasm without any extra motivation. This matches the Tendency toward apathy description.", false],
+
+    ["Salespeople work alone and struggle to feel part of a team. This relates to Maintaining a feeling of group identity.", true],
+
+    ["A manager uses Maslow's ladder from physiological needs up to self-actualization. This applies the Hierarchy of Needs.", true],
+
+    ["Basic needs for food and shelter are addressed first. These are Physiological needs.", true],
+
+    ["Salespeople seek protection from emotional and physical harm. These are Security needs.", true],
+
+    ["Friendship and belonging motivate salespeople. These are Social needs.", true],
+
+    ["Salespeople want self-respect, achievement, status, and recognition. These are Esteem needs.", true],
+
+    ["A salesperson strives to grow and become all they are capable of becoming. This is Self-actualization.", true],
+
+    ["A manager separates factors that prevent dissatisfaction from those that create satisfaction. This follows the Motivation-Hygiene Theory.", true],
+
+    ["Fixing basic job conditions only brings performance to a neutral point. This describes Hygiene needs.", true],
+
+    ["Opportunities for achievement and recognition push performance beyond neutral into satisfaction. These are Motivation factors.", true],
+
+    ["Management recruits people who constantly think about doing better and advancing. This uses Achievement-Motivation Theory.", true],
+
+    ["A salesperson takes personal responsibility, sets reachable goals, and wants feedback. This shows high Need for achievement (nAch).", true],
+
+    ["A manager focuses on how people value outcomes, link effort to performance, and link performance to rewards. This is Expectancy Theory.", true],
+
+    ["A salesperson places high personal importance on a particular expected reward. This is Valence.", true],
+
+    ["A salesperson believes more effort will produce better measured performance. This is Expectancy.", true],
+
+    ["A salesperson is confident that good performance will produce a meaningful reward. This is Instrumentality.", true],
+
+    ["The salesperson believes effort will be recognized in the appraisal. This is the Effort-performance relationship.", true],
+
+    ["Targets for calls, expenses, or new customers give salespeople a standard of success. These are Quotas.", true],
+
+    ["Salespeople receive only a fixed amount at regular intervals with no variable pay. This is a Straight-salary plan.", true],
+
+    ["Pay is based entirely on the sales produced. This is a Straight-commission plan.", true],
+
+    ["Salespeople receive a fixed base plus a variable amount based on sales. This is a Combination of salary and commission.", true],
+
+    ["An extra payment is given for hitting a quota or opening new accounts. This is a Bonus.", true],
+
+    ["Benefits such as social security or other non-performance-linked perks are provided. These are Fringe benefits.", true],
+
+    ["Management publicly acknowledges achievements as a powerful low-cost reward. This is Recognition.", true],
+
+    ["Top performers receive trips, jewelry, or gift certificates. These are Gifts and Prizes.", true],
+
+    ["After exceeding targets, a salesperson is allowed more flexible hours. This is Flex Hours.", true],
+
+    ["High performers are offered training or mentoring to help career progress. This is Training as non-financial reward.", true],
+
+    ["Formal awards for profit or customer wins raise a salesperson's standing. This relates to Status.", true],
+
+    ["Salespeople feel motivated when their values match the company's reputation and image. This is Affiliation.", true],
+
+    ["Praise from a supervisor improves morale in the short term. This is Positive Feedback.", true],
+
+    ["Order-taking roles in wholesale settings are typically paid by straight salary. These are Trade selling jobs.", true],
+
+    ["Under pure salary, salespeople have strong incentive to push for higher sales. This correctly describes the Disincentive of straight salary.", false],
+
+    ["Higher performers automatically earn more because they generate more sales. This is Reward for performance under commission.", true],
+
+    ["Compensation is the top motivator; work content is the second most significant basis of motivation.", true],
+
+    ["Most salesforce compensation approaches use a combination of salary and commission or salary and bonus.", true]
+
+];
+
+
+/* =========================================================
+   ENUMERATION
+   ========================================================= */
+
+const ENUMERATION = [
+
+    {
+        question: "Enumerate the four aspects of the salesperson's job that affect the quality of its performance.",
+        answers: [
+            "Salesperson's role conflicts",
+            "Tendency toward apathy",
+            "Maintaining a feeling of group identity",
+            "Intrinsic nature of the sales job"
+        ],
+        explanation: "The chapter discusses the intrinsic nature of the sales job along with role conflicts, tendency toward apathy, and maintaining group identity as key aspects affecting performance quality."
+    },
+
+    {
+        question: "Enumerate the five levels in Maslow's Hierarchy of Needs (from lowest to highest).",
+        answers: [
+            "Physiological",
+            "Security",
+            "Social",
+            "Esteem",
+            "Self-actualization"
+        ],
+        explanation: "Maslow's hierarchy is Physiological, Security, Social, Esteem, and Self-actualization."
+    },
+
+    {
+        question: "Enumerate the three characteristics of people with a high need for achievement (nAch).",
+        answers: [
+            "Like problem situations in which they take personal responsibility for finding solutions",
+            "Likely to plan for reachable achievement goals",
+            "Want feedback on how they are doing"
+        ],
+        explanation: "People with high nAch like taking personal responsibility for solutions, plan reachable goals, and want feedback."
+    },
+
+    {
+        question: "Enumerate the three key concepts in Vroom's Expectancy Theory.",
+        answers: [
+            "Valence",
+            "Expectancy",
+            "Instrumentality"
+        ],
+        explanation: "Expectancy Theory centers on valence, expectancy, and instrumentality."
+    },
+
+    {
+        question: "Enumerate the three relationships that Expectancy Theory focuses on.",
+        answers: [
+            "Effort-performance relationship",
+            "Performance-reward relationship",
+            "Rewards-personal goals relationship"
+        ],
+        explanation: "The three relationships are Effort-performance, Performance-reward, and Rewards-personal goals."
+    },
+
+    {
+        question: "Enumerate the three elements affecting motivation within the organizational environment.",
+        answers: [
+            "The individual salesperson",
+            "The sales job",
+            "The organization environment"
+        ],
+        explanation: "Motivation is affected by the individual salesperson, the sales job, and the organization environment."
+    },
+
+    {
+        question: "Enumerate the three basic types of compensation plans.",
+        answers: [
+            "Straight salary",
+            "Straight commission",
+            "Combination of salary and other variable elements"
+        ],
+        explanation: "The three basic plans are straight salary, straight commission, and a combination of salary and other variable elements."
+    },
+
+    {
+        question: "Enumerate four disadvantages or concerns associated with the straight-salary plan.",
+        answers: [
+            "Disincentive",
+            "High turnover",
+            "Less experienced staff",
+            "Lower value for the company"
+        ],
+        explanation: "Disadvantages include disincentive to excel, high turnover, attraction of less experienced staff, and lower value for the company."
+    },
+
+    {
+        question: "Enumerate four non-financial rewards discussed in Chapter 6.",
+        answers: [
+            "Recognition",
+            "Gifts and Prizes",
+            "Flex Hours",
+            "Training"
+        ],
+        explanation: "Non-financial rewards include Recognition, Gifts and Prizes, Flex Hours, and Training (among others such as Status, Affiliation, and Positive Feedback)."
+    },
+
+    {
+        question: "Enumerate the three additional non-financial rewards listed as Status, Affiliation, and Positive Feedback.",
+        answers: [
+            "Status",
+            "Affiliation",
+            "Positive Feedback"
+        ],
+        explanation: "Status (formal awards), Affiliation (company reputation and image), and Positive Feedback (praise from superiors) are non-financial rewards."
+    }
+
+];
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let quizQuestions = [];
+
+let currentQuestion = 0;
+
+let score = 0;
+
+let answers = [];
+
+let selectedType = "mc";
+
+let selectedStyle = "direct";
+
+let selectedOrder = "ordered";
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
+
+const startScreen =
+    document.getElementById("startScreen");
+
+const quizScreen =
+    document.getElementById("quizScreen");
+
+const resultScreen =
+    document.getElementById("resultScreen");
+
+const questionType =
+    document.getElementById("questionType");
+
+const questionStyle =
+    document.getElementById("questionStyle");
+
+const questionOrder =
+    document.getElementById("questionOrder");
+
+const startButton =
+    document.getElementById("startButton");
+
+const backButton =
+    document.getElementById("backButton");
+
+const skipButton =
+    document.getElementById("skipButton");
+
+const restartButton =
+    document.getElementById("restartButton");
+
+const nextButton =
+    document.getElementById("nextButton");
+
+const reviewButton =
+    document.getElementById("reviewButton");
+
+const resultRestartButton =
+    document.getElementById("resultRestartButton");
+
+
+/* =========================================================
+   SHUFFLE
+   ========================================================= */
+
+function shuffle(array){
+
+    const result = [...array];
+
+    for(
+        let i = result.length - 1;
+        i > 0;
+        i--
+    ){
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [
+            result[i],
+            result[j]
+        ] =
+        [
+            result[j],
+            result[i]
+        ];
+
+    }
+
+    return result;
+}
+
+
+/* =========================================================
+   NORMALIZE ANSWER
+   ========================================================= */
+
+function normalize(text){
+
+    return String(text)
+        .toLowerCase()
+        .replace(/[.,!?;:'"()]/g,"")
+        .replace(/\s+/g," ")
+        .trim();
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   BUILD MULTIPLE CHOICE — DIRECT
+   ========================================================= */
+
+function buildMCDirect(){
+
+    return FACTS.map(
+        (fact,index)=>{
+
+            const otherAnswers =
+                shuffle(
+                    FACTS.filter(
+                        item =>
+                            item.term !==
+                            fact.term
+                    )
+                )
+                .slice(0,3)
+                .map(
+                    item =>
+                        item.term
+                );
+
+            const choices =
+                shuffle([
+                    fact.term,
+                    ...otherAnswers
+                ]);
+
+            return {
+
+                id:
+                    "mc-direct-" + index,
+
+                type:
+                    "Multiple Choice",
+
+                style:
+                    "Direct",
+
+                question:
+                    `Which of the following is described by this definition?\n\n"${fact.definition}"`,
+
+                choices:
+                    choices,
+
+                correctIndex:
+                    choices.indexOf(
+                        fact.term
+                    ),
+
+                correctText:
+                    fact.term,
+
+                explanation:
+                    `${fact.term} is the concept described by the definition.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BUILD MULTIPLE CHOICE — SITUATIONAL
+   ========================================================= */
+
+function buildMCSituational(){
+
+    return SITUATIONS.map(
+        (item,index)=>{
+
+            const distractors =
+                shuffle(
+                    SITUATIONS.filter(
+                        x =>
+                            x.term !==
+                            item.term
+                    )
+                )
+                .slice(0,3)
+                .map(
+                    x =>
+                        x.term
+                );
+
+            const choices =
+                shuffle([
+                    item.term,
+                    ...distractors
+                ]);
+
+            return {
+
+                id:
+                    "mc-situational-" + index,
+
+                type:
+                    "Multiple Choice",
+
+                style:
+                    "Situational",
+
+                question:
+                    `${item.situation}\n\nWhich Chapter 6 concept is being demonstrated?`,
+
+                choices:
+                    choices,
+
+                correctIndex:
+                    choices.indexOf(
+                        item.term
+                    ),
+
+                correctText:
+                    item.term,
+
+                explanation:
+                    `The situation demonstrates ${item.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION — DIRECT
+   ========================================================= */
+
+function buildIdentificationDirect(){
+
+    return FACTS.map(
+        (fact,index)=>{
+
+            return {
+
+                id:
+                    "id-direct-" + index,
+
+                type:
+                    "Identification",
+
+                style:
+                    "Direct",
+
+                question:
+                    `Identify the concept described below.\n\n"${fact.definition}"`,
+
+                correctText:
+                    fact.term,
+
+                explanation:
+                    `The correct answer is ${fact.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION — SITUATIONAL
+   ========================================================= */
+
+function buildIdentificationSituational(){
+
+    return SITUATIONS.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "id-situational-" + index,
+
+                type:
+                    "Identification",
+
+                style:
+                    "Situational",
+
+                question:
+                    `${item.situation}\n\nIdentify the Chapter 6 concept being demonstrated.`,
+
+                correctText:
+                    item.term,
+
+                explanation:
+                    `The correct concept is ${item.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE — DIRECT
+   ========================================================= */
+
+function buildTFDirect(){
+
+    return TF_DIRECT.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "tf-direct-" + index,
+
+                type:
+                    "True / False",
+
+                style:
+                    "Direct",
+
+                question:
+                    item[0],
+
+                correct:
+                    item[1],
+
+                correctText:
+                    item[1]
+                        ? "True"
+                        : "False",
+
+                explanation:
+                    item[1]
+                        ? "The statement agrees with the Chapter 6 presentation."
+                        : "The statement is misleading or contradicts the Chapter 6 presentation."
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE — SITUATIONAL
+   ========================================================= */
+
+function buildTFSituational(){
+
+    return TF_SITUATIONAL.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "tf-situational-" + index,
+
+                type:
+                    "True / False",
+
+                style:
+                    "Situational",
+
+                question:
+                    item[0],
+
+                correct:
+                    item[1],
+
+                correctText:
+                    item[1]
+                        ? "True"
+                        : "False",
+
+                explanation:
+                    item[1]
+                        ? "The situation correctly represents the Chapter 6 concept."
+                        : "The situation does not correctly represent the Chapter 6 concept."
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ENUMERATION
+   ========================================================= */
+
+function buildEnumeration(){
+
+    return ENUMERATION.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "enumeration-" + index,
+
+                type:
+                    "Enumeration",
+
+                style:
+                    "Direct",
+
+                question:
+                    item.question,
+
+                answers:
+                    item.answers,
+
+                correctText:
+                    item.answers.join("; "),
+
+                explanation:
+                    item.explanation
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BUILD SELECTED QUIZ
+   ========================================================= */
+
+function buildQuiz(){
+
+    if(
+        selectedType === "mc"
+    ){
+
+        if(
+            selectedStyle === "direct"
+        ){
+
+            return buildMCDirect();
+
+        }
+
+        return buildMCSituational();
+
+    }
+
+
+    if(
+        selectedType === "identification"
+    ){
+
+        if(
+            selectedStyle === "direct"
+        ){
+
+            return buildIdentificationDirect();
+
+        }
+
+        return buildIdentificationSituational();
+
+    }
+
+
+    if(
+        selectedType === "tf"
+    ){
+
+        if(
+            selectedStyle === "direct"
+        ){
+
+            return buildTFDirect();
+
+        }
+
+        return buildTFSituational();
+
+    }
+
+
+    if(
+        selectedType === "enumeration"
+    ){
+
+        return buildEnumeration();
+
+    }
+
+
+    return [];
+
+}
+
+
+/* =========================================================
+   UPDATE NOTICE COUNT
+   ========================================================= */
+
+function updateNoticeCount(){
+
+    const count = FACTS.length;
+    const el = document.getElementById("standardCount");
+    if(el){
+        el.textContent = count;
+    }
+
+}
+
+
+/* =========================================================
+   START QUIZ
+   ========================================================= */
+
+function startQuiz(){
+
+    selectedType =
+        questionType.value;
+
+    selectedStyle =
+        questionStyle.value;
+
+    selectedOrder =
+        questionOrder.value;
+
+
+    quizQuestions =
+        buildQuiz();
+
+
+    if(
+        selectedOrder === "random"
+    ){
+
+        quizQuestions =
+            shuffle(
+                quizQuestions
+            );
+
+    }
+
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answers = [];
+
+
+    startScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.add(
+        "hidden"
+    );
+
+    quizScreen.classList.remove(
+        "hidden"
+    );
+
+
+    renderQuestion();
+
+}
+
+
+/* =========================================================
+   RENDER QUESTION
+   ========================================================= */
+
+function renderQuestion(){
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    if(!q){
+
+        finishQuiz();
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "questionCounter"
+    ).textContent =
+        `Question ${currentQuestion + 1} of ${quizQuestions.length}`;
+
+
+    document.getElementById(
+        "scoreDisplay"
+    ).textContent =
+        `Score: ${score}`;
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        `${((currentQuestion + 1) / quizQuestions.length) * 100}%`;
+
+
+    document.getElementById(
+        "typeBadge"
+    ).textContent =
+        q.type;
+
+
+    document.getElementById(
+        "styleBadge"
+    ).textContent =
+        q.style;
+
+
+    document.getElementById(
+        "questionText"
+    ).textContent =
+        q.question;
+
+
+    const answerArea =
+        document.getElementById(
+            "answerArea"
+        );
+
+
+    answerArea.innerHTML = "";
+
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    feedback.className =
+        "feedback";
+
+
+    feedback.innerHTML =
+        "";
+
+
+    nextButton.classList.add(
+        "hidden"
+    );
+
+
+    backButton.disabled =
+        currentQuestion === 0;
+
+
+    skipButton.disabled =
+        false;
+
+
+    /* =====================================================
+       MULTIPLE CHOICE
+       ===================================================== */
+
+    if(
+        q.type === "Multiple Choice"
+    ){
+
+        const choices =
+            document.createElement(
+                "div"
+            );
+
+        choices.className =
+            "choices";
+
+
+        q.choices.forEach(
+            (choice,index)=>{
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.className =
+                    "choice";
+
+
+                button.innerHTML =
+                    `
+                    <span class="choice-letter">
+                        ${String.fromCharCode(65 + index)}
+                    </span>
+                    ${escapeHTML(choice)}
+                    `;
+
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        answerMultipleChoice(
+                            index
+                        );
+
+                    }
+                );
+
+
+                choices.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        answerArea.appendChild(
+            choices
+        );
+
+    }
+
+
+    /* =====================================================
+       TRUE / FALSE
+       ===================================================== */
+
+    else if(
+        q.type === "True / False"
+    ){
+
+        const choices =
+            document.createElement(
+                "div"
+            );
+
+        choices.className =
+            "choices";
+
+
+        ["True","False"]
+        .forEach(
+            value=>{
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.className =
+                    "choice";
+
+                button.textContent =
+                    value;
+
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        answerTrueFalse(
+                            value === "True"
+                        );
+
+                    }
+                );
+
+
+                choices.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        answerArea.appendChild(
+            choices
+        );
+
+    }
+
+
+    /* =====================================================
+       IDENTIFICATION
+       ===================================================== */
+
+    else if(
+        q.type === "Identification"
+    ){
+
+        answerArea.innerHTML =
+            `
+            <div class="text-answer">
+
+                <input
+                    type="text"
+                    id="textAnswer"
+                    placeholder="Type your answer here..."
+                    autocomplete="off"
+                >
+
+                <button
+                    id="submitIdentification"
+                    class="primary">
+
+                    Submit Answer
+
+                </button>
+
+            </div>
+            `;
+
+
+        document
+            .getElementById(
+                "submitIdentification"
+            )
+            .addEventListener(
+                "click",
+                answerIdentification
+            );
+
+
+        document
+            .getElementById(
+                "textAnswer"
+            )
+            .addEventListener(
+                "keydown",
+                function(event){
+
+                    if(
+                        event.key === "Enter"
+                    ){
+
+                        answerIdentification();
+
+                    }
+
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       ENUMERATION
+       ===================================================== */
+
+    else if(
+        q.type === "Enumeration"
+    ){
+
+        let html =
+            `<div class="enumeration-inputs">`;
+
+
+        q.answers.forEach(
+            (answer,index)=>{
+
+                html +=
+                    `
+                    <div class="enum-row">
+
+                        <div class="enum-number">
+                            ${index + 1}.
+                        </div>
+
+                        <input
+                            type="text"
+                            id="enumInput${index}"
+                            placeholder="Enter answer ${index + 1}"
+                        >
+
+                    </div>
+                    `;
+
+            }
+        );
+
+
+        html +=
+            `
+            </div>
+
+            <br>
+
+            <button
+                id="submitEnumeration"
+                class="primary">
+
+                Submit Answers
+
+            </button>
+            `;
+
+
+        answerArea.innerHTML =
+            html;
+
+
+        document
+            .getElementById(
+                "submitEnumeration"
+            )
+            .addEventListener(
+                "click",
+                answerEnumeration
+            );
+
+    }
+
+
+    restoreSavedAnswer();
+
+}
+
+
+/* =========================================================
+   MULTIPLE CHOICE ANSWER
+   ========================================================= */
+
+function answerMultipleChoice(index){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const isCorrect =
+        index === q.correctIndex;
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            q.choices[index],
+
+        correct:
+            isCorrect
+
+    };
+
+
+    const buttons =
+        document.querySelectorAll(
+            "#answerArea .choice"
+        );
+
+
+    buttons.forEach(
+        (button,i)=>{
+
+            button.disabled =
+                true;
+
+
+            if(
+                i === q.correctIndex
+            ){
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+
+            if(
+                i === index &&
+                !isCorrect
+            ){
+
+                button.classList.add(
+                    "wrong"
+                );
+
+            }
+
+        }
+    );
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE ANSWER
+   ========================================================= */
+
+function answerTrueFalse(value){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const isCorrect =
+        value === q.correct;
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            value
+                ? "True"
+                : "False",
+
+        correct:
+            isCorrect
+
+    };
+
+
+    const buttons =
+        document.querySelectorAll(
+            "#answerArea .choice"
+        );
+
+
+    buttons.forEach(
+        button=>{
+
+            button.disabled =
+                true;
+
+
+            if(
+                button.textContent ===
+                q.correctText
+            ){
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+
+            if(
+                button.textContent ===
+                (
+                    value
+                        ? "True"
+                        : "False"
+                ) &&
+                !isCorrect
+            ){
+
+                button.classList.add(
+                    "wrong"
+                );
+
+            }
+
+        }
+    );
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION ANSWER
+   ========================================================= */
+
+function answerIdentification(){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "textAnswer"
+        );
+
+
+    const entered =
+        input.value.trim();
+
+
+    if(!entered){
+
+        alert(
+            "Please enter an answer."
+        );
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const isCorrect =
+        normalize(entered) ===
+        normalize(q.correctText);
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            entered,
+
+        correct:
+            isCorrect
+
+    };
+
+
+    input.disabled =
+        true;
+
+
+    document
+        .getElementById(
+            "submitIdentification"
+        )
+        .disabled =
+            true;
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   ENUMERATION ANSWER
+   ========================================================= */
+
+function answerEnumeration(){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const entered = [];
+
+
+    for(
+        let i = 0;
+        i < q.answers.length;
+        i++
+    ){
+
+        const input =
+            document.getElementById(
+                `enumInput${i}`
+            );
+
+
+        if(
+            !input.value.trim()
+        ){
+
+            alert(
+                "Please answer all items."
+            );
+
+            return;
+
+        }
+
+
+        entered.push(
+            input.value.trim()
+        );
+
+    }
+
+
+    /*
+       Enumeration checking: order is flexible
+       for most lists unless the chapter requires
+       a specific sequence (e.g., the 5-step process).
+       We accept answers in any order by sorting
+       normalized versions for comparison, except
+       for the ordered 5-step process.
+    */
+
+    let isCorrect = true;
+
+    const requireOrder =
+        q.id === "enumeration-5" || // five-step process
+        q.question.toLowerCase().includes("five steps") ||
+        q.question.toLowerCase().includes("five-step");
+
+
+    if(
+        entered.length !==
+        q.answers.length
+    ){
+
+        isCorrect = false;
+
+    }
+    else if(requireOrder){
+
+        for(
+            let i = 0;
+            i < q.answers.length;
+            i++
+        ){
+
+            if(
+                normalize(entered[i]) !==
+                normalize(q.answers[i])
+            ){
+
+                isCorrect = false;
+                break;
+
+            }
+
+        }
+
+    }
+    else{
+
+        const normalizedEntered =
+            entered.map(normalize).sort();
+
+        const normalizedCorrect =
+            q.answers.map(normalize).sort();
+
+        for(
+            let i = 0;
+            i < normalizedCorrect.length;
+            i++
+        ){
+
+            if(
+                normalizedEntered[i] !==
+                normalizedCorrect[i]
+            ){
+
+                isCorrect = false;
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            entered.join(" | "),
+
+        correct:
+            isCorrect
+
+    };
+
+
+    document
+        .querySelectorAll(
+            "#answerArea input"
+        )
+        .forEach(
+            input =>
+                input.disabled = true
+        );
+
+
+    document
+        .getElementById(
+            "submitEnumeration"
+        )
+        .disabled =
+            true;
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   SHOW FEEDBACK
+   ========================================================= */
+
+function showFeedback(
+    isCorrect,
+    explanation,
+    correctAnswer
+){
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    feedback.className =
+        "feedback show " +
+        (
+            isCorrect
+                ? "correct"
+                : "incorrect"
+        );
+
+
+    feedback.innerHTML =
+        `
+        <div class="feedback-title">
+
+            ${
+                isCorrect
+                    ? "✓ Correct!"
+                    : "✗ Incorrect"
+            }
+
+        </div>
+
+        <div>
+            ${escapeHTML(
+                explanation
+            )}
+        </div>
+
+        <div style="margin-top:8px;">
+
+            <b>Correct answer:</b>
+            ${escapeHTML(
+                correctAnswer
+            )}
+
+        </div>
+        `;
+
+
+    document.getElementById(
+        "scoreDisplay"
+    ).textContent =
+        `Score: ${score}`;
+
+
+    skipButton.disabled =
+        true;
+
+
+    nextButton.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   SKIP
+   ========================================================= */
+
+function skipQuestion(){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:true,
+
+        answer:"Skipped",
+
+        correct:false
+
+    };
+
+
+    showFeedback(
+        false,
+        "You skipped this question. No point was awarded.",
+        q.correctText ||
+        (
+            q.answers
+                ? q.answers.join("; ")
+                : ""
+        )
+    );
+
+}
+
+
+/* =========================================================
+   NEXT
+   ========================================================= */
+
+function nextQuestion(){
+
+    if(
+        currentQuestion <
+        quizQuestions.length - 1
+    ){
+
+        currentQuestion++;
+
+        renderQuestion();
+
+    }
+    else{
+
+        finishQuiz();
+
+    }
+
+}
+
+
+/* =========================================================
+   BACK
+   ========================================================= */
+
+function goBack(){
+
+    if(
+        currentQuestion <= 0
+    ){
+
+        return;
+
+    }
+
+
+    currentQuestion--;
+
+    renderQuestion();
+
+}
+
+
+/* =========================================================
+   RESTORE PREVIOUS ANSWER
+   ========================================================= */
+
+function restoreSavedAnswer(){
+
+    const saved =
+        answers[currentQuestion];
+
+
+    if(!saved){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    /* =====================================================
+       MULTIPLE CHOICE
+       ===================================================== */
+
+    if(
+        q.type === "Multiple Choice"
+    ){
+
+        const buttons =
+            document.querySelectorAll(
+                "#answerArea .choice"
+            );
+
+
+        buttons.forEach(
+            (button,index)=>{
+
+                button.disabled =
+                    true;
+
+
+                if(
+                    index ===
+                    q.correctIndex
+                ){
+
+                    button.classList.add(
+                        "correct"
+                    );
+
+                }
+
+
+                if(
+                    button.textContent
+                        .replace(/^[A-D]\s*/,"")
+                        .trim() ===
+                    saved.answer &&
+                    !saved.correct
+                ){
+
+                    button.classList.add(
+                        "wrong"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       TRUE / FALSE
+       ===================================================== */
+
+    else if(
+        q.type === "True / False"
+    ){
+
+        const buttons =
+            document.querySelectorAll(
+                "#answerArea .choice"
+            );
+
+
+        buttons.forEach(
+            button=>{
+
+                button.disabled =
+                    true;
+
+
+                if(
+                    button.textContent ===
+                    q.correctText
+                ){
+
+                    button.classList.add(
+                        "correct"
+                    );
+
+                }
+
+
+                if(
+                    button.textContent ===
+                    saved.answer &&
+                    !saved.correct
+                ){
+
+                    button.classList.add(
+                        "wrong"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       IDENTIFICATION
+       ===================================================== */
+
+    else if(
+        q.type === "Identification"
+    ){
+
+        const input =
+            document.getElementById(
+                "textAnswer"
+            );
+
+
+        if(input){
+
+            input.value =
+                saved.answer;
+
+            input.disabled =
+                true;
+
+        }
+
+
+        const submit =
+            document.getElementById(
+                "submitIdentification"
+            );
+
+
+        if(submit){
+
+            submit.disabled =
+                true;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ENUMERATION
+       ===================================================== */
+
+    else if(
+        q.type === "Enumeration"
+    ){
+
+        const values =
+            saved.answer.split(
+                " | "
+            );
+
+
+        values.forEach(
+            (value,index)=>{
+
+                const input =
+                    document.getElementById(
+                        `enumInput${index}`
+                    );
+
+
+                if(input){
+
+                    input.value =
+                        value;
+
+                    input.disabled =
+                        true;
+
+                }
+
+            }
+        );
+
+
+        const submit =
+            document.getElementById(
+                "submitEnumeration"
+            );
+
+
+        if(submit){
+
+            submit.disabled =
+                true;
+
+        }
+
+    }
+
+
+    showFeedback(
+        saved.correct,
+        q.explanation,
+        q.correctText ||
+        (
+            q.answers
+                ? q.answers.join("; ")
+                : ""
+        )
+    );
+
+}
+
+
+/* =========================================================
+   FINISH QUIZ
+   ========================================================= */
+
+function finishQuiz(){
+
+    quizScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.remove(
+        "hidden"
+    );
+
+
+    const total =
+        quizQuestions.length;
+
+
+    const percentage =
+        total === 0
+            ? 0
+            : Math.round(
+                (score / total) * 100
+            );
+
+
+    document.getElementById(
+        "resultScore"
+    ).textContent =
+        `${score} / ${total}`;
+
+
+    document.getElementById(
+        "resultPercent"
+    ).textContent =
+        `${percentage}%`;
+
+
+    let message;
+
+
+    if(
+        percentage >= 90
+    ){
+
+        message =
+            "Excellent work! You have a strong understanding of Chapter 6.";
+
+    }
+    else if(
+        percentage >= 75
+    ){
+
+        message =
+            "Good job! You have a solid understanding of the chapter.";
+
+    }
+    else if(
+        percentage >= 60
+    ){
+
+        message =
+            "Not bad. Review the chapter and try again.";
+
+    }
+    else{
+
+        message =
+            "Keep studying. Review Chapter 6 and try the quiz again.";
+
+    }
+
+
+    document.getElementById(
+        "resultMessage"
+    ).textContent =
+        message;
+
+}
+
+
+/* =========================================================
+   REVIEW ANSWERS
+   ========================================================= */
+
+function showReview(){
+
+    const area =
+        document.getElementById(
+            "reviewArea"
+        );
+
+
+    if(
+        !area.classList.contains(
+            "hidden"
+        )
+    ){
+
+        area.classList.add(
+            "hidden"
+        );
+
+        return;
+
+    }
+
+
+    area.classList.remove(
+        "hidden"
+    );
+
+
+    let html =
+        "<h2>Answer Review</h2>";
+
+
+    quizQuestions.forEach(
+        (q,index)=>{
+
+            const result =
+                answers[index];
+
+
+            let status =
+                "Not answered";
+
+
+            let statusClass =
+                "skipped";
+
+
+            let userAnswer =
+                "Not answered";
+
+
+            if(result){
+
+                userAnswer =
+                    result.answer;
+
+
+                if(
+                    result.skipped
+                ){
+
+                    status =
+                        "Skipped";
+
+                    statusClass =
+                        "skipped";
+
+                }
+                else if(
+                    result.correct
+                ){
+
+                    status =
+                        "Correct";
+
+                    statusClass =
+                        "correct";
+
+                }
+                else{
+
+                    status =
+                        "Incorrect";
+
+                    statusClass =
+                        "incorrect";
+
+                }
+
+            }
+
+
+            const correctAnswer =
+                q.correctText ||
+                (
+                    q.answers
+                        ? q.answers.join("; ")
+                        : ""
+                );
+
+
+            html +=
+                `
+                <div class="review-item">
+
+                    <b>
+                        ${index + 1}.
+                        ${escapeHTML(
+                            q.question
+                        )}
+                    </b>
+
+                    <br><br>
+
+                    <b>Your answer:</b>
+                    ${escapeHTML(
+                        userAnswer
+                    )}
+
+                    <br>
+
+                    <b>Correct answer:</b>
+                    ${escapeHTML(
+                        correctAnswer
+                    )}
+
+                    <br><br>
+
+                    <span class="review-status ${statusClass}">
+
+                        ${status}
+
+                    </span>
+
+                </div>
+                `;
+
+        }
+    );
+
+
+    area.innerHTML =
+        html;
+
+}
+
+
+/* =========================================================
+   RESTART
+   ========================================================= */
+
+function restartQuiz(){
+
+    quizQuestions = [];
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answers = [];
+
+
+    quizScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.add(
+        "hidden"
+    );
+
+
+    document
+        .getElementById(
+            "reviewArea"
+        )
+        .classList
+        .add("hidden");
+
+
+    startScreen.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   BUTTON EVENTS
+   ========================================================= */
+
+startButton.addEventListener(
+    "click",
+    startQuiz
+);
+
+
+backButton.addEventListener(
+    "click",
+    goBack
+);
+
+
+skipButton.addEventListener(
+    "click",
+    skipQuestion
+);
+
+
+restartButton.addEventListener(
+    "click",
+    restartQuiz
+);
+
+
+nextButton.addEventListener(
+    "click",
+    nextQuestion
+);
+
+
+reviewButton.addEventListener(
+    "click",
+    showReview
+);
+
+
+resultRestartButton.addEventListener(
+    "click",
+    restartQuiz
+);
+
+
+/* Update the displayed standard question count on load */
+updateNoticeCount();
+
+</script>
+
+</body>
+</html>
