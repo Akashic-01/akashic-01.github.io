@@ -1,0 +1,3762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sales Management - Chapter 4 Quiz</title>
+
+<style>
+:root{
+    --primary:#172554;
+    --primary2:#1e3a8a;
+    --light:#f5f7fb;
+    --border:#d9deea;
+    --text:#172033;
+    --muted:#667085;
+    --success:#15803d;
+    --successBg:#ecfdf3;
+    --danger:#b91c1c;
+    --dangerBg:#fef2f2;
+    --warning:#b45309;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--light);
+    color:var(--text);
+}
+
+.container{
+    width:min(1000px,94%);
+    margin:35px auto;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+h1,h2,h3{
+    margin-top:0;
+}
+
+.subtitle{
+    color:var(--muted);
+    line-height:1.6;
+}
+
+.settings{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin:25px 0;
+}
+
+.field label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+select,
+input[type="text"]{
+    width:100%;
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+}
+
+select:focus,
+input[type="text"]:focus{
+    border-color:var(--primary2);
+}
+
+button{
+    border:none;
+    border-radius:10px;
+    padding:12px 18px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.15s;
+}
+
+button:hover:not(:disabled){
+    transform:translateY(-1px);
+}
+
+button:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.primary{
+    background:var(--primary);
+    color:white;
+}
+
+.secondary{
+    background:#e9edf5;
+    color:var(--text);
+}
+
+.danger{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.quiz-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.badges{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.badge{
+    background:#eef2ff;
+    color:#3730a3;
+    padding:7px 11px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.progress-container{
+    height:9px;
+    background:#e5e7eb;
+    border-radius:50px;
+    overflow:hidden;
+    margin:20px 0 30px;
+}
+
+.progress{
+    height:100%;
+    width:0;
+    background:var(--primary);
+    transition:.25s;
+}
+
+.question{
+    font-size:23px;
+    line-height:1.5;
+    margin-bottom:22px;
+    white-space:pre-line;
+}
+
+.choices{
+    display:grid;
+    gap:12px;
+}
+
+.choice{
+    width:100%;
+    text-align:left;
+    background:white;
+    border:2px solid var(--border);
+    color:var(--text);
+    padding:15px 17px;
+}
+
+.choice:hover:not(:disabled){
+    border-color:var(--primary2);
+    background:#f8faff;
+}
+
+.choice.correct{
+    border-color:var(--success);
+    background:var(--successBg);
+    color:#166534;
+}
+
+.choice.wrong{
+    border-color:var(--danger);
+    background:var(--dangerBg);
+    color:#991b1b;
+}
+
+.choice-letter{
+    display:inline-flex;
+    width:30px;
+    height:30px;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#edf0f5;
+    margin-right:10px;
+    font-weight:bold;
+}
+
+.feedback{
+    display:none;
+    margin-top:22px;
+    padding:17px;
+    border-radius:12px;
+    line-height:1.6;
+}
+
+.feedback.show{
+    display:block;
+}
+
+.feedback.correct{
+    background:var(--successBg);
+    color:#166534;
+}
+
+.feedback.incorrect{
+    background:var(--dangerBg);
+    color:#991b1b;
+}
+
+.feedback-title{
+    font-weight:bold;
+    font-size:17px;
+    margin-bottom:5px;
+}
+
+.controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+.control-right{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.text-answer{
+    display:grid;
+    gap:12px;
+}
+
+.enumeration-inputs{
+    display:grid;
+    gap:10px;
+}
+
+.enum-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.enum-number{
+    width:30px;
+    font-weight:bold;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.notice{
+    background:#f8fafc;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    color:var(--muted);
+    line-height:1.5;
+}
+
+.result-score{
+    font-size:52px;
+    font-weight:800;
+    color:var(--primary);
+}
+
+.result-percent{
+    font-size:22px;
+    margin:10px 0 25px;
+}
+
+.review-item{
+    border-top:1px solid var(--border);
+    padding:18px 0;
+    line-height:1.6;
+}
+
+.review-status{
+    font-weight:bold;
+}
+
+.review-status.correct{
+    color:var(--success);
+}
+
+.review-status.incorrect{
+    color:var(--danger);
+}
+
+.review-status.skipped{
+    color:var(--warning);
+}
+
+@media(max-width:750px){
+
+    .settings{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .question{
+        font-size:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- =====================================================
+     START SCREEN
+     ===================================================== -->
+
+<section id="startScreen" class="card">
+
+    <h1>Sales Management — Chapter 4 Quiz</h1>
+
+    <p class="subtitle">
+        Test your understanding of Chapter 4 (Sales Training) using different question types and question styles.
+    </p>
+
+    <div class="settings">
+
+        <div class="field">
+
+            <label for="questionType">
+                Question Type
+            </label>
+
+            <select id="questionType">
+
+                <option value="mc">
+                    Multiple Choice
+                </option>
+
+                <option value="identification">
+                    Identification
+                </option>
+
+                <option value="tf">
+                    True / False
+                </option>
+
+                <option value="enumeration">
+                    Enumeration
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="questionStyle">
+                Question Style
+            </label>
+
+            <select id="questionStyle">
+
+                <option value="direct">
+                    Direct
+                </option>
+
+                <option value="situational">
+                    Situational
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="questionOrder">
+                Question Order
+            </label>
+
+            <select id="questionOrder">
+
+                <option value="ordered">
+                    In Order
+                </option>
+
+                <option value="random">
+                    Randomized
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div class="notice">
+
+        <b>Question count:</b>
+        Multiple Choice, Identification, and True/False contain
+        <span id="standardCount">0</span> questions per style.
+        Enumeration uses only the lists that naturally fit the chapter content.
+
+    </div>
+
+    <br>
+
+    <button
+        id="startButton"
+        class="primary">
+
+        Start Quiz
+
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     QUIZ SCREEN
+     ===================================================== -->
+
+<section id="quizScreen" class="card hidden">
+
+    <div class="quiz-header">
+
+        <div>
+            <b id="questionCounter">
+                Question 1 of 28
+            </b>
+        </div>
+
+        <div>
+            <b id="scoreDisplay">
+                Score: 0
+            </b>
+        </div>
+
+    </div>
+
+
+    <div class="progress-container">
+
+        <div
+            id="progressBar"
+            class="progress">
+        </div>
+
+    </div>
+
+
+    <div class="badges">
+
+        <span
+            id="typeBadge"
+            class="badge">
+        </span>
+
+        <span
+            id="styleBadge"
+            class="badge">
+        </span>
+
+    </div>
+
+    <br>
+
+
+    <div
+        id="questionText"
+        class="question">
+    </div>
+
+
+    <div id="answerArea">
+    </div>
+
+
+    <div
+        id="feedback"
+        class="feedback">
+    </div>
+
+
+    <div class="controls">
+
+        <button
+            id="backButton"
+            class="secondary">
+
+            ← Back
+
+        </button>
+
+
+        <div class="control-right">
+
+            <button
+                id="skipButton"
+                class="secondary">
+
+                Skip
+
+            </button>
+
+
+            <button
+                id="restartButton"
+                class="danger">
+
+                Restart
+
+            </button>
+
+
+            <button
+                id="nextButton"
+                class="primary hidden">
+
+                Next →
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RESULT SCREEN
+     ===================================================== -->
+
+<section id="resultScreen" class="card hidden">
+
+    <h1>
+        Quiz Complete!
+    </h1>
+
+    <div
+        id="resultScore"
+        class="result-score">
+
+        0 / 0
+
+    </div>
+
+
+    <div
+        id="resultPercent"
+        class="result-percent">
+
+        0%
+
+    </div>
+
+
+    <p
+        id="resultMessage"
+        class="subtitle">
+    </p>
+
+
+    <div class="controls">
+
+        <button
+            id="reviewButton"
+            class="primary">
+
+            Review Answers
+
+        </button>
+
+
+        <button
+            id="resultRestartButton"
+            class="danger">
+
+            Restart Quiz
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="reviewArea"
+        class="hidden">
+    </div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CHAPTER 4 — SOURCE CONTENT
+   Based on Sales-Management-Chapter-4.docx
+   ========================================================= */
+
+
+/* =========================================================
+   CORE CONCEPTS / FACTS
+   ========================================================= */
+
+const FACTS = [
+
+    {
+        term: "Sales Training",
+        definition: "An endeavor given by an employer to offer the salesperson job-related culture, skill, knowledge, and attitudes.",
+        category: "Definition"
+    },
+
+    {
+        term: "Improve Company Knowledge",
+        definition: "Enhance the latest and current salespeople's knowledge of the company.",
+        category: "Objectives of Sales Training"
+    },
+
+    {
+        term: "Clarify Responsibilities and Expectations",
+        definition: "Provide a complete understanding of daily activities and responsibilities.",
+        category: "Objectives of Sales Training"
+    },
+
+    {
+        term: "Improve Product Knowledge",
+        definition: "Disseminate comprehensive knowledge of specifications, features, etc.",
+        category: "Objectives of Sales Training"
+    },
+
+    {
+        term: "Enhance Sales Skills",
+        definition: "Advance knowledge on how to successfully prospect, deal with clients, and convince them to buy.",
+        category: "Objectives of Sales Training"
+    },
+
+    {
+        term: "Improve Morale",
+        definition: "Boost morale so salespeople complete training with an optimistic attitude.",
+        category: "Objectives of Sales Training"
+    },
+
+    {
+        term: "Promote a company-wide sales culture",
+        definition: "One benefit of sales training that helps create a healthy sales culture advantageous to everybody in a sales organization.",
+        category: "Benefits of Sales Training"
+    },
+
+    {
+        term: "Make everyone speak the same language",
+        definition: "A common language means better efficiency and internal conversations built on shared vocabulary in the workplace.",
+        category: "Benefits of Sales Training"
+    },
+
+    {
+        term: "Connect relationships across the organization",
+        definition: "Sales training creates connections between teams, not just within the sales team.",
+        category: "Benefits of Sales Training"
+    },
+
+    {
+        term: "Produce alliances between departments",
+        definition: "Multiple departments come to share a common sales process.",
+        category: "Benefits of Sales Training"
+    },
+
+    {
+        term: "Job Specifications",
+        definition: "The qualifications required to carry out the job; one of the initial training needs.",
+        category: "Initial Training Needs"
+    },
+
+    {
+        term: "Trainee's Background and Experience",
+        definition: "Distinctive educational background and experience that help determine initial sales training needs.",
+        category: "Initial Training Needs"
+    },
+
+    {
+        term: "Sales-Related Marketing Policies",
+        definition: "Must be scrutinized to find out initial sales training needs.",
+        category: "Initial Training Needs"
+    },
+
+    {
+        term: "Product data",
+        definition: "The basic topic in training content; salespeople must be familiar with the products, their uses, and applications.",
+        category: "Training Content"
+    },
+
+    {
+        term: "Sales technique",
+        definition: "Salespeople must know how to approach a qualified prospect.",
+        category: "Training Content"
+    },
+
+    {
+        term: "Markets",
+        definition: "A salesperson needs to identify not just who buys what, but why and how customers purchase.",
+        category: "Training Content"
+    },
+
+    {
+        term: "Company information",
+        definition: "A salesperson must know pricing policy so they can answer customers' questions.",
+        category: "Training Content"
+    },
+
+    {
+        term: "Manuals",
+        definition: "Used in most group-type sales training programs; frequently also known as workbooks.",
+        category: "Instructional Materials and Training Aids"
+    },
+
+    {
+        term: "Other printed materials",
+        definition: "Company bulletins, sales and product handbooks used as instructional materials.",
+        category: "Instructional Materials and Training Aids"
+    },
+
+    {
+        term: "Blackboard",
+        definition: "The most used and indispensable training aid; every training facility should use one to illustrate points.",
+        category: "Instructional Materials and Training Aids"
+    },
+
+    {
+        term: "Advance assignments",
+        definition: "To save time, many programs require trainees to prepare assignments in advance.",
+        category: "Instructional Materials and Training Aids"
+    },
+
+    {
+        term: "Observe",
+        definition: "The first step in the five-step training process for sales recruits: observing experienced salespeople performing the same duties.",
+        category: "Sales Training for New Recruits"
+    },
+
+    {
+        term: "Learn",
+        definition: "The second step in the five-step training process: learn all products in detailed and meaningful ways.",
+        category: "Sales Training for New Recruits"
+    },
+
+    {
+        term: "Practice",
+        definition: "The third step in the five-step training process: enter written orders or take mock, roleplay-style orders over the phone.",
+        category: "Sales Training for New Recruits"
+    },
+
+    {
+        term: "Shadow",
+        definition: "The fourth step in the five-step training process: follow seasoned salespeople on each of their calls and try to take the same order.",
+        category: "Sales Training for New Recruits"
+    },
+
+    {
+        term: "Prove",
+        definition: "The fifth step in the five-step training process: given the opportunity to talk to real customers.",
+        category: "Sales Training for New Recruits"
+    },
+
+    {
+        term: "Expedite the paperwork",
+        definition: "Send all paperwork to new employees two weeks before they begin.",
+        category: "Tips on How New Hires Could Get Started"
+    },
+
+    {
+        term: "Make salespeople show value from day one",
+        definition: "Every individual brings their background into the workplace.",
+        category: "Tips on How New Hires Could Get Started"
+    },
+
+    {
+        term: "Share the load",
+        definition: "Departments contribute to the load when onboarding new hires.",
+        category: "Tips on How New Hires Could Get Started"
+    },
+
+    {
+        term: "Salesperson-to-salesperson training",
+        definition: "Let more experienced salespeople contribute their expertise to new hires.",
+        category: "Tips on How New Hires Could Get Started"
+    },
+
+    {
+        term: "Mentoring approach to success",
+        definition: "New hires pick their own mentor.",
+        category: "Tips on How New Hires Could Get Started"
+    },
+
+    {
+        term: "Generate a viable environment",
+        definition: "Mentoring must sit within a framework of team competition.",
+        category: "Tips on How New Hires Could Get Started"
+    },
+
+    {
+        term: "Assemble tactical teams",
+        definition: "Salespeople shouldn't grow unaided; they should be part of support teams.",
+        category: "Tips on How New Hires Could Get Started"
+    },
+
+    {
+        term: "Produce a 90-day action plan",
+        definition: "Let new hires plan their first 90 days once hired.",
+        category: "Tips on How New Hires Could Get Started"
+    },
+
+    {
+        term: "Keeping on the right track",
+        definition: "Train new hires on what documents are needed to track activities.",
+        category: "Tips on How New Hires Could Get Started"
+    },
+
+    {
+        term: "Make use of their sales experience and expertise",
+        definition: "Brainstorming and discussion activities in advanced sales workshops for experienced salespeople.",
+        category: "Training Experienced Salespeople"
+    },
+
+    {
+        term: "Center on advanced concepts",
+        definition: "Focus on effective questioning, key account management, and team selling when training experienced salespeople.",
+        category: "Training Experienced Salespeople"
+    },
+
+    {
+        term: "Make it application-oriented, not theoretical",
+        definition: "Bring a real sales opportunity into the workshop for sharing and discussion with colleagues and the mentor.",
+        category: "Training Experienced Salespeople"
+    },
+
+    {
+        term: "Sales negotiation skills",
+        definition: "A recommended workshop where experienced salespeople must know how to use the selling phase.",
+        category: "Recommended Workshops"
+    },
+
+    {
+        term: "Key account management",
+        definition: "Using an established process for strategic account planning.",
+        category: "Recommended Workshops"
+    },
+
+    {
+        term: "Sales prospecting and business development",
+        definition: "Locating or generating a boundless supply of fresh sales opportunities.",
+        category: "Recommended Workshops"
+    },
+
+    {
+        term: "High-performance selling",
+        definition: "A broad understanding of the customer's financial picture, and more.",
+        category: "Recommended Workshops"
+    },
+
+    {
+        term: "Writing a winning proposal",
+        definition: "Tips and guidelines for preparing the best possible proposal.",
+        category: "Recommended Workshops"
+    },
+
+    {
+        term: "Presenting with impact",
+        definition: "Understanding the audience's expectations helps a salesperson adjust their style and pitch to specific requirements.",
+        category: "Recommended Workshops"
+    },
+
+    {
+        term: "Team selling",
+        definition: "Developing the ability to structure, assemble, direct, and be a member of a winning sales team.",
+        category: "Recommended Workshops"
+    },
+
+    {
+        term: "Selling with influence",
+        definition: "The ability to persuade others.",
+        category: "Recommended Workshops"
+    },
+
+    {
+        term: "The Lecture",
+        definition: "Prior to the invention of printing, the earliest instructional method extensively used in sales training; trainees largely watch and listen.",
+        category: "Sales Training Methods"
+    },
+
+    {
+        term: "The Personal Conference",
+        definition: "Typically conducted in offices, restaurants, bars, motel rooms, and other unstructured, informal settings.",
+        category: "Sales Training Methods"
+    },
+
+    {
+        term: "Demonstrations",
+        definition: "Well suited for conveying information on topics like new products and selling techniques.",
+        category: "Sales Training Methods"
+    },
+
+    {
+        term: "Role Playing",
+        definition: "Has trainees dramatizing parts in artificial problem scenarios.",
+        category: "Sales Training Methods"
+    },
+
+    {
+        term: "Case Discussion",
+        definition: "Originated by business educators as a substitute for learning by experience.",
+        category: "Sales Training Methods"
+    },
+
+    {
+        term: "Impromptu Discussion",
+        definition: "Sometimes called a sales seminar or buzz session; involves giving a short oral presentation about an everyday problem.",
+        category: "Sales Training Methods"
+    },
+
+    {
+        term: "Gaming",
+        definition: "Also known as simulation; similar to role playing, using complex artificial situations based on reality.",
+        category: "Sales Training Methods"
+    },
+
+    {
+        term: "On-the-Job Training",
+        definition: "Also known as the coach-and-pupil method; incorporates telling, showing, practicing, and evaluating into one.",
+        category: "Sales Training Methods"
+    }
+
+];
+
+
+/* =========================================================
+   SITUATIONAL QUESTIONS
+   ========================================================= */
+
+const SITUATIONS = [
+
+    {
+        term: "Sales Training",
+        situation: "An employer designs a program to give salespeople job-related culture, skills, knowledge, and attitudes."
+    },
+
+    {
+        term: "Improve Company Knowledge",
+        situation: "A training session is held so current salespeople learn the latest information about their own company."
+    },
+
+    {
+        term: "Clarify Responsibilities and Expectations",
+        situation: "New salespeople receive a complete overview of their daily activities and what is expected of them on the job."
+    },
+
+    {
+        term: "Improve Product Knowledge",
+        situation: "Trainees study product specifications, features, and technical details so they can explain them accurately to customers."
+    },
+
+    {
+        term: "Enhance Sales Skills",
+        situation: "A workshop teaches salespeople how to prospect effectively, handle client interactions, and close sales."
+    },
+
+    {
+        term: "Improve Morale",
+        situation: "After completing training, salespeople leave with a more optimistic and confident attitude toward their work."
+    },
+
+    {
+        term: "Promote a company-wide sales culture",
+        situation: "A company runs sales training that helps build a healthy sales culture shared across the entire organization."
+    },
+
+    {
+        term: "Make everyone speak the same language",
+        situation: "After training, employees from different teams use the same sales vocabulary, improving internal communication and efficiency."
+    },
+
+    {
+        term: "Connect relationships across the organization",
+        situation: "Sales training creates stronger connections between the sales team and other departments."
+    },
+
+    {
+        term: "Produce alliances between departments",
+        situation: "Multiple departments begin sharing a common sales process after participating in joint training."
+    },
+
+    {
+        term: "Job Specifications",
+        situation: "Before designing training, management reviews the exact qualifications required to perform the sales job."
+    },
+
+    {
+        term: "Trainee's Background and Experience",
+        situation: "Trainers examine each recruit's educational background and prior experience to tailor the initial training needs."
+    },
+
+    {
+        term: "Sales-Related Marketing Policies",
+        situation: "Management carefully reviews company marketing policies related to selling to determine what the initial training must cover."
+    },
+
+    {
+        term: "Product data",
+        situation: "Trainees must become familiar with product uses and applications as the basic topic of their training content."
+    },
+
+    {
+        term: "Sales technique",
+        situation: "A module focuses on teaching salespeople the correct way to approach a qualified prospect."
+    },
+
+    {
+        term: "Markets",
+        situation: "Salespeople are trained to understand not only who buys the product, but also why and how customers make purchase decisions."
+    },
+
+    {
+        term: "Company information",
+        situation: "Trainees learn the company's pricing policy so they can confidently answer customer questions about costs."
+    },
+
+    {
+        term: "Manuals",
+        situation: "In a group sales training program, participants receive workbooks that guide them through the course material."
+    },
+
+    {
+        term: "Other printed materials",
+        situation: "Trainees receive company bulletins along with sales and product handbooks as supporting instructional materials."
+    },
+
+    {
+        term: "Blackboard",
+        situation: "The trainer uses the most common and indispensable visual aid in the room to illustrate key points during the session."
+    },
+
+    {
+        term: "Advance assignments",
+        situation: "To save classroom time, trainees are required to complete reading or exercises before the training session begins."
+    },
+
+    {
+        term: "Observe",
+        situation: "A new recruit watches experienced salespeople perform their daily duties as the first step of the training process."
+    },
+
+    {
+        term: "Learn",
+        situation: "A new salesperson studies all company products in detailed and meaningful ways as part of the recruit training process."
+    },
+
+    {
+        term: "Practice",
+        situation: "A trainee practices by entering written orders and taking mock role-play orders over the phone."
+    },
+
+    {
+        term: "Shadow",
+        situation: "A new hire follows a seasoned salesperson on customer calls and attempts to take the same order."
+    },
+
+    {
+        term: "Prove",
+        situation: "After preparation, a new recruit is finally given the chance to speak directly with real customers."
+    },
+
+    {
+        term: "Expedite the paperwork",
+        situation: "HR sends all necessary forms and documents to a new salesperson two weeks before the start date."
+    },
+
+    {
+        term: "Make salespeople show value from day one",
+        situation: "Managers expect each new hire to contribute value immediately by drawing on the background they bring to the job."
+    },
+
+    {
+        term: "Share the load",
+        situation: "Several departments help with onboarding tasks so the burden of training new salespeople is not left to sales alone."
+    },
+
+    {
+        term: "Salesperson-to-salesperson training",
+        situation: "Experienced salespeople are invited to share their practical expertise directly with newer colleagues."
+    },
+
+    {
+        term: "Mentoring approach to success",
+        situation: "Each new hire is allowed to choose their own mentor rather than being assigned one."
+    },
+
+    {
+        term: "Generate a viable environment",
+        situation: "Mentoring for new salespeople is placed inside a framework that includes healthy team competition."
+    },
+
+    {
+        term: "Assemble tactical teams",
+        situation: "New salespeople are placed into support teams so they do not have to develop their skills completely alone."
+    },
+
+    {
+        term: "Produce a 90-day action plan",
+        situation: "A newly hired salesperson is asked to create a detailed plan covering the first three months on the job."
+    },
+
+    {
+        term: "Keeping on the right track",
+        situation: "New hires are trained on which documents and records they must use to track their daily sales activities."
+    },
+
+    {
+        term: "Make use of their sales experience and expertise",
+        situation: "In an advanced workshop, experienced salespeople participate in brainstorming and discussion activities that draw on their existing knowledge."
+    },
+
+    {
+        term: "Center on advanced concepts",
+        situation: "Training for veteran salespeople focuses on effective questioning techniques, key account management, and team selling."
+    },
+
+    {
+        term: "Make it application-oriented, not theoretical",
+        situation: "An advanced workshop brings a real sales opportunity into the room so participants can discuss it with colleagues and a mentor."
+    },
+
+    {
+        term: "Sales negotiation skills",
+        situation: "Experienced salespeople attend a workshop that teaches them how to handle the selling phase of negotiations effectively."
+    },
+
+    {
+        term: "Key account management",
+        situation: "A workshop teaches an established process for strategic planning of the company's most important customer accounts."
+    },
+
+    {
+        term: "Sales prospecting and business development",
+        situation: "A training session focuses on locating and generating a continuous supply of new sales opportunities."
+    },
+
+    {
+        term: "High-performance selling",
+        situation: "Salespeople learn to develop a broad understanding of the customer's financial situation as part of advanced selling skills."
+    },
+
+    {
+        term: "Writing a winning proposal",
+        situation: "A workshop provides tips and guidelines for preparing the strongest possible written sales proposals."
+    },
+
+    {
+        term: "Presenting with impact",
+        situation: "Salespeople learn to adjust their presentation style and pitch according to the specific expectations of each audience."
+    },
+
+    {
+        term: "Team selling",
+        situation: "Training develops the ability to structure, assemble, lead, and participate as a member of a successful sales team."
+    },
+
+    {
+        term: "Selling with influence",
+        situation: "A workshop focuses on developing the salesperson's ability to persuade other people."
+    },
+
+    {
+        term: "The Lecture",
+        situation: "Trainees mainly watch and listen while an instructor presents material, using the earliest instructional method historically used in sales training."
+    },
+
+    {
+        term: "The Personal Conference",
+        situation: "A sales manager meets with a salesperson in an informal setting such as a restaurant or motel room to discuss performance and coaching."
+    },
+
+    {
+        term: "Demonstrations",
+        situation: "A trainer shows how a new product works and how related selling techniques should be applied in front of the trainees."
+    },
+
+    {
+        term: "Role Playing",
+        situation: "Trainees act out parts in made-up problem scenarios to practice handling difficult customer situations."
+    },
+
+    {
+        term: "Case Discussion",
+        situation: "Participants analyze a written business situation as a substitute for learning solely through real experience."
+    },
+
+    {
+        term: "Impromptu Discussion",
+        situation: "In a sales seminar or buzz session, each person gives a short oral presentation about an everyday sales problem."
+    },
+
+    {
+        term: "Gaming",
+        situation: "Trainees take part in a simulation that uses complex artificial situations based on real sales conditions."
+    },
+
+    {
+        term: "On-the-Job Training",
+        situation: "A coach works directly with a salesperson by telling, showing, practicing, and evaluating performance in the actual work setting."
+    }
+
+];
+
+
+/* =========================================================
+   TRUE / FALSE DIRECT
+   ========================================================= */
+
+const TF_DIRECT = [
+
+    ["Sales Training is an endeavor given by an employer to offer the salesperson job-related culture, skill, knowledge, and attitudes.", true],
+
+    ["One objective of sales training is to Improve Company Knowledge by enhancing salespeople's knowledge of the company.", true],
+
+    ["Clarify Responsibilities and Expectations means providing a complete understanding of daily activities and responsibilities.", true],
+
+    ["Improve Product Knowledge involves disseminating comprehensive knowledge of specifications and features.", true],
+
+    ["Enhance Sales Skills focuses only on product specifications and does not include prospecting or dealing with clients.", false],
+
+    ["Improve Morale aims to boost morale so salespeople complete training with an optimistic attitude.", true],
+
+    ["Having a healthy sales culture is advantageous only to the sales department and not to the rest of the organization.", false],
+
+    ["One benefit of sales training is making everyone speak the same language, which improves efficiency and internal conversations.", true],
+
+    ["Sales training creates connections between teams, not just within the sales team.", true],
+
+    ["Produce alliances between departments means multiple departments come to share a common sales process.", true],
+
+    ["Job Specifications refer to the qualifications required to carry out the job and are part of initial training needs.", true],
+
+    ["Trainee's Background and Experience is ignored when determining initial sales training needs.", false],
+
+    ["Sales-Related Marketing Policies must be scrutinized to find out initial sales training needs.", true],
+
+    ["Product data is the basic topic of training content; salespeople must be familiar with products, their uses, and applications.", true],
+
+    ["Sales technique training teaches salespeople how to approach a qualified prospect.", true],
+
+    ["In markets training, a salesperson only needs to know who buys the product and not why or how customers purchase.", false],
+
+    ["Company information training includes knowing pricing policy so salespeople can answer customers' questions.", true],
+
+    ["Manuals are used in most group-type sales training programs and are frequently also known as workbooks.", true],
+
+    ["Other printed materials include company bulletins, sales and product handbooks.", true],
+
+    ["The blackboard is the most used and indispensable training aid, and every training facility should use one.", true],
+
+    ["Advance assignments are discouraged because they waste trainees' time before the program begins.", false],
+
+    ["A sales training program is an investment of time, money, and effort for sales management.", true],
+
+    ["The five-step training process for sales recruits begins with Observe and ends with Prove.", true],
+
+    ["In the Learn step, trainees learn all products in detailed and meaningful ways.", true],
+
+    ["In the Practice step, trainees enter written orders or take mock, roleplay-style orders over the phone.", true],
+
+    ["The Shadow step involves following seasoned salespeople on their calls and trying to take the same order.", true],
+
+    ["The Prove step gives the recruit the opportunity to talk to real customers.", true],
+
+    ["Expedite the paperwork means sending all paperwork to new employees two weeks before they begin.", true],
+
+    ["Make salespeople show value from day one recognizes that every individual brings their background into the workplace.", true],
+
+    ["Share the load means departments contribute to the onboarding load.", true],
+
+    ["Salesperson-to-salesperson training lets more experienced salespeople contribute their expertise.", true],
+
+    ["New hires should pick their own mentor according to the mentoring approach to success.", true],
+
+    ["Generate a viable environment means mentoring must sit within a framework of team competition.", true],
+
+    ["Assemble tactical teams means salespeople shouldn't grow unaided; they should be part of support teams.", true],
+
+    ["Produce a 90-day action plan means letting new hires plan their first 90 days once hired.", true],
+
+    ["Keeping on the right track means training new hires on what documents are needed to track activities.", true],
+
+    ["When training experienced salespeople, managers should make use of their sales experience and expertise through brainstorming and discussion.", true],
+
+    ["Center on advanced concepts means focusing on effective questioning, key account management, and team selling.", true],
+
+    ["When training experienced salespeople, the focus should remain purely theoretical rather than application-oriented.", false],
+
+    ["Recommended workshops for experienced salespeople include Sales negotiation skills and Key account management.", true],
+
+    ["Sales prospecting and business development involves locating or generating a boundless supply of fresh sales opportunities.", true],
+
+    ["High-performance selling involves a broad understanding of the customer's financial picture.", true],
+
+    ["Writing a winning proposal provides tips and guidelines for preparing the best possible proposal.", true],
+
+    ["Presenting with impact means understanding the audience's expectations to adjust style and pitch.", true],
+
+    ["Team selling develops the ability to structure, assemble, direct, and be a member of a winning sales team.", true],
+
+    ["Selling with influence refers to the ability to persuade others.", true],
+
+    ["The Lecture is the earliest instructional method extensively used in sales training; trainees largely watch and listen.", true],
+
+    ["The Personal Conference is typically conducted in formal classroom settings with large groups.", false],
+
+    ["Demonstrations are well suited for conveying information on new products and selling techniques.", true],
+
+    ["Role Playing has trainees dramatizing parts in artificial problem scenarios.", true],
+
+    ["Case Discussion originated by business educators as a substitute for learning by experience.", true],
+
+    ["Impromptu Discussion is sometimes called a sales seminar or buzz session.", true],
+
+    ["Gaming is also known as simulation and uses complex artificial situations based on reality.", true],
+
+    ["On-the-Job Training is also known as the coach-and-pupil method and incorporates telling, showing, practicing, and evaluating.", true]
+
+];
+
+
+/* =========================================================
+   TRUE / FALSE SITUATIONAL
+   ========================================================= */
+
+const TF_SITUATIONAL = [
+
+    ["An employer provides salespeople with job-related culture, skill, knowledge, and attitudes. This describes Sales Training.", true],
+
+    ["A training program is designed mainly to update salespeople on the latest company information. This supports the objective of Improve Company Knowledge.", true],
+
+    ["Trainees receive a full explanation of their daily duties and what management expects. This illustrates Clarify Responsibilities and Expectations.", true],
+
+    ["A session focuses on product specifications and features. This supports Improve Product Knowledge.", true],
+
+    ["A workshop teaches only product features and ignores prospecting and closing skills. This correctly describes Enhance Sales Skills.", false],
+
+    ["After training, salespeople leave feeling more optimistic about their work. This reflects the objective of Improve Morale.", true],
+
+    ["Sales training benefits only the sales team and has no value for other departments. This matches the chapter's view of benefits.", false],
+
+    ["After training, employees across departments use a shared sales vocabulary. This illustrates Make everyone speak the same language.", true],
+
+    ["Training creates stronger links between sales and other teams. This demonstrates Connect relationships across the organization.", true],
+
+    ["Several departments start following the same sales process after joint training. This shows Produce alliances between departments.", true],
+
+    ["Management reviews the qualifications needed for the sales job before designing training. This involves Job Specifications.", true],
+
+    ["Trainers ignore a recruit's prior education and experience when planning initial training. This follows the chapter's guidance.", false],
+
+    ["Marketing policies related to selling are reviewed to identify training needs. This concerns Sales-Related Marketing Policies.", true],
+
+    ["Trainees must learn product uses and applications as a core topic. This refers to Product data in training content.", true],
+
+    ["A module teaches how to approach a qualified prospect. This covers Sales technique.", true],
+
+    ["Salespeople are trained only on who buys the product and not on why or how customers buy. This fully covers the Markets topic.", false],
+
+    ["Trainees learn pricing policy so they can answer customer questions. This is part of Company information.", true],
+
+    ["Group trainees receive workbooks that guide the program. These materials are Manuals.", true],
+
+    ["Trainees receive company bulletins and product handbooks. These are Other printed materials.", true],
+
+    ["The trainer uses a blackboard as the main visual aid. The chapter identifies the blackboard as the most used and indispensable training aid.", true],
+
+    ["Trainees are required to complete work before the session starts to save classroom time. This describes Advance assignments.", true],
+
+    ["A sales training program costs time, money, and effort and is therefore not considered an investment. This contradicts the chapter.", false],
+
+    ["A new recruit first watches experienced salespeople do the job. This is the Observe step.", true],
+
+    ["A new salesperson studies all company products in detailed ways. This is the Learn step.", true],
+
+    ["A trainee practices by writing orders and doing phone role-plays. This is the Practice step.", true],
+
+    ["A new hire follows a veteran on calls and tries to take the same order. This is the Shadow step.", true],
+
+    ["After preparation, a new recruit is given the chance to speak with real customers. This is the Prove step.", true],
+
+    ["HR sends all necessary forms to a new salesperson two weeks before the start date. This is Expedite the paperwork.", true],
+
+    ["Managers expect each new hire to contribute value immediately by drawing on their background. This is Make salespeople show value from day one.", true],
+
+    ["Several departments help with onboarding tasks. This is Share the load.", true],
+
+    ["Experienced salespeople share practical expertise with newer colleagues. This is Salesperson-to-salesperson training.", true],
+
+    ["New hires are allowed to choose their own mentor. This matches the Mentoring approach to success.", true],
+
+    ["Mentoring for new salespeople is placed inside a framework that includes team competition. This is Generate a viable environment.", true],
+
+    ["New salespeople are placed into support teams so they do not develop skills completely alone. This is Assemble tactical teams.", true],
+
+    ["A newly hired salesperson creates a detailed plan covering the first three months. This is Produce a 90-day action plan.", true],
+
+    ["New hires are trained on which documents they must use to track activities. This is Keeping on the right track.", true],
+
+    ["In an advanced workshop, experienced salespeople brainstorm and discuss using their existing knowledge. This is Make use of their sales experience and expertise.", true],
+
+    ["Training for veteran salespeople focuses on effective questioning, key account management, and team selling. This is Center on advanced concepts.", true],
+
+    ["Advanced workshops for experienced staff stay purely theoretical and avoid real opportunities. This follows the chapter recommendation.", false],
+
+    ["Experienced salespeople attend a workshop on handling negotiations in the selling phase. This is Sales negotiation skills.", true],
+
+    ["A workshop teaches strategic planning for important customer accounts. This is Key account management.", true],
+
+    ["Training focuses on generating a continuous flow of new sales opportunities. This is Sales prospecting and business development.", true],
+
+    ["Salespeople learn to understand the customer's financial picture in depth. This relates to High-performance selling.", true],
+
+    ["A workshop gives guidelines for preparing strong written proposals. This is Writing a winning proposal.", true],
+
+    ["Salespeople learn to adjust their pitch to the audience's expectations. This is Presenting with impact.", true],
+
+    ["Training develops skills for building and participating in sales teams. This is Team selling.", true],
+
+    ["A workshop focuses on the ability to persuade others. This is Selling with influence.", true],
+
+    ["Trainees mainly watch and listen to an instructor. This describes The Lecture method.", true],
+
+    ["A manager coaches a salesperson in a restaurant or motel room. This is typical of The Personal Conference.", true],
+
+    ["A trainer shows how a new product works and how to sell it. This is a Demonstration.", true],
+
+    ["Trainees act out artificial problem scenarios. This is Role Playing.", true],
+
+    ["Participants discuss a written business situation instead of relying only on real experience. This is Case Discussion.", true],
+
+    ["In a buzz session, each person gives a short talk about an everyday problem. This is Impromptu Discussion.", true],
+
+    ["Trainees participate in a complex artificial situation based on real conditions. This is Gaming (simulation).", true]
+
+];
+
+
+/* =========================================================
+   ENUMERATION
+   ========================================================= */
+
+const ENUMERATION = [
+
+    {
+        question: "Enumerate the five objectives of Sales Training discussed in Chapter 4.",
+        answers: [
+            "Improve Company Knowledge",
+            "Clarify Responsibilities and Expectations",
+            "Improve Product Knowledge",
+            "Enhance Sales Skills",
+            "Improve Morale"
+        ],
+        explanation: "The five objectives are Improve Company Knowledge, Clarify Responsibilities and Expectations, Improve Product Knowledge, Enhance Sales Skills, and Improve Morale."
+    },
+
+    {
+        question: "Enumerate the four benefits of Sales Training discussed in Chapter 4.",
+        answers: [
+            "Promote a company-wide sales culture",
+            "Make everyone speak the same language",
+            "Connect relationships across the organization",
+            "Produce alliances between departments"
+        ],
+        explanation: "The four benefits are Promote a company-wide sales culture, Make everyone speak the same language, Connect relationships across the organization, and Produce alliances between departments."
+    },
+
+    {
+        question: "Enumerate the three Initial Training Needs discussed in Chapter 4.",
+        answers: [
+            "Job Specifications",
+            "Trainee's Background and Experience",
+            "Sales-Related Marketing Policies"
+        ],
+        explanation: "The three initial training needs are Job Specifications, Trainee's Background and Experience, and Sales-Related Marketing Policies."
+    },
+
+    {
+        question: "Enumerate the four main topics under Training Content discussed in Chapter 4.",
+        answers: [
+            "Product data",
+            "Sales technique",
+            "Markets",
+            "Company information"
+        ],
+        explanation: "The four training content topics are Product data, Sales technique, Markets, and Company information."
+    },
+
+    {
+        question: "Enumerate the four Instructional Materials and Training Aids discussed in Chapter 4.",
+        answers: [
+            "Manuals",
+            "Other printed materials",
+            "Training aids",
+            "Advance assignments"
+        ],
+        explanation: "The four items are Manuals, Other printed materials, Training aids (especially the blackboard), and Advance assignments."
+    },
+
+    {
+        question: "Enumerate the five steps in the training process for sales recruits.",
+        answers: [
+            "Observe",
+            "Learn",
+            "Practice",
+            "Shadow",
+            "Prove"
+        ],
+        explanation: "The five-step process is Observe, Learn, Practice, Shadow, and Prove."
+    },
+
+    {
+        question: "Enumerate the nine tips on how new hires could get started.",
+        answers: [
+            "Expedite the paperwork",
+            "Make salespeople show value from day one",
+            "Share the load",
+            "Salesperson-to-salesperson training",
+            "Mentoring approach to success",
+            "Generate a viable environment",
+            "Assemble tactical teams",
+            "Produce a 90-day action plan",
+            "Keeping on the right track"
+        ],
+        explanation: "The nine tips are Expedite the paperwork, Make salespeople show value from day one, Share the load, Salesperson-to-salesperson training, Mentoring approach to success, Generate a viable environment, Assemble tactical teams, Produce a 90-day action plan, and Keeping on the right track."
+    },
+
+    {
+        question: "Enumerate the three guidelines for Training Experienced Salespeople.",
+        answers: [
+            "Make use of their sales experience and expertise",
+            "Center on advanced concepts",
+            "Make it application-oriented, not theoretical"
+        ],
+        explanation: "The three guidelines are Make use of their sales experience and expertise, Center on advanced concepts, and Make it application-oriented, not theoretical."
+    },
+
+    {
+        question: "Enumerate the eight recommended workshops for experienced sales professionals.",
+        answers: [
+            "Sales negotiation skills",
+            "Key account management",
+            "Sales prospecting and business development",
+            "High-performance selling",
+            "Writing a winning proposal",
+            "Presenting with impact",
+            "Team selling",
+            "Selling with influence"
+        ],
+        explanation: "The eight workshops are Sales negotiation skills, Key account management, Sales prospecting and business development, High-performance selling, Writing a winning proposal, Presenting with impact, Team selling, and Selling with influence."
+    },
+
+    {
+        question: "Enumerate the eight Sales Training Methods discussed in Chapter 4.",
+        answers: [
+            "The Lecture",
+            "The Personal Conference",
+            "Demonstrations",
+            "Role Playing",
+            "Case Discussion",
+            "Impromptu Discussion",
+            "Gaming",
+            "On-the-Job Training"
+        ],
+        explanation: "The eight methods are The Lecture, The Personal Conference, Demonstrations, Role Playing, Case Discussion, Impromptu Discussion, Gaming, and On-the-Job Training."
+    }
+
+];
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let quizQuestions = [];
+
+let currentQuestion = 0;
+
+let score = 0;
+
+let answers = [];
+
+let selectedType = "mc";
+
+let selectedStyle = "direct";
+
+let selectedOrder = "ordered";
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
+
+const startScreen =
+    document.getElementById("startScreen");
+
+const quizScreen =
+    document.getElementById("quizScreen");
+
+const resultScreen =
+    document.getElementById("resultScreen");
+
+const questionType =
+    document.getElementById("questionType");
+
+const questionStyle =
+    document.getElementById("questionStyle");
+
+const questionOrder =
+    document.getElementById("questionOrder");
+
+const startButton =
+    document.getElementById("startButton");
+
+const backButton =
+    document.getElementById("backButton");
+
+const skipButton =
+    document.getElementById("skipButton");
+
+const restartButton =
+    document.getElementById("restartButton");
+
+const nextButton =
+    document.getElementById("nextButton");
+
+const reviewButton =
+    document.getElementById("reviewButton");
+
+const resultRestartButton =
+    document.getElementById("resultRestartButton");
+
+
+/* =========================================================
+   SHUFFLE
+   ========================================================= */
+
+function shuffle(array){
+
+    const result = [...array];
+
+    for(
+        let i = result.length - 1;
+        i > 0;
+        i--
+    ){
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [
+            result[i],
+            result[j]
+        ] =
+        [
+            result[j],
+            result[i]
+        ];
+
+    }
+
+    return result;
+}
+
+
+/* =========================================================
+   NORMALIZE ANSWER
+   ========================================================= */
+
+function normalize(text){
+
+    return String(text)
+        .toLowerCase()
+        .replace(/[.,!?;:'"()]/g,"")
+        .replace(/\s+/g," ")
+        .trim();
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   BUILD MULTIPLE CHOICE — DIRECT
+   ========================================================= */
+
+function buildMCDirect(){
+
+    return FACTS.map(
+        (fact,index)=>{
+
+            const otherAnswers =
+                shuffle(
+                    FACTS.filter(
+                        item =>
+                            item.term !==
+                            fact.term
+                    )
+                )
+                .slice(0,3)
+                .map(
+                    item =>
+                        item.term
+                );
+
+            const choices =
+                shuffle([
+                    fact.term,
+                    ...otherAnswers
+                ]);
+
+            return {
+
+                id:
+                    "mc-direct-" + index,
+
+                type:
+                    "Multiple Choice",
+
+                style:
+                    "Direct",
+
+                question:
+                    `Which of the following is described by this definition?\n\n"${fact.definition}"`,
+
+                choices:
+                    choices,
+
+                correctIndex:
+                    choices.indexOf(
+                        fact.term
+                    ),
+
+                correctText:
+                    fact.term,
+
+                explanation:
+                    `${fact.term} is the concept described by the definition.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BUILD MULTIPLE CHOICE — SITUATIONAL
+   ========================================================= */
+
+function buildMCSituational(){
+
+    return SITUATIONS.map(
+        (item,index)=>{
+
+            const distractors =
+                shuffle(
+                    SITUATIONS.filter(
+                        x =>
+                            x.term !==
+                            item.term
+                    )
+                )
+                .slice(0,3)
+                .map(
+                    x =>
+                        x.term
+                );
+
+            const choices =
+                shuffle([
+                    item.term,
+                    ...distractors
+                ]);
+
+            return {
+
+                id:
+                    "mc-situational-" + index,
+
+                type:
+                    "Multiple Choice",
+
+                style:
+                    "Situational",
+
+                question:
+                    `${item.situation}\n\nWhich Chapter 4 concept is being demonstrated?`,
+
+                choices:
+                    choices,
+
+                correctIndex:
+                    choices.indexOf(
+                        item.term
+                    ),
+
+                correctText:
+                    item.term,
+
+                explanation:
+                    `The situation demonstrates ${item.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION — DIRECT
+   ========================================================= */
+
+function buildIdentificationDirect(){
+
+    return FACTS.map(
+        (fact,index)=>{
+
+            return {
+
+                id:
+                    "id-direct-" + index,
+
+                type:
+                    "Identification",
+
+                style:
+                    "Direct",
+
+                question:
+                    `Identify the concept described below.\n\n"${fact.definition}"`,
+
+                correctText:
+                    fact.term,
+
+                explanation:
+                    `The correct answer is ${fact.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION — SITUATIONAL
+   ========================================================= */
+
+function buildIdentificationSituational(){
+
+    return SITUATIONS.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "id-situational-" + index,
+
+                type:
+                    "Identification",
+
+                style:
+                    "Situational",
+
+                question:
+                    `${item.situation}\n\nIdentify the Chapter 4 concept being demonstrated.`,
+
+                correctText:
+                    item.term,
+
+                explanation:
+                    `The correct concept is ${item.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE — DIRECT
+   ========================================================= */
+
+function buildTFDirect(){
+
+    return TF_DIRECT.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "tf-direct-" + index,
+
+                type:
+                    "True / False",
+
+                style:
+                    "Direct",
+
+                question:
+                    item[0],
+
+                correct:
+                    item[1],
+
+                correctText:
+                    item[1]
+                        ? "True"
+                        : "False",
+
+                explanation:
+                    item[1]
+                        ? "The statement agrees with the Chapter 4 presentation."
+                        : "The statement is misleading or contradicts the Chapter 4 presentation."
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE — SITUATIONAL
+   ========================================================= */
+
+function buildTFSituational(){
+
+    return TF_SITUATIONAL.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "tf-situational-" + index,
+
+                type:
+                    "True / False",
+
+                style:
+                    "Situational",
+
+                question:
+                    item[0],
+
+                correct:
+                    item[1],
+
+                correctText:
+                    item[1]
+                        ? "True"
+                        : "False",
+
+                explanation:
+                    item[1]
+                        ? "The situation correctly represents the Chapter 4 concept."
+                        : "The situation does not correctly represent the Chapter 4 concept."
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ENUMERATION
+   ========================================================= */
+
+function buildEnumeration(){
+
+    return ENUMERATION.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "enumeration-" + index,
+
+                type:
+                    "Enumeration",
+
+                style:
+                    "Direct",
+
+                question:
+                    item.question,
+
+                answers:
+                    item.answers,
+
+                correctText:
+                    item.answers.join("; "),
+
+                explanation:
+                    item.explanation
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BUILD SELECTED QUIZ
+   ========================================================= */
+
+function buildQuiz(){
+
+    if(
+        selectedType === "mc"
+    ){
+
+        if(
+            selectedStyle === "direct"
+        ){
+
+            return buildMCDirect();
+
+        }
+
+        return buildMCSituational();
+
+    }
+
+
+    if(
+        selectedType === "identification"
+    ){
+
+        if(
+            selectedStyle === "direct"
+        ){
+
+            return buildIdentificationDirect();
+
+        }
+
+        return buildIdentificationSituational();
+
+    }
+
+
+    if(
+        selectedType === "tf"
+    ){
+
+        if(
+            selectedStyle === "direct"
+        ){
+
+            return buildTFDirect();
+
+        }
+
+        return buildTFSituational();
+
+    }
+
+
+    if(
+        selectedType === "enumeration"
+    ){
+
+        return buildEnumeration();
+
+    }
+
+
+    return [];
+
+}
+
+
+/* =========================================================
+   UPDATE NOTICE COUNT
+   ========================================================= */
+
+function updateNoticeCount(){
+
+    const count = FACTS.length;
+    const el = document.getElementById("standardCount");
+    if(el){
+        el.textContent = count;
+    }
+
+}
+
+
+/* =========================================================
+   START QUIZ
+   ========================================================= */
+
+function startQuiz(){
+
+    selectedType =
+        questionType.value;
+
+    selectedStyle =
+        questionStyle.value;
+
+    selectedOrder =
+        questionOrder.value;
+
+
+    quizQuestions =
+        buildQuiz();
+
+
+    if(
+        selectedOrder === "random"
+    ){
+
+        quizQuestions =
+            shuffle(
+                quizQuestions
+            );
+
+    }
+
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answers = [];
+
+
+    startScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.add(
+        "hidden"
+    );
+
+    quizScreen.classList.remove(
+        "hidden"
+    );
+
+
+    renderQuestion();
+
+}
+
+
+/* =========================================================
+   RENDER QUESTION
+   ========================================================= */
+
+function renderQuestion(){
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    if(!q){
+
+        finishQuiz();
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "questionCounter"
+    ).textContent =
+        `Question ${currentQuestion + 1} of ${quizQuestions.length}`;
+
+
+    document.getElementById(
+        "scoreDisplay"
+    ).textContent =
+        `Score: ${score}`;
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        `${((currentQuestion + 1) / quizQuestions.length) * 100}%`;
+
+
+    document.getElementById(
+        "typeBadge"
+    ).textContent =
+        q.type;
+
+
+    document.getElementById(
+        "styleBadge"
+    ).textContent =
+        q.style;
+
+
+    document.getElementById(
+        "questionText"
+    ).textContent =
+        q.question;
+
+
+    const answerArea =
+        document.getElementById(
+            "answerArea"
+        );
+
+
+    answerArea.innerHTML = "";
+
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    feedback.className =
+        "feedback";
+
+
+    feedback.innerHTML =
+        "";
+
+
+    nextButton.classList.add(
+        "hidden"
+    );
+
+
+    backButton.disabled =
+        currentQuestion === 0;
+
+
+    skipButton.disabled =
+        false;
+
+
+    /* =====================================================
+       MULTIPLE CHOICE
+       ===================================================== */
+
+    if(
+        q.type === "Multiple Choice"
+    ){
+
+        const choices =
+            document.createElement(
+                "div"
+            );
+
+        choices.className =
+            "choices";
+
+
+        q.choices.forEach(
+            (choice,index)=>{
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.className =
+                    "choice";
+
+
+                button.innerHTML =
+                    `
+                    <span class="choice-letter">
+                        ${String.fromCharCode(65 + index)}
+                    </span>
+                    ${escapeHTML(choice)}
+                    `;
+
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        answerMultipleChoice(
+                            index
+                        );
+
+                    }
+                );
+
+
+                choices.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        answerArea.appendChild(
+            choices
+        );
+
+    }
+
+
+    /* =====================================================
+       TRUE / FALSE
+       ===================================================== */
+
+    else if(
+        q.type === "True / False"
+    ){
+
+        const choices =
+            document.createElement(
+                "div"
+            );
+
+        choices.className =
+            "choices";
+
+
+        ["True","False"]
+        .forEach(
+            value=>{
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.className =
+                    "choice";
+
+                button.textContent =
+                    value;
+
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        answerTrueFalse(
+                            value === "True"
+                        );
+
+                    }
+                );
+
+
+                choices.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        answerArea.appendChild(
+            choices
+        );
+
+    }
+
+
+    /* =====================================================
+       IDENTIFICATION
+       ===================================================== */
+
+    else if(
+        q.type === "Identification"
+    ){
+
+        answerArea.innerHTML =
+            `
+            <div class="text-answer">
+
+                <input
+                    type="text"
+                    id="textAnswer"
+                    placeholder="Type your answer here..."
+                    autocomplete="off"
+                >
+
+                <button
+                    id="submitIdentification"
+                    class="primary">
+
+                    Submit Answer
+
+                </button>
+
+            </div>
+            `;
+
+
+        document
+            .getElementById(
+                "submitIdentification"
+            )
+            .addEventListener(
+                "click",
+                answerIdentification
+            );
+
+
+        document
+            .getElementById(
+                "textAnswer"
+            )
+            .addEventListener(
+                "keydown",
+                function(event){
+
+                    if(
+                        event.key === "Enter"
+                    ){
+
+                        answerIdentification();
+
+                    }
+
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       ENUMERATION
+       ===================================================== */
+
+    else if(
+        q.type === "Enumeration"
+    ){
+
+        let html =
+            `<div class="enumeration-inputs">`;
+
+
+        q.answers.forEach(
+            (answer,index)=>{
+
+                html +=
+                    `
+                    <div class="enum-row">
+
+                        <div class="enum-number">
+                            ${index + 1}.
+                        </div>
+
+                        <input
+                            type="text"
+                            id="enumInput${index}"
+                            placeholder="Enter answer ${index + 1}"
+                        >
+
+                    </div>
+                    `;
+
+            }
+        );
+
+
+        html +=
+            `
+            </div>
+
+            <br>
+
+            <button
+                id="submitEnumeration"
+                class="primary">
+
+                Submit Answers
+
+            </button>
+            `;
+
+
+        answerArea.innerHTML =
+            html;
+
+
+        document
+            .getElementById(
+                "submitEnumeration"
+            )
+            .addEventListener(
+                "click",
+                answerEnumeration
+            );
+
+    }
+
+
+    restoreSavedAnswer();
+
+}
+
+
+/* =========================================================
+   MULTIPLE CHOICE ANSWER
+   ========================================================= */
+
+function answerMultipleChoice(index){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const isCorrect =
+        index === q.correctIndex;
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            q.choices[index],
+
+        correct:
+            isCorrect
+
+    };
+
+
+    const buttons =
+        document.querySelectorAll(
+            "#answerArea .choice"
+        );
+
+
+    buttons.forEach(
+        (button,i)=>{
+
+            button.disabled =
+                true;
+
+
+            if(
+                i === q.correctIndex
+            ){
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+
+            if(
+                i === index &&
+                !isCorrect
+            ){
+
+                button.classList.add(
+                    "wrong"
+                );
+
+            }
+
+        }
+    );
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE ANSWER
+   ========================================================= */
+
+function answerTrueFalse(value){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const isCorrect =
+        value === q.correct;
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            value
+                ? "True"
+                : "False",
+
+        correct:
+            isCorrect
+
+    };
+
+
+    const buttons =
+        document.querySelectorAll(
+            "#answerArea .choice"
+        );
+
+
+    buttons.forEach(
+        button=>{
+
+            button.disabled =
+                true;
+
+
+            if(
+                button.textContent ===
+                q.correctText
+            ){
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+
+            if(
+                button.textContent ===
+                (
+                    value
+                        ? "True"
+                        : "False"
+                ) &&
+                !isCorrect
+            ){
+
+                button.classList.add(
+                    "wrong"
+                );
+
+            }
+
+        }
+    );
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION ANSWER
+   ========================================================= */
+
+function answerIdentification(){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "textAnswer"
+        );
+
+
+    const entered =
+        input.value.trim();
+
+
+    if(!entered){
+
+        alert(
+            "Please enter an answer."
+        );
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const isCorrect =
+        normalize(entered) ===
+        normalize(q.correctText);
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            entered,
+
+        correct:
+            isCorrect
+
+    };
+
+
+    input.disabled =
+        true;
+
+
+    document
+        .getElementById(
+            "submitIdentification"
+        )
+        .disabled =
+            true;
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   ENUMERATION ANSWER
+   ========================================================= */
+
+function answerEnumeration(){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const entered = [];
+
+
+    for(
+        let i = 0;
+        i < q.answers.length;
+        i++
+    ){
+
+        const input =
+            document.getElementById(
+                `enumInput${i}`
+            );
+
+
+        if(
+            !input.value.trim()
+        ){
+
+            alert(
+                "Please answer all items."
+            );
+
+            return;
+
+        }
+
+
+        entered.push(
+            input.value.trim()
+        );
+
+    }
+
+
+    /*
+       Enumeration checking: order is flexible
+       for most lists unless the chapter requires
+       a specific sequence (e.g., the 5-step process).
+       We accept answers in any order by sorting
+       normalized versions for comparison, except
+       for the ordered 5-step process.
+    */
+
+    let isCorrect = true;
+
+    const requireOrder =
+        q.id === "enumeration-5" || // five-step process
+        q.question.toLowerCase().includes("five steps") ||
+        q.question.toLowerCase().includes("five-step");
+
+
+    if(
+        entered.length !==
+        q.answers.length
+    ){
+
+        isCorrect = false;
+
+    }
+    else if(requireOrder){
+
+        for(
+            let i = 0;
+            i < q.answers.length;
+            i++
+        ){
+
+            if(
+                normalize(entered[i]) !==
+                normalize(q.answers[i])
+            ){
+
+                isCorrect = false;
+                break;
+
+            }
+
+        }
+
+    }
+    else{
+
+        const normalizedEntered =
+            entered.map(normalize).sort();
+
+        const normalizedCorrect =
+            q.answers.map(normalize).sort();
+
+        for(
+            let i = 0;
+            i < normalizedCorrect.length;
+            i++
+        ){
+
+            if(
+                normalizedEntered[i] !==
+                normalizedCorrect[i]
+            ){
+
+                isCorrect = false;
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            entered.join(" | "),
+
+        correct:
+            isCorrect
+
+    };
+
+
+    document
+        .querySelectorAll(
+            "#answerArea input"
+        )
+        .forEach(
+            input =>
+                input.disabled = true
+        );
+
+
+    document
+        .getElementById(
+            "submitEnumeration"
+        )
+        .disabled =
+            true;
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   SHOW FEEDBACK
+   ========================================================= */
+
+function showFeedback(
+    isCorrect,
+    explanation,
+    correctAnswer
+){
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    feedback.className =
+        "feedback show " +
+        (
+            isCorrect
+                ? "correct"
+                : "incorrect"
+        );
+
+
+    feedback.innerHTML =
+        `
+        <div class="feedback-title">
+
+            ${
+                isCorrect
+                    ? "✓ Correct!"
+                    : "✗ Incorrect"
+            }
+
+        </div>
+
+        <div>
+            ${escapeHTML(
+                explanation
+            )}
+        </div>
+
+        <div style="margin-top:8px;">
+
+            <b>Correct answer:</b>
+            ${escapeHTML(
+                correctAnswer
+            )}
+
+        </div>
+        `;
+
+
+    document.getElementById(
+        "scoreDisplay"
+    ).textContent =
+        `Score: ${score}`;
+
+
+    skipButton.disabled =
+        true;
+
+
+    nextButton.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   SKIP
+   ========================================================= */
+
+function skipQuestion(){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:true,
+
+        answer:"Skipped",
+
+        correct:false
+
+    };
+
+
+    showFeedback(
+        false,
+        "You skipped this question. No point was awarded.",
+        q.correctText ||
+        (
+            q.answers
+                ? q.answers.join("; ")
+                : ""
+        )
+    );
+
+}
+
+
+/* =========================================================
+   NEXT
+   ========================================================= */
+
+function nextQuestion(){
+
+    if(
+        currentQuestion <
+        quizQuestions.length - 1
+    ){
+
+        currentQuestion++;
+
+        renderQuestion();
+
+    }
+    else{
+
+        finishQuiz();
+
+    }
+
+}
+
+
+/* =========================================================
+   BACK
+   ========================================================= */
+
+function goBack(){
+
+    if(
+        currentQuestion <= 0
+    ){
+
+        return;
+
+    }
+
+
+    currentQuestion--;
+
+    renderQuestion();
+
+}
+
+
+/* =========================================================
+   RESTORE PREVIOUS ANSWER
+   ========================================================= */
+
+function restoreSavedAnswer(){
+
+    const saved =
+        answers[currentQuestion];
+
+
+    if(!saved){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    /* =====================================================
+       MULTIPLE CHOICE
+       ===================================================== */
+
+    if(
+        q.type === "Multiple Choice"
+    ){
+
+        const buttons =
+            document.querySelectorAll(
+                "#answerArea .choice"
+            );
+
+
+        buttons.forEach(
+            (button,index)=>{
+
+                button.disabled =
+                    true;
+
+
+                if(
+                    index ===
+                    q.correctIndex
+                ){
+
+                    button.classList.add(
+                        "correct"
+                    );
+
+                }
+
+
+                if(
+                    button.textContent
+                        .replace(/^[A-D]\s*/,"")
+                        .trim() ===
+                    saved.answer &&
+                    !saved.correct
+                ){
+
+                    button.classList.add(
+                        "wrong"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       TRUE / FALSE
+       ===================================================== */
+
+    else if(
+        q.type === "True / False"
+    ){
+
+        const buttons =
+            document.querySelectorAll(
+                "#answerArea .choice"
+            );
+
+
+        buttons.forEach(
+            button=>{
+
+                button.disabled =
+                    true;
+
+
+                if(
+                    button.textContent ===
+                    q.correctText
+                ){
+
+                    button.classList.add(
+                        "correct"
+                    );
+
+                }
+
+
+                if(
+                    button.textContent ===
+                    saved.answer &&
+                    !saved.correct
+                ){
+
+                    button.classList.add(
+                        "wrong"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       IDENTIFICATION
+       ===================================================== */
+
+    else if(
+        q.type === "Identification"
+    ){
+
+        const input =
+            document.getElementById(
+                "textAnswer"
+            );
+
+
+        if(input){
+
+            input.value =
+                saved.answer;
+
+            input.disabled =
+                true;
+
+        }
+
+
+        const submit =
+            document.getElementById(
+                "submitIdentification"
+            );
+
+
+        if(submit){
+
+            submit.disabled =
+                true;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ENUMERATION
+       ===================================================== */
+
+    else if(
+        q.type === "Enumeration"
+    ){
+
+        const values =
+            saved.answer.split(
+                " | "
+            );
+
+
+        values.forEach(
+            (value,index)=>{
+
+                const input =
+                    document.getElementById(
+                        `enumInput${index}`
+                    );
+
+
+                if(input){
+
+                    input.value =
+                        value;
+
+                    input.disabled =
+                        true;
+
+                }
+
+            }
+        );
+
+
+        const submit =
+            document.getElementById(
+                "submitEnumeration"
+            );
+
+
+        if(submit){
+
+            submit.disabled =
+                true;
+
+        }
+
+    }
+
+
+    showFeedback(
+        saved.correct,
+        q.explanation,
+        q.correctText ||
+        (
+            q.answers
+                ? q.answers.join("; ")
+                : ""
+        )
+    );
+
+}
+
+
+/* =========================================================
+   FINISH QUIZ
+   ========================================================= */
+
+function finishQuiz(){
+
+    quizScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.remove(
+        "hidden"
+    );
+
+
+    const total =
+        quizQuestions.length;
+
+
+    const percentage =
+        total === 0
+            ? 0
+            : Math.round(
+                (score / total) * 100
+            );
+
+
+    document.getElementById(
+        "resultScore"
+    ).textContent =
+        `${score} / ${total}`;
+
+
+    document.getElementById(
+        "resultPercent"
+    ).textContent =
+        `${percentage}%`;
+
+
+    let message;
+
+
+    if(
+        percentage >= 90
+    ){
+
+        message =
+            "Excellent work! You have a strong understanding of Chapter 4.";
+
+    }
+    else if(
+        percentage >= 75
+    ){
+
+        message =
+            "Good job! You have a solid understanding of the chapter.";
+
+    }
+    else if(
+        percentage >= 60
+    ){
+
+        message =
+            "Not bad. Review the chapter and try again.";
+
+    }
+    else{
+
+        message =
+            "Keep studying. Review Chapter 4 and try the quiz again.";
+
+    }
+
+
+    document.getElementById(
+        "resultMessage"
+    ).textContent =
+        message;
+
+}
+
+
+/* =========================================================
+   REVIEW ANSWERS
+   ========================================================= */
+
+function showReview(){
+
+    const area =
+        document.getElementById(
+            "reviewArea"
+        );
+
+
+    if(
+        !area.classList.contains(
+            "hidden"
+        )
+    ){
+
+        area.classList.add(
+            "hidden"
+        );
+
+        return;
+
+    }
+
+
+    area.classList.remove(
+        "hidden"
+    );
+
+
+    let html =
+        "<h2>Answer Review</h2>";
+
+
+    quizQuestions.forEach(
+        (q,index)=>{
+
+            const result =
+                answers[index];
+
+
+            let status =
+                "Not answered";
+
+
+            let statusClass =
+                "skipped";
+
+
+            let userAnswer =
+                "Not answered";
+
+
+            if(result){
+
+                userAnswer =
+                    result.answer;
+
+
+                if(
+                    result.skipped
+                ){
+
+                    status =
+                        "Skipped";
+
+                    statusClass =
+                        "skipped";
+
+                }
+                else if(
+                    result.correct
+                ){
+
+                    status =
+                        "Correct";
+
+                    statusClass =
+                        "correct";
+
+                }
+                else{
+
+                    status =
+                        "Incorrect";
+
+                    statusClass =
+                        "incorrect";
+
+                }
+
+            }
+
+
+            const correctAnswer =
+                q.correctText ||
+                (
+                    q.answers
+                        ? q.answers.join("; ")
+                        : ""
+                );
+
+
+            html +=
+                `
+                <div class="review-item">
+
+                    <b>
+                        ${index + 1}.
+                        ${escapeHTML(
+                            q.question
+                        )}
+                    </b>
+
+                    <br><br>
+
+                    <b>Your answer:</b>
+                    ${escapeHTML(
+                        userAnswer
+                    )}
+
+                    <br>
+
+                    <b>Correct answer:</b>
+                    ${escapeHTML(
+                        correctAnswer
+                    )}
+
+                    <br><br>
+
+                    <span class="review-status ${statusClass}">
+
+                        ${status}
+
+                    </span>
+
+                </div>
+                `;
+
+        }
+    );
+
+
+    area.innerHTML =
+        html;
+
+}
+
+
+/* =========================================================
+   RESTART
+   ========================================================= */
+
+function restartQuiz(){
+
+    quizQuestions = [];
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answers = [];
+
+
+    quizScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.add(
+        "hidden"
+    );
+
+
+    document
+        .getElementById(
+            "reviewArea"
+        )
+        .classList
+        .add("hidden");
+
+
+    startScreen.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   BUTTON EVENTS
+   ========================================================= */
+
+startButton.addEventListener(
+    "click",
+    startQuiz
+);
+
+
+backButton.addEventListener(
+    "click",
+    goBack
+);
+
+
+skipButton.addEventListener(
+    "click",
+    skipQuestion
+);
+
+
+restartButton.addEventListener(
+    "click",
+    restartQuiz
+);
+
+
+nextButton.addEventListener(
+    "click",
+    nextQuestion
+);
+
+
+reviewButton.addEventListener(
+    "click",
+    showReview
+);
+
+
+resultRestartButton.addEventListener(
+    "click",
+    restartQuiz
+);
+
+
+/* Update the displayed standard question count on load */
+updateNoticeCount();
+
+</script>
+
+</body>
+</html>
+Build Sales Management Quiz - Grok
