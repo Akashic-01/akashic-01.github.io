@@ -501,9 +501,8 @@ window.CHAPTER_CONTENT = {
     </ul>
   `,
   'sales-7': `
-    <p>It is a must to make every investment in the salesforce count when people and resources are scarce and expensive. The salesforce is a major growth engine and a critical source of market feedback. Leading the effective sales force helps optimize performance by learning to cut costs while increasing sales.</p>
+    <p>After studying this chapter, the students should be able to:</p>
 
-    <h3>Objectives</h3>
     <ol>
       <li>Understand the foundations of sales leadership and supervision;</li>
       <li>Describe the modern views of sales leadership;</li>
@@ -513,126 +512,147 @@ window.CHAPTER_CONTENT = {
       <li>Identify problems in leadership.</li>
     </ol>
 
+    <p>It is a must to make every investment in the salesforce count when people and resources are scarce and expensive. The salesforce is a major growth engine and a critical source of market feedback. Leading the effective sales force helps optimize performance by learning to cut costs while increasing sales.</p>
+
     <h3>Foundations of Sales Leadership and Supervision</h3>
-    <p><strong>Leadership</strong> is the interpersonal process of communicating, inspiring, guiding, and influencing the behavior of subordinate salespeople toward the attainment of organizational objectives, goals, and values.</p>
-    <p>Important elements in sales force leadership are as follows:</p>
+
+    <p>Leadership &ndash; the interpersonal process of communicating, inspiring, guiding, and influencing the behavior of subordinate salespeople toward the attainment of organizational objectives, goals, and values.</p>
+
+    <p><strong>Important elements in sales force leadership are as follows:</strong></p>
+
     <ol>
-      <li><strong>Leadership is interpersonal</strong> &mdash; it affects the followers who must be agreeable to accept orders from the sales manager or supervisor.</li>
-      <li><strong>Leadership relies on influence</strong> &mdash; influence comes from the different types of power. Power is the potential to influence the behavior of followers. Sources of power:
-        <ul>
-          <li><strong>Legitimate power</strong> &mdash; comes from the sales manager's position in the company's hierarchical structure and level of responsibility (also called authority).</li>
-          <li><strong>Reward power</strong> &mdash; ability to provide benefits such as salary, commissions, bonuses, incentives, promotions, preferred territories, and challenging assignments.</li>
-          <li><strong>Coercive power</strong> &mdash; ability to hold back rewards or punish salespeople to transform behavior.</li>
-          <li><strong>Referent power</strong> &mdash; comes from salespeople who admire the manager because of personal traits and charisma.</li>
-          <li><strong>Expert power</strong> &mdash; comes from the sales manager's skills, knowledge, and special abilities.</li>
-        </ul>
+      <li>Leadership is interpersonal &ndash; It affects the followers who must be agreeable to accept orders from the sales manager or supervisor.</li>
+      <li>Leadership relies on influence &ndash; Influence comes from the different types of power. Power is the potential to influence the behavior of followers. Sources of power:
+        <ol type="a">
+          <li>Legitimate power &ndash; Comes from the sales manager&rsquo;s position in the company&rsquo;s hierarchical structure and level of responsibility (also called authority).</li>
+          <li>Reward power &ndash; Ability to provide benefits such as salary, commissions, bonuses, incentives, promotions, preferred territories, and challenging assignments.</li>
+          <li>Coercive power &ndash; Ability to hold back rewards or punish salespeople to transform behavior.</li>
+          <li>Referent power &ndash; Comes from salespeople who admire the manager because of personal traits and charisma.</li>
+          <li>Expert power &ndash; Comes from the sales manager&rsquo;s skills, knowledge, and special abilities.</li>
+        </ol>
       </li>
-      <li><strong>Leaders guide salespeople to reach individual and organizational goals</strong> &mdash; includes setting goals, guiding, clarifying, charting paths, and offering inspiration.</li>
-      <li><strong>Leaders advocate ethical and moral values</strong> &mdash; sales leaders serve as models of fair, decent, and professional selling.</li>
+      <li>Leaders guide salespeople to reach individual and organizational goals &ndash; Includes setting goals, guiding, clarifying, charting paths, and offering inspiration.</li>
+      <li>Leaders advocate ethical and moral values &ndash; Sales leaders serve as models of fair, decent, and professional selling.</li>
     </ol>
-    <p><strong>Supervision</strong> is the close checking of the daily work activities of the salespeople. Close supervision becomes less apparent as the level in the sales management hierarchy levels up. The goal of supervision is to assist salespeople to work smartly by doing the right things in the right ways.</p>
+
+    <p>Supervision &ndash; close checking of the daily work activities of the salespeople. Close supervision becomes less apparent as the level in the sales management hierarchy levels up.</p>
+
+    <p>Goal of supervision &ndash; Assist salespeople to work smartly by doing the right things in the right ways.</p>
 
     <h3>Components of Sales Leadership</h3>
-    <p>Common skills and traits of effective sales leaders:</p>
+
+    <p><strong>Common skills/traits of effective sales leaders:</strong></p>
 
     <p><strong>Honesty and Integrity</strong></p>
+
     <ul>
       <li>Great sales leaders form an organizational culture founded on honesty and integrity.</li>
       <li>Effective sales leaders must be truthful and committed to the highest standards of ethical conduct.</li>
       <li>They willingly acknowledge their faults.</li>
       <li>They put the welfare of the organization before individual benefit.</li>
-      <li>Transparency is essential &mdash; letting everyone know both the bad and the good builds trust.</li>
+      <li>Transparency is essential &ndash; letting everyone know both the bad and the good builds trust.</li>
     </ul>
 
-    <p><strong>Outstanding Self-Awareness</strong></p>
+    <p><strong>Outstanding Self Awareness</strong></p>
+
     <ul>
       <li>A sales leader must be aware of individual strengths and weaknesses.</li>
-      <li>Acknowledge limitations and seek help &mdash; this shows humility.</li>
+      <li>Acknowledge limitations and seek help &ndash; this shows humility.</li>
       <li>Welcome feedback and opposing opinions; generate healthy discussions.</li>
-      <li>Apply servant-style leadership &mdash; lend a hand rather than just telling others what to do.</li>
+      <li>Apply servant style leadership &ndash; lend a hand rather than just telling others what to do.</li>
       <li>Show empathy, demonstrate humility, and be concerned about others.</li>
       <li>Obtain 360-degree feedback from the sales team.</li>
     </ul>
 
     <p><strong>Vision</strong></p>
+
     <ul>
       <li>Outstanding sales leaders visualize the entire picture and do not get overly focused on particular tasks.</li>
       <li>They are strategic thinkers with well-built networks.</li>
-      <li>Extremely good at speaking a vision of the future and receiving organizational buy-in.</li>
+      <li>Extremely good in speaking a vision of the future and receiving organizational buy-in.</li>
     </ul>
 
     <p><strong>Courage</strong></p>
+
     <ul>
       <li>Confidence needs courage.</li>
-      <li>The finest leaders are decisive and willing to take risks even when conservative wisdom dictates otherwise.</li>
+      <li>Finest leaders are decisive and willing to acquire risks even when conservative wisdom dictates otherwise.</li>
       <li>Willing to stand alone if they believe in their convictions.</li>
       <li>Able to recognize when they need the expertise of others.</li>
     </ul>
 
     <p><strong>Communication Skills</strong></p>
+
     <ul>
       <li>Must be motivating and convincing (not necessarily great orators or writers).</li>
-      <li>Know how to articulate sales ideas to the audience's level.</li>
+      <li>Know how to articulate sales ideas to the audience&rsquo;s level.</li>
       <li>Communicate both orally and in writing successfully.</li>
       <li>Always be truthful and appropriately convey bad news.</li>
       <li>Display an encouraging and optimistic attitude even in disturbing times.</li>
     </ul>
 
     <p><strong>Team Builder</strong></p>
+
     <ul>
-      <li>Exceptional team-building skills &mdash; the ability to attract and keep top talent.</li>
-      <li>Forms a team with matching skill sets; searches for people better than themself.</li>
+      <li>Exceptional team building skills &ndash; ability to magnetize and keep top talent.</li>
+      <li>Form a team with matching skill sets; search for people better than him.</li>
       <li>Diversity among members increases viewpoints and prevents &ldquo;group think.&rdquo;</li>
-      <li>Acts as a facilitator who causes healthy discussions and produces agreement.</li>
+      <li>Act as a facilitator who causes healthy discussions and produces agreement.</li>
     </ul>
 
     <h3>Modern View of Sales Leadership</h3>
-    <p>Two general views of sales leadership:</p>
+
+    <p><strong>Two general views of sales leadership:</strong></p>
+
     <ol>
       <li><strong>Leadership Style</strong>
         <ul>
-          <li><strong>Transactional leadership</strong> &mdash; the sales manager gives positive or negative feedback based on effort or performance (recognition/approval or reprimands/disapproval).</li>
-          <li><strong>Transformational leadership</strong> &mdash; alters the values, attitudes, beliefs, and goals of salespeople. The primary basis of power is internalization or identification, with strong positive relationships to performance and organizational citizenship behavior.</li>
+          <li>Transactional leadership &ndash; Sales manager gives positive or negative feedback based on effort or performance (recognition/approval or reprimands/disapproval).</li>
+          <li>Transformational leadership &ndash; Alters values, attitudes, beliefs, and goals of salespeople. Primary basis of power is internalization or identification. Strong positive relationships with performance and organizational citizenship behavior.</li>
         </ul>
       </li>
       <li><strong>Leader-Member Exchange (LMX) Model</strong>
         <ul>
           <li>Focuses on sales manager&ndash;salesperson reciprocal relationships based on strength and trust.</li>
-          <li><strong>Cadres</strong> (the &ldquo;in&rdquo; group) &mdash; receive more trust, regular constructive communication, mentoring, and favorable territories.</li>
-          <li><strong>Hired hand</strong> &mdash; receives less mentoring, fewer favorable territories, and less communication.</li>
+          <li>Cadres (&ldquo;in&rdquo; group) &ndash; receive more trust, regular constructive communication, mentoring, favorable territories.</li>
+          <li>Hired hand &ndash; receive fewer mentoring, favorable territories, and communication.</li>
           <li>Shared trust influences LMX quality, job attitudes, and performance.</li>
         </ul>
       </li>
     </ol>
+
     <p><strong>Behavioral Self-Management</strong></p>
+
     <ul>
-      <li>The latest management thinking: an organized set of behavioral and cognitive strategies for higher performance.</li>
+      <li>Latest management thinking: organized set of behavioral and cognitive strategies for higher performance.</li>
       <li>Gives salespeople more command over their work (self-imposed planning, behavior, evaluation, rewards).</li>
       <li>Self-control and self-discipline are vital because many salespeople work without regular supervision.</li>
     </ul>
 
     <h3>Sales Leadership Functions</h3>
-    <p>Three of the most important sales leadership functions:</p>
+
+    <p><strong>Three of the most important sales leadership functions:</strong></p>
+
     <ol>
       <li><strong>Sales Coaching</strong>
         <ul>
           <li>A coach is a teacher, counselor, guide, cheerleader, and facilitator rolled into one.</li>
-          <li>Must know the person's motivations, appraise strengths and weaknesses, persuade, and motivate.</li>
-          <li>Coaching model: the question is also the answer &mdash; salespeople develop answers themselves.</li>
-          <li>Collaborative and interactive; uses inquiry to reach their own level of awareness.</li>
-          <li>Devotes time to one-on-one discussion; knows strengths, weaknesses, and KPIs.</li>
-          <li>Data-driven and logical; gauges hard data, then assesses advancement.</li>
+          <li>Must know the person&rsquo;s motivations, appraise strengths and weaknesses, persuade, and motivate.</li>
+          <li>Coaching model: the question is also the answer &ndash; salespeople develop answers themselves.</li>
+          <li>Collaborative and interactive; uses inquiry to reach own level of awareness.</li>
+          <li>Devote time to one-on-one discussion; know strengths, weaknesses, and KPIs.</li>
+          <li>Data-driven and logical; gauge hard data then assess advancement.</li>
           <li>Helps keep top performers and turns high performers into doubly effective ones.</li>
-          <li>Vital quality: collaboration &mdash; both co-create and put into practice a plan to advance skills, rather than just &ldquo;telling.&rdquo;</li>
+          <li>Vital quality: collaboration &ndash; both co-create and put into practice a plan to advance skills (not just &ldquo;telling&rdquo;).</li>
         </ul>
       </li>
-      <li><strong>Planning and Conducting Integrative Sales Meetings</strong>
+      <li><strong>Planning and Conducting Integrative Sales Meeting</strong>
         <ul>
-          <li>The best opportunity for sales managers to display leadership ability.</li>
-          <li>Main objective: unite salespeople toward achievement of a common goal.</li>
+          <li>Best opportunity for sales managers to display leadership ability.</li>
+          <li>Main objective: unite salespeople toward achievement of common goal.</li>
           <li>May also accomplish training, planning, motivational programs, recognition, and recreation.</li>
-          <li>The needs and wants of salespeople should be given priority.</li>
-          <li>Preparation includes picking a theme, organizing entertainers and AV materials, inspecting arrangements, and setting up supplies.</li>
+          <li>Needs and wants of salespeople should be given priority.</li>
+          <li>Preparation includes: picking a theme, organizing entertainers/AV materials, inspecting arrangements, setting up supplies.</li>
         </ul>
       </li>
       <li><strong>Meeting Ethical and Moral Responsibilities</strong>
@@ -643,96 +663,120 @@ window.CHAPTER_CONTENT = {
       </li>
     </ol>
 
-    <p>Three approaches to the management of ethics:</p>
+    <p><strong>Three approaches to management of ethics:</strong></p>
+
     <ul>
-      <li><strong>Moral Manager</strong> &mdash; dedicated to high standards of ethical behavior in personal actions and decisions. Considers themself a steward rather than an owner, and pursues success within ethical norms.</li>
-      <li><strong>Immoral Manager</strong> &mdash; has no regard for ethical standards, operating on a &ldquo;kill or be killed&rdquo; mentality and willing to short-circuit legal requirements if they can get away with it &mdash; classic self-serving greed.</li>
-      <li><strong>Amoral Manager</strong> &mdash; believes it is not necessary to consider ethical principles as long as one stays within legal bounds. This may be intentional or unintentional, and is often the result of lawyer-driven decisions.</li>
+      <li>Moral Manager &ndash; Dedicated to high standards of ethical behavior in personal actions and decisions. Considers himself a steward rather than owner. Pursues success within ethical norms.</li>
+      <li>Immoral Manager &ndash; No regard for ethical standards. &ldquo;Kill or be killed&rdquo; mentality. Willing to short-circuit legal requirements if he can get away with it. Classic self-serving greed (&ldquo;Simply Business&rdquo;).</li>
+      <li>Amoral Manager &ndash; Believes it is not necessary to consider ethical principles as long as one stays within legal bounds. May be intentional or unintentional. Often lawyer-driven decisions.</li>
     </ul>
 
-    <p>Three relevant types of unethical behavior:</p>
+    <p><strong>Three relevant types of unethical behavior:</strong></p>
+
     <ol>
-      <li><strong>Non-role act</strong> &mdash; a calculated attempt to gain something at the expense of the company (e.g., cheating on an expense account).</li>
-      <li><strong>Role failure act</strong> &mdash; failure to execute job responsibilities (e.g., understating a performance appraisal).</li>
-      <li><strong>Role distortion act</strong> &mdash; may place the person in danger while benefiting the organization (e.g., committing bribery).</li>
+      <li>Non-role act &ndash; Calculated attempt to gain something at the expense of the company (e.g., cheating on expense account).</li>
+      <li>Role failure act &ndash; Failure to execute job responsibilities (e.g., understating performance appraisal).</li>
+      <li>Role distortion act &ndash; May place the person in danger while benefiting the organization (e.g., committing bribery).</li>
     </ol>
 
     <h3>Core Sales Leadership Theories</h3>
+
     <p><strong>Trait Theories: What Type of Person Makes a Good Leader?</strong></p>
+
     <ul>
-      <li>Argue that effective leaders share common personality characteristics, or &ldquo;traits.&rdquo;</li>
-      <li>Early theories held that leadership is innate and distinctive.</li>
+      <li>Argue that effective leaders share common personality characteristics or &ldquo;traits.&rdquo;</li>
+      <li>Early theories: leadership is innate and distinctive.</li>
       <li>Examples of traits: integrity, empathy, assertiveness, good decision-making skills, likability.</li>
       <li>No single or specific combination of traits assures success.</li>
     </ul>
 
-    <p><strong>Twelve Traits of Highly Effective Sales Managers</strong> (guide):</p>
+    <p><strong>Twelve Traits of Highly Effective Sales Managers (guide):</strong></p>
+
     <ol>
-      <li><strong>Conscientiousness</strong> &mdash; take great pride in work; organized and efficient; keep going no matter what.</li>
-      <li><strong>Respectful</strong> &mdash; treat customers like gold; respect their time.</li>
-      <li><strong>Initiative</strong> &mdash; go-getters; take matters into their own hands; stay on track.</li>
-      <li><strong>They listen</strong> &mdash; ask clients why they want something done; find out wants and needs.</li>
-      <li><strong>Persistent</strong> &mdash; thick-skinned; confident and persistent despite &ldquo;no.&rdquo;</li>
-      <li><strong>Coachable</strong> &mdash; energetic, willing to learn, able to adapt; early adopter of suggestions.</li>
-      <li><strong>Positive</strong> &mdash; a cheerful attitude makes it easier to approach customers.</li>
-      <li><strong>Resourceful</strong> &mdash; shift gears; try different approaches using creativity.</li>
-      <li><strong>Passionate</strong> &mdash; actually enjoy the job and the products or services they sell.</li>
-      <li><strong>Ask questions</strong> &mdash; higher-performing reps ask more questions, often about implications.</li>
-      <li><strong>Independent</strong> &mdash; self-motivator; does not need constant supervision.</li>
-      <li><strong>Time manages</strong> &mdash; more selling time increases sales; manages routes and time effectively.</li>
-      <li><strong>Overachieve</strong> &mdash; over-commit and over-deliver; push for more.</li>
-      <li><strong>Persuasible</strong> &mdash; enjoy meeting new people; the power of networking.</li>
-      <li><strong>Alertness</strong> &mdash; always prepared; aware of self and situation.</li>
+      <li>Conscientiousness &ndash; Take great pride in work; organized and efficient; keep going no matter what.</li>
+      <li>Respectful &ndash; Treat customers like gold; respect their time.</li>
+      <li>Initiative &ndash; Go-getters; take matters into their own hands; stay on track.</li>
+      <li>They listen &ndash; Ask clients why they want something done; find out wants and needs.</li>
+      <li>Persistent &ndash; Thick-skinned; confident and persistent despite &ldquo;no.&rdquo;</li>
+      <li>Coachable &ndash; Energetic, willing to learn, able to adapt; early adopter of suggestions.</li>
+      <li>Positive &ndash; Cheerful attitude makes it easier to approach customers.</li>
+      <li>Resourceful &ndash; Shift gears; try different approaches using creativity.</li>
+      <li>Passionate &ndash; Actually enjoy the job and the products/services they sell.</li>
+      <li>Ask questions &ndash; Higher-performing reps ask more questions (often about implications).</li>
+      <li>Independent &ndash; Self-motivator; do not need constant supervision.</li>
+      <li>Time manages &ndash; More selling time increases sales; manage routes and time effectively.</li>
+      <li>Overachieve &ndash; Over-commit and over-deliver; push for more.</li>
+      <li>Persuasible &ndash; Enjoy meeting new people; power of networking.</li>
+      <li>Alertness &ndash; Always prepared; aware of self and situation.</li>
     </ol>
 
     <p><strong>Behavioral Theories: What Does a Good Leader Do?</strong></p>
-    <p>These focus on how leaders behave. Kurt Lewin's three types of leaders:</p>
-    <ol>
-      <li><strong>Autocratic</strong> &mdash; formulate decisions with no consultation. Suitable when decisions must be made promptly.</li>
-      <li><strong>Democratic</strong> &mdash; let the team give input prior to a decision. Vital when team conformity is an issue.</li>
-      <li><strong>Laissez-faire</strong> &mdash; do not get in the way; let the team formulate many decisions. Works when the team is highly competent and motivated.</li>
-    </ol>
-    <p>Four leadership styles using consideration and initiating structure:</p>
+
     <ul>
-      <li><strong>Quadrant 1 &mdash; High consideration / Low structure:</strong> focus on team harmony and individual need satisfaction. Appropriate for experienced, high-performing salespeople.</li>
-      <li><strong>Quadrant 2 &mdash; High consideration / High structure:</strong> accomplish the job while maintaining harmony; provide guidance. Appropriate for newly hired, inexperienced trainees.</li>
-      <li><strong>Quadrant 3 &mdash; Low consideration / Low structure:</strong> largely passive; little structure or consideration. Appropriate for experienced salespeople who know and enjoy their work.</li>
-      <li><strong>Quadrant 4 &mdash; Low consideration / High structure:</strong> focus on getting the job done by structuring tasks. Appropriate when experienced salespeople must do unpleasant or unfamiliar work.</li>
+      <li>Focus on how leaders behave.</li>
+      <li>Kurt Lewin&rsquo;s three types of leaders:
+        <ol>
+          <li>Autocratic &ndash; Formulate decisions with no consultation. Suitable when decisions must be made promptly.</li>
+          <li>Democratic &ndash; Let the team give input prior to decision. Vital when team conformity is an issue.</li>
+          <li>Laissez-faire &ndash; Do not get in the way; let the team formulate many decisions. Works when team is highly competent and motivated.</li>
+        </ol>
+      </li>
+    </ul>
+
+    <p><strong>Four leadership styles using consideration and initiating structure (Table 6):</strong></p>
+
+    <ul>
+      <li>Quadrant 1 &ndash; High consideration / Low structure: Focus on team harmony and individual need satisfaction. Appropriate for experienced, high-performing salespeople.</li>
+      <li>Quadrant 2 &ndash; High consideration / High structure: Accomplish the job while maintaining harmony; provide guidance. Appropriate for newly hired, inexperienced trainees.</li>
+      <li>Quadrant 3 &ndash; Low consideration / Low structure: Largely passive; little structure or consideration. Appropriate for experienced salespeople who know and enjoy their work.</li>
+      <li>Quadrant 4 &ndash; Low consideration / High structure: Focus on getting the job done by structuring tasks. Appropriate when experienced salespeople must do unpleasant or unfamiliar work.</li>
     </ul>
 
     <p><strong>Contingency Theories: How Does the Situation Influence Good Leadership?</strong></p>
-    <p>There is no one correct type of leader &mdash; the best style depends on the situation.</p>
 
-    <p><strong>House's Path-Goal Theory</strong></p>
-    <p>Helps identify an effective way to lead based on what salespeople want and the current situation. The leader needs to (1) assist them in identifying and realizing their goals, (2) take away hindrances, and (3) present fitting rewards. Four types of leadership:</p>
     <ul>
-      <li><strong>Supportive</strong> &mdash; focus on relationships; sensitivity to needs. Effective when tasks are monotonous or demanding.</li>
-      <li><strong>Directive</strong> &mdash; communicate goals and expectations; assign clear tasks. Effective when tasks are unstructured or the team is inexperienced.</li>
-      <li><strong>Participative</strong> &mdash; consult with the group; consider ideas and expertise. Effective when the team is knowledgeable and wants to give input.</li>
-      <li><strong>Achievement-oriented</strong> &mdash; set demanding goals; maintain high standards. Effective when the team is unmotivated or unchallenged.</li>
+      <li>No correct type of leader; best style depends on the situation.</li>
     </ul>
-    <p>Three assumptions underlie the theory: salespeople are independent with shared goals, the senior manager has access to power sources, and good interaction is needed for coordination.</p>
 
-    <p><strong>Fiedler's Contingency Model</strong></p>
+    <p><strong>House&rsquo;s Path-Goal Theory</strong></p>
+
     <ul>
-      <li>Created by Fred Fiedler in the mid-1960s.</li>
-      <li>Holds that there is no one best style of leadership &mdash; effectiveness is based on the situation.</li>
-      <li>Two factors: leadership style and situational favorableness.</li>
-      <li>Leadership style is measured by the Least-Preferred Co-Worker (LPC) Scale &mdash; a high LPC score points to a relationship-oriented leader, and a low LPC score points to a task-oriented leader.</li>
-      <li><strong>Low LPC (task-oriented)</strong> &mdash; effective at finishing tasks; relationship-building is a low priority.</li>
-      <li><strong>High LPC (relationship-oriented)</strong> &mdash; concentrates on personal associations; good at preventing and managing conflict.</li>
-      <li>Situational favorableness depends on three factors: <strong>leader-member relations</strong> (the level of trust and confidence the team has in the manager), <strong>task structure</strong> (clear and structured vs. vague and unstructured), and the <strong>leader's position power</strong> (the amount of power to lead, reward, or punish).</li>
+      <li>Helps identify an effective way to leadership based on what salespeople want and the current situation.</li>
+      <li>Leader needs to: (1) assist them identify and realize goals, (2) take away hindrances, (3) present fitting rewards.</li>
+      <li>Four types of leadership:
+        <ol>
+          <li>Supportive &ndash; Focus on relationships; sensitivity to needs. Effective when tasks are monotonous or demanding.</li>
+          <li>Directive &ndash; Communicate goals and expectations; assign clear tasks. Effective when tasks are unstructured or team is inexperienced.</li>
+          <li>Participative &ndash; Consult with group; consider ideas and expertise. Effective when team is knowledgeable and wants to give input.</li>
+          <li>Achievement-oriented &ndash; Set demanding goals; maintain high standards. Effective when team is unmotivated or unchallenged.</li>
+        </ol>
+      </li>
+      <li>Three assumptions: salespeople are independent with shared goals; senior manager has access to power sources; good interaction for coordination.</li>
+    </ul>
+
+    <p><strong>Fiedler&rsquo;s Contingency Model</strong></p>
+
+    <ul>
+      <li>Created by Fred Fiedler (mid-1960s).</li>
+      <li>No one best style of leadership; effectiveness is based on the situation.</li>
+      <li>Two factors: leadership style + situational favorableness.</li>
+      <li>Leadership style measured by Least-Preferred Co-Worker (LPC) Scale.
+        <ul>
+          <li>High LPC score → relationship-oriented leader.</li>
+          <li>Low LPC score → task-oriented leader.</li>
+        </ul>
+      </li>
+      <li>Low LPC (task-oriented) &ndash; effective in finishing tasks; relationship-building is low priority.</li>
+      <li>High LPC (relationship-oriented) &ndash; concentrate on personal associations; good at preventing/administering conflict.</li>
+      <li>Situational favorableness depends on three factors:
+        <ol>
+          <li>Leader-Member Relations &ndash; Level of trust and confidence the team has in the manager.</li>
+          <li>Task Structure &ndash; Clear and structured vs. vague and unstructured.</li>
+          <li>Leader&rsquo;s Position Power &ndash; Amount of power to lead, reward, or punish (strong or weak).</li>
+        </ol>
+      </li>
       <li>Newly promoted managers who were high-performing salespeople may need to switch from task-oriented to more relationship-centered leadership.</li>
     </ul>
-
-    <h3>Problems in Leadership</h3>
-    <p>Some of the most common problems handled by sales managers include:</p>
-    <ol>
-      <li><strong>Conflicts of interest</strong> &mdash; salespeople may meet conflicts of interest in their sales activities, putting problem-solving skills frequently to the test.</li>
-      <li><strong>Chemical abuse and dependency</strong> &mdash; a serious problem that affects the performance of salespeople and costs the organization heavily.</li>
-      <li><strong>Termination of employment</strong> &mdash; in several instances, it is essential to conclude the service of a salesperson when problems cannot be solved.</li>
-      <li><strong>Sexual harassment</strong> &mdash; it is vital to take action right away if a sexual harassment problem occurs in the sales organization.</li>
-    </ol>
   `,
   'sales-8': `
     <p>Controlling and evaluating the salesperson's performance is how sales management confirms that the sales plan is actually working &mdash; and corrects course when it isn't. It closes the loop on everything else sales management sets out to do.</p>
