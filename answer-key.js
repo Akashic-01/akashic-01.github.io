@@ -141,41 +141,97 @@
     return captured;
   }
 
+  // Multiple Choice / Identification / True-False each have a Direct
+  // and a Situational style; Enumeration doesn't (its buildQuiz()
+  // branch ignores the Style dropdown entirely — see chapter script).
+  // The download button should give ONE file containing every style
+  // for whichever Question Type is currently selected, so this sweeps
+  // the Style dropdown through each of its options (swapping the
+  // value, capturing via buildAnswerKeyEntries(), then moving on),
+  // and puts the dropdown back to what it was when it's done.
+  function gatherAllStylesForSelectedType() {
+    const typeSelect = document.getElementById('questionType');
+    const styleSelect = document.getElementById('questionStyle');
+    const typeValue = typeSelect ? typeSelect.value : '';
+
+    const styleValues =
+      styleSelect && typeValue !== 'enumeration'
+        ? Array.from(styleSelect.options).map((opt) => opt.value)
+        : [styleSelect ? styleSelect.value : null];
+
+    const originalStyleValue = styleSelect ? styleSelect.value : null;
+    const sections = [];
+
+    styleValues.forEach((styleValue) => {
+      if (styleSelect && styleValue != null) {
+        styleSelect.value = styleValue;
+      }
+      const entries = buildAnswerKeyEntries();
+      if (entries && entries.length) {
+        const styleLabel = styleSelect
+          ? (Array.from(styleSelect.options).find((o) => o.value === styleValue) || {}).textContent || ''
+          : '';
+        sections.push({ styleLabel, entries });
+      }
+    });
+
+    if (styleSelect && originalStyleValue != null) {
+      styleSelect.value = originalStyleValue;
+    }
+
+    return sections.length ? sections : null;
+  }
+
   function docTitleParts() {
     // "Sales Management - Chapter 1 Quiz" -> "Sales Management - Chapter 1"
     const base = document.title.replace(/\s+Quiz\s*$/i, '').trim() || 'Answer Key';
-    const safeName = base
+    const typeSelect = document.getElementById('questionType');
+    const typeLabel = typeSelect ? typeSelect.selectedOptions[0].textContent : '';
+
+    const safeBase = base
       .replace(/\s*-\s*/g, ' ')
       .replace(/[^\w\- ]+/g, '')
       .trim()
       .replace(/\s+/g, '-');
-    return { titleText: base, safeName: safeName || 'Answer-Key' };
+    const safeType = typeLabel
+      .replace(/[^\w\- ]+/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
+
+    const safeName = [safeBase, safeType].filter(Boolean).join('-');
+    return { titleText: base, typeLabel, safeName: safeName || 'Answer-Key' };
   }
 
-  async function buildAnswerKeyBlob(entries) {
+  // `sections` is an array of { styleLabel, entries } — one entry per
+  // Question Style available for the selected Question Type (see
+  // gatherAllStylesForSelectedType above), so a single file ends up
+  // holding every style for that type instead of just whichever style
+  // happened to be selected when the button was clicked.
+  async function buildAnswerKeyBlob(sections) {
     await loadJSZip();
 
-    const { titleText } = docTitleParts();
-    const typeSelect = document.getElementById('questionType');
-    const styleSelect = document.getElementById('questionStyle');
-    const typeLabel = typeSelect ? typeSelect.selectedOptions[0].textContent : '';
-    const styleLabel = styleSelect ? styleSelect.selectedOptions[0].textContent : '';
+    const { titleText, typeLabel } = docTitleParts();
 
     const paragraphs = [];
     paragraphs.push(
       paragraph(textRuns(`${titleText} — Answer Key`, { bold: true, size: HEADER_SZ }), { spaceAfter: 120 })
     );
-    if (typeLabel || styleLabel) {
-      const subtitle = [typeLabel, styleLabel].filter(Boolean).join(' — ');
-      paragraphs.push(paragraph(textRuns(subtitle, { italic: true }), { spaceAfter: 300 }));
+    if (typeLabel) {
+      paragraphs.push(paragraph(textRuns(typeLabel, { italic: true }), { spaceAfter: 300 }));
     }
 
-    entries.forEach((q, index) => {
-      paragraphs.push(paragraph(textRuns(`${index + 1}. ${q.question}`, { bold: true }), { spaceAfter: 60 }));
-      paragraphs.push(paragraph(textRuns(`Answer: ${formatAnswer(q)}`), { spaceAfter: q.explanation ? 60 : 300 }));
-      if (q.explanation) {
-        paragraphs.push(paragraph(textRuns(q.explanation, { italic: true }), { spaceAfter: 300 }));
+    let counter = 0;
+    const showStyleHeadings = sections.length > 1;
+
+    sections.forEach(({ styleLabel, entries }) => {
+      if (showStyleHeadings && styleLabel) {
+        paragraphs.push(paragraph(textRuns(styleLabel, { bold: true }), { spaceAfter: 200 }));
       }
+      entries.forEach((q) => {
+        counter += 1;
+        paragraphs.push(paragraph(textRuns(`${counter}. ${q.question}`, { bold: true }), { spaceAfter: 60 }));
+        paragraphs.push(paragraph(textRuns(`Answer: ${formatAnswer(q)}`), { spaceAfter: 300 }));
+      });
     });
 
     const documentXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -259,9 +315,9 @@
   }
 
   async function handleDownloadClick(btn) {
-    const entries = buildAnswerKeyEntries();
-    if (!entries || !entries.length) {
-      alert('Could not find questions for the current Question Type / Question Style selection.');
+    const sections = gatherAllStylesForSelectedType();
+    if (!sections || !sections.length) {
+      alert('Could not find questions for the current Question Type selection.');
       return;
     }
 
@@ -270,7 +326,7 @@
     btn.textContent = 'Preparing…';
 
     try {
-      const blob = await buildAnswerKeyBlob(entries);
+      const blob = await buildAnswerKeyBlob(sections);
       const { safeName } = docTitleParts();
       triggerDownload(blob, `${safeName}-Answer-Key.docx`);
     } catch (err) {
