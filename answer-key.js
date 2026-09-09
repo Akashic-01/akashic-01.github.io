@@ -91,44 +91,54 @@
   // block-scoped `let` variables in the page's inline script and
   // aren't actually reachable from here the way top-level `function`
   // declarations are.
+  // Different chapters were written at different times and don't all
+  // name their internal per-type question builders the same way —
+  // chapters 1-2 use generateMCDirect()/generateTFDirect()/etc, but
+  // chapters 3+ use buildMCDirect()/buildTFDirect()/etc instead. Rather
+  // than guess every naming variant a chapter might use, this hooks
+  // into the three entry points that ARE identical in every chapter:
+  // buildQuiz(), startQuiz(), and restartQuiz().
+  //
+  // Trick: startQuiz() reads the Question Type/Style dropdowns, then
+  // calls buildQuiz() to get the question list (exactly the set we
+  // want) before doing anything visual. So this temporarily swaps in
+  // a wrapped buildQuiz() that captures whatever startQuiz() passes
+  // through it, calls startQuiz() to trigger that (using whatever
+  // Type/Style the page's own dropdowns are currently set to), then
+  // immediately calls restartQuiz() to put the page straight back to
+  // the start screen — startQuiz() and restartQuiz() run back-to-back
+  // synchronously with nothing in between that would let the browser
+  // paint, so the page never actually visibly flashes to the quiz
+  // screen. The temporary buildQuiz() override is undone right after.
   function buildAnswerKeyEntries() {
-    const typeSelect = document.getElementById('questionType');
-    const styleSelect = document.getElementById('questionStyle');
-    if (!typeSelect) return null;
+    if (typeof window.buildQuiz !== 'function' || typeof window.startQuiz !== 'function') {
+      return null;
+    }
 
-    const type = typeSelect.value;
-    const style = styleSelect ? styleSelect.value : '';
+    const originalBuildQuiz = window.buildQuiz;
+    let captured = null;
 
-    if (type === 'mc' && style === 'direct' && typeof window.generateMCDirect === 'function') {
-      return window.generateMCDirect();
+    window.buildQuiz = function (...args) {
+      captured = originalBuildQuiz.apply(this, args);
+      return captured;
+    };
+
+    try {
+      window.startQuiz();
+    } catch (err) {
+      console.error('answer-key.js: startQuiz() threw while capturing questions', err);
+    } finally {
+      window.buildQuiz = originalBuildQuiz;
+      if (typeof window.restartQuiz === 'function') {
+        try {
+          window.restartQuiz();
+        } catch (err) {
+          console.error('answer-key.js: restartQuiz() threw while resetting the page', err);
+        }
+      }
     }
-    if (type === 'mc' && style === 'situational' && typeof window.generateMCSituational === 'function') {
-      return window.generateMCSituational();
-    }
-    if (
-      type === 'identification' &&
-      style === 'direct' &&
-      typeof window.generateIdentificationDirect === 'function'
-    ) {
-      return window.generateIdentificationDirect();
-    }
-    if (
-      type === 'identification' &&
-      style === 'situational' &&
-      typeof window.generateIdentificationSituational === 'function'
-    ) {
-      return window.generateIdentificationSituational();
-    }
-    if (type === 'tf' && style === 'direct' && typeof window.generateTFDirect === 'function') {
-      return window.generateTFDirect();
-    }
-    if (type === 'tf' && style === 'situational' && typeof window.generateTFSituational === 'function') {
-      return window.generateTFSituational();
-    }
-    if (type === 'enumeration' && typeof window.generateEnumeration === 'function') {
-      return window.generateEnumeration();
-    }
-    return null;
+
+    return captured;
   }
 
   function docTitleParts() {
@@ -272,9 +282,23 @@
     }
   }
 
+  // Different chapters were generated with slightly different markup:
+  // some wire the button with inline onclick="startQuiz()", others give
+  // it id="startButton" and attach the click handler via
+  // addEventListener instead (no onclick attribute at all). Try every
+  // known shape so this keeps working regardless of which template a
+  // given chapter's assessment file used.
+  function findStartButton() {
+    return (
+      document.getElementById('startButton') ||
+      document.querySelector('#startScreen button[onclick="startQuiz()"]') ||
+      document.querySelector('#startScreen button.primary')
+    );
+  }
+
   function injectButton() {
     if (document.getElementById('downloadAnswerKeyBtn')) return;
-    const startBtn = document.querySelector('#startScreen button[onclick="startQuiz()"]');
+    const startBtn = findStartButton();
     if (!startBtn) return;
 
     const btn = document.createElement('button');
