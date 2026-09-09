@@ -1,0 +1,3865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sales Management - Chapter 7 Quiz</title>
+
+<style>
+:root{
+    --primary:#172554;
+    --primary2:#1e3a8a;
+    --light:#f5f7fb;
+    --border:#d9deea;
+    --text:#172033;
+    --muted:#667085;
+    --success:#15803d;
+    --successBg:#ecfdf3;
+    --danger:#b91c1c;
+    --dangerBg:#fef2f2;
+    --warning:#b45309;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--light);
+    color:var(--text);
+}
+
+.container{
+    width:min(1000px,94%);
+    margin:35px auto;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+h1,h2,h3{
+    margin-top:0;
+}
+
+.subtitle{
+    color:var(--muted);
+    line-height:1.6;
+}
+
+.settings{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin:25px 0;
+}
+
+.field label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+select,
+input[type="text"]{
+    width:100%;
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+}
+
+select:focus,
+input[type="text"]:focus{
+    border-color:var(--primary2);
+}
+
+button{
+    border:none;
+    border-radius:10px;
+    padding:12px 18px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.15s;
+}
+
+button:hover:not(:disabled){
+    transform:translateY(-1px);
+}
+
+button:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.primary{
+    background:var(--primary);
+    color:white;
+}
+
+.secondary{
+    background:#e9edf5;
+    color:var(--text);
+}
+
+.danger{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.quiz-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.badges{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.badge{
+    background:#eef2ff;
+    color:#3730a3;
+    padding:7px 11px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.progress-container{
+    height:9px;
+    background:#e5e7eb;
+    border-radius:50px;
+    overflow:hidden;
+    margin:20px 0 30px;
+}
+
+.progress{
+    height:100%;
+    width:0;
+    background:var(--primary);
+    transition:.25s;
+}
+
+.question{
+    font-size:23px;
+    line-height:1.5;
+    margin-bottom:22px;
+    white-space:pre-line;
+}
+
+.choices{
+    display:grid;
+    gap:12px;
+}
+
+.choice{
+    width:100%;
+    text-align:left;
+    background:white;
+    border:2px solid var(--border);
+    color:var(--text);
+    padding:15px 17px;
+}
+
+.choice:hover:not(:disabled){
+    border-color:var(--primary2);
+    background:#f8faff;
+}
+
+.choice.correct{
+    border-color:var(--success);
+    background:var(--successBg);
+    color:#166534;
+}
+
+.choice.wrong{
+    border-color:var(--danger);
+    background:var(--dangerBg);
+    color:#991b1b;
+}
+
+.choice-letter{
+    display:inline-flex;
+    width:30px;
+    height:30px;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#edf0f5;
+    margin-right:10px;
+    font-weight:bold;
+}
+
+.feedback{
+    display:none;
+    margin-top:22px;
+    padding:17px;
+    border-radius:12px;
+    line-height:1.6;
+}
+
+.feedback.show{
+    display:block;
+}
+
+.feedback.correct{
+    background:var(--successBg);
+    color:#166534;
+}
+
+.feedback.incorrect{
+    background:var(--dangerBg);
+    color:#991b1b;
+}
+
+.feedback-title{
+    font-weight:bold;
+    font-size:17px;
+    margin-bottom:5px;
+}
+
+.controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+.control-right{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.text-answer{
+    display:grid;
+    gap:12px;
+}
+
+.enumeration-inputs{
+    display:grid;
+    gap:10px;
+}
+
+.enum-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.enum-number{
+    width:30px;
+    font-weight:bold;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.notice{
+    background:#f8fafc;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    color:var(--muted);
+    line-height:1.5;
+}
+
+.result-score{
+    font-size:52px;
+    font-weight:800;
+    color:var(--primary);
+}
+
+.result-percent{
+    font-size:22px;
+    margin:10px 0 25px;
+}
+
+.review-item{
+    border-top:1px solid var(--border);
+    padding:18px 0;
+    line-height:1.6;
+}
+
+.review-status{
+    font-weight:bold;
+}
+
+.review-status.correct{
+    color:var(--success);
+}
+
+.review-status.incorrect{
+    color:var(--danger);
+}
+
+.review-status.skipped{
+    color:var(--warning);
+}
+
+@media(max-width:750px){
+
+    .settings{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .question{
+        font-size:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- =====================================================
+     START SCREEN
+     ===================================================== -->
+
+<section id="startScreen" class="card">
+
+    <h1>Sales Management — Chapter 7 Quiz</h1>
+
+    <p class="subtitle">
+        Test your understanding of Chapter 7 (Sales Leadership and Supervision) using different question types and question styles.
+    </p>
+
+    <div class="settings">
+
+        <div class="field">
+
+            <label for="questionType">
+                Question Type
+            </label>
+
+            <select id="questionType">
+
+                <option value="mc">
+                    Multiple Choice
+                </option>
+
+                <option value="identification">
+                    Identification
+                </option>
+
+                <option value="tf">
+                    True / False
+                </option>
+
+                <option value="enumeration">
+                    Enumeration
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="questionStyle">
+                Question Style
+            </label>
+
+            <select id="questionStyle">
+
+                <option value="direct">
+                    Direct
+                </option>
+
+                <option value="situational">
+                    Situational
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="questionOrder">
+                Question Order
+            </label>
+
+            <select id="questionOrder">
+
+                <option value="ordered">
+                    In Order
+                </option>
+
+                <option value="random">
+                    Randomized
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div class="notice">
+
+        <b>Question count:</b>
+        Multiple Choice, Identification, and True/False contain
+        51 questions per style. Enumeration uses only the lists that
+        naturally fit the chapter content.
+
+    </div>
+
+    <br>
+
+    <button
+        id="startButton"
+        class="primary">
+
+        Start Quiz
+
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     QUIZ SCREEN
+     ===================================================== -->
+
+<section id="quizScreen" class="card hidden">
+
+    <div class="quiz-header">
+
+        <div>
+            <b id="questionCounter">
+                Question 1 of 51
+            </b>
+        </div>
+
+        <div>
+            <b id="scoreDisplay">
+                Score: 0
+            </b>
+        </div>
+
+    </div>
+
+
+    <div class="progress-container">
+
+        <div
+            id="progressBar"
+            class="progress">
+        </div>
+
+    </div>
+
+
+    <div class="badges">
+
+        <span
+            id="typeBadge"
+            class="badge">
+        </span>
+
+        <span
+            id="styleBadge"
+            class="badge">
+        </span>
+
+    </div>
+
+    <br>
+
+
+    <div
+        id="questionText"
+        class="question">
+    </div>
+
+
+    <div id="answerArea">
+    </div>
+
+
+    <div
+        id="feedback"
+        class="feedback">
+    </div>
+
+
+    <div class="controls">
+
+        <button
+            id="backButton"
+            class="secondary">
+
+            ← Back
+
+        </button>
+
+
+        <div class="control-right">
+
+            <button
+                id="skipButton"
+                class="secondary">
+
+                Skip
+
+            </button>
+
+
+            <button
+                id="restartButton"
+                class="danger">
+
+                Restart
+
+            </button>
+
+
+            <button
+                id="nextButton"
+                class="primary hidden">
+
+                Next →
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RESULT SCREEN
+     ===================================================== -->
+
+<section id="resultScreen" class="card hidden">
+
+    <h1>
+        Quiz Complete!
+    </h1>
+
+    <div
+        id="resultScore"
+        class="result-score">
+
+        0 / 0
+
+    </div>
+
+
+    <div
+        id="resultPercent"
+        class="result-percent">
+
+        0%
+
+    </div>
+
+
+    <p
+        id="resultMessage"
+        class="subtitle">
+    </p>
+
+
+    <div class="controls">
+
+        <button
+            id="reviewButton"
+            class="primary">
+
+            Review Answers
+
+        </button>
+
+
+        <button
+            id="resultRestartButton"
+            class="danger">
+
+            Restart Quiz
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="reviewArea"
+        class="hidden">
+    </div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CHAPTER 3 — SOURCE CONTENT
+   Based on Chapter-3-SM (1).pptx
+   ========================================================= */
+
+
+/* =========================================================
+   CORE CONCEPTS
+   ========================================================= */
+
+const FACTS = [
+
+    {
+        term:"Leadership",
+
+        definition:
+        "The interpersonal process of communicating, inspiring, guiding, and influencing the behavior of subordinate salespeople toward the attainment of organizational objectives, goals, and values.",
+
+        category:"Foundations of Sales Leadership"
+    },
+
+    {
+        term:"Legitimate Power",
+
+        definition:
+        "Comes from the sales manager's position in the company's hierarchical structure and level of responsibility; also called authority.",
+
+        category:"Sources of Power"
+    },
+
+    {
+        term:"Reward Power",
+
+        definition:
+        "The ability to provide benefits such as salary, commissions, bonuses, incentives, promotions, preferred territories, and challenging assignments.",
+
+        category:"Sources of Power"
+    },
+
+    {
+        term:"Coercive Power",
+
+        definition:
+        "The ability to hold back rewards or punish salespeople to transform behavior.",
+
+        category:"Sources of Power"
+    },
+
+    {
+        term:"Referent Power",
+
+        definition:
+        "Comes from salespeople who admire the manager because of personal traits and charisma.",
+
+        category:"Sources of Power"
+    },
+
+    {
+        term:"Expert Power",
+
+        definition:
+        "Comes from the sales manager's skills, knowledge, and special abilities.",
+
+        category:"Sources of Power"
+    },
+
+    {
+        term:"Leadership Is Interpersonal",
+
+        definition:
+        "It affects the followers who must be agreeable to accept orders from the sales manager or supervisor.",
+
+        category:"Important Elements in Sales Force Leadership"
+    },
+
+    {
+        term:"Leadership Relies on Influence",
+
+        definition:
+        "Influence comes from the different types of power, which is the potential to influence the behavior of followers.",
+
+        category:"Important Elements in Sales Force Leadership"
+    },
+
+    {
+        term:"Leaders Guide Salespeople to Reach Goals",
+
+        definition:
+        "Includes setting goals, guiding, clarifying, charting paths, and offering inspiration.",
+
+        category:"Important Elements in Sales Force Leadership"
+    },
+
+    {
+        term:"Leaders Advocate Ethical and Moral Values",
+
+        definition:
+        "Sales leaders serve as models of fair, decent, and professional selling.",
+
+        category:"Important Elements in Sales Force Leadership"
+    },
+
+    {
+        term:"Supervision",
+
+        definition:
+        "The close checking of the daily work activities of the salespeople.",
+
+        category:"Foundations of Sales Leadership"
+    },
+
+    {
+        term:"Goal of Supervision",
+
+        definition:
+        "To assist salespeople to work smartly by doing the right things in the right ways.",
+
+        category:"Foundations of Sales Leadership"
+    },
+
+    {
+        term:"Honesty and Integrity",
+
+        definition:
+        "Great sales leaders form an organizational culture founded on honesty and integrity, and are truthful and committed to the highest standards of ethical conduct.",
+
+        category:"Components of Sales Leadership"
+    },
+
+    {
+        term:"Outstanding Self-Awareness",
+
+        definition:
+        "A sales leader is aware of individual strengths and weaknesses, acknowledges limitations, and welcomes feedback and opposing opinions.",
+
+        category:"Components of Sales Leadership"
+    },
+
+    {
+        term:"Vision",
+
+        definition:
+        "Outstanding sales leaders visualize the entire picture, are strategic thinkers with well-built networks, and are skilled at speaking a vision of the future.",
+
+        category:"Components of Sales Leadership"
+    },
+
+    {
+        term:"Courage",
+
+        definition:
+        "Confidence needs courage; the finest leaders are decisive and willing to take risks even when conservative wisdom dictates otherwise.",
+
+        category:"Components of Sales Leadership"
+    },
+
+    {
+        term:"Communication Skills",
+
+        definition:
+        "Must be motivating and convincing, know how to articulate sales ideas to the audience's level, and communicate both orally and in writing successfully.",
+
+        category:"Components of Sales Leadership"
+    },
+
+    {
+        term:"Team Builder",
+
+        definition:
+        "Has exceptional team building skills, forms a team with matching skill sets, and searches for people better than himself.",
+
+        category:"Components of Sales Leadership"
+    },
+
+    {
+        term:"Transactional Leadership",
+
+        definition:
+        "The sales manager gives positive or negative feedback based on effort or performance, such as recognition or reprimands.",
+
+        category:"Modern View of Sales Leadership"
+    },
+
+    {
+        term:"Transformational Leadership",
+
+        definition:
+        "Alters the values, attitudes, beliefs, and goals of salespeople; its primary basis of power is internalization or identification.",
+
+        category:"Modern View of Sales Leadership"
+    },
+
+    {
+        term:"Leader-Member Exchange (LMX) Model",
+
+        definition:
+        "Focuses on sales manager-salesperson reciprocal relationships based on strength and trust.",
+
+        category:"Modern View of Sales Leadership"
+    },
+
+    {
+        term:"Cadres (\"In\" Group)",
+
+        definition:
+        "Receive more trust, regular constructive communication, mentoring, and favorable territories under the LMX Model.",
+
+        category:"Modern View of Sales Leadership"
+    },
+
+    {
+        term:"Hired Hand",
+
+        definition:
+        "Receive fewer mentoring opportunities, favorable territories, and communication under the LMX Model.",
+
+        category:"Modern View of Sales Leadership"
+    },
+
+    {
+        term:"Behavioral Self-Management",
+
+        definition:
+        "An organized set of behavioral and cognitive strategies for higher performance that gives salespeople more command over their own work.",
+
+        category:"Modern View of Sales Leadership"
+    },
+
+    {
+        term:"Sales Coaching",
+
+        definition:
+        "A coach is a teacher, counselor, guide, cheerleader, and facilitator rolled into one, helping salespeople develop their own answers.",
+
+        category:"Sales Leadership Functions"
+    },
+
+    {
+        term:"Planning and Conducting Integrative Sales Meetings",
+
+        definition:
+        "The best opportunity for sales managers to display leadership ability, with the main objective of uniting salespeople toward a common goal.",
+
+        category:"Sales Leadership Functions"
+    },
+
+    {
+        term:"Meeting Ethical and Moral Responsibilities",
+
+        definition:
+        "Every sales management function should be done ethically, requiring strict financial control and secure supervision.",
+
+        category:"Sales Leadership Functions"
+    },
+
+    {
+        term:"Moral Manager",
+
+        definition:
+        "Dedicated to high standards of ethical behavior in personal actions and decisions; considers himself a steward rather than owner.",
+
+        category:"Approaches to Management of Ethics"
+    },
+
+    {
+        term:"Immoral Manager",
+
+        definition:
+        "Has no regard for ethical standards, follows a \"kill or be killed\" mentality, and is willing to short-circuit legal requirements.",
+
+        category:"Approaches to Management of Ethics"
+    },
+
+    {
+        term:"Amoral Manager",
+
+        definition:
+        "Believes it is not necessary to consider ethical principles as long as one stays within legal bounds.",
+
+        category:"Approaches to Management of Ethics"
+    },
+
+    {
+        term:"Non-Role Act",
+
+        definition:
+        "A calculated attempt to gain something at the expense of the company, such as cheating on an expense account.",
+
+        category:"Types of Unethical Behavior"
+    },
+
+    {
+        term:"Role Failure Act",
+
+        definition:
+        "A failure to execute job responsibilities, such as understating a performance appraisal.",
+
+        category:"Types of Unethical Behavior"
+    },
+
+    {
+        term:"Role Distortion Act",
+
+        definition:
+        "An act that may place the person in danger while benefiting the organization, such as committing bribery.",
+
+        category:"Types of Unethical Behavior"
+    },
+
+    {
+        term:"Trait Theories",
+
+        definition:
+        "Argue that effective leaders share common personality characteristics, or \"traits,\" such as integrity, empathy, and assertiveness.",
+
+        category:"Core Sales Leadership Theories"
+    },
+
+    {
+        term:"Autocratic Leadership",
+
+        definition:
+        "Formulates decisions with no consultation; suitable when decisions must be made promptly.",
+
+        category:"Behavioral Theories"
+    },
+
+    {
+        term:"Democratic Leadership",
+
+        definition:
+        "Lets the team give input prior to a decision; vital when team conformity is an issue.",
+
+        category:"Behavioral Theories"
+    },
+
+    {
+        term:"Laissez-Faire Leadership",
+
+        definition:
+        "Does not get in the way and lets the team formulate many decisions; works when the team is highly competent and motivated.",
+
+        category:"Behavioral Theories"
+    },
+
+    {
+        term:"High Consideration / Low Structure (Quadrant 1)",
+
+        definition:
+        "Focuses on team harmony and individual need satisfaction; appropriate for experienced, high-performing salespeople.",
+
+        category:"Leadership Styles Using Consideration and Structure"
+    },
+
+    {
+        term:"High Consideration / High Structure (Quadrant 2)",
+
+        definition:
+        "Accomplishes the job while maintaining harmony and providing guidance; appropriate for newly hired, inexperienced trainees.",
+
+        category:"Leadership Styles Using Consideration and Structure"
+    },
+
+    {
+        term:"Low Consideration / Low Structure (Quadrant 3)",
+
+        definition:
+        "Largely passive with little structure or consideration; appropriate for experienced salespeople who know and enjoy their work.",
+
+        category:"Leadership Styles Using Consideration and Structure"
+    },
+
+    {
+        term:"Low Consideration / High Structure (Quadrant 4)",
+
+        definition:
+        "Focuses on getting the job done by structuring tasks; appropriate when experienced salespeople must do unpleasant or unfamiliar work.",
+
+        category:"Leadership Styles Using Consideration and Structure"
+    },
+
+    {
+        term:"House's Path-Goal Theory",
+
+        definition:
+        "Helps identify an effective way to leadership based on what salespeople want and the current situation.",
+
+        category:"Contingency Theories"
+    },
+
+    {
+        term:"Supportive Leadership",
+
+        definition:
+        "Focuses on relationships and sensitivity to needs; effective when tasks are monotonous or demanding.",
+
+        category:"Path-Goal Theory Leadership Types"
+    },
+
+    {
+        term:"Directive Leadership",
+
+        definition:
+        "Communicates goals and expectations and assigns clear tasks; effective when tasks are unstructured or the team is inexperienced.",
+
+        category:"Path-Goal Theory Leadership Types"
+    },
+
+    {
+        term:"Participative Leadership",
+
+        definition:
+        "Consults with the group and considers their ideas and expertise; effective when the team is knowledgeable and wants to give input.",
+
+        category:"Path-Goal Theory Leadership Types"
+    },
+
+    {
+        term:"Achievement-Oriented Leadership",
+
+        definition:
+        "Sets demanding goals and maintains high standards; effective when the team is unmotivated or unchallenged.",
+
+        category:"Path-Goal Theory Leadership Types"
+    },
+
+    {
+        term:"Fiedler's Contingency Model",
+
+        definition:
+        "States that no one style of leadership is best; effectiveness is based on the situation, combining leadership style and situational favorableness.",
+
+        category:"Contingency Theories"
+    },
+
+    {
+        term:"Least-Preferred Co-Worker (LPC) Scale",
+
+        definition:
+        "The scale used to measure leadership style; a high score indicates a relationship-oriented leader and a low score indicates a task-oriented leader.",
+
+        category:"Fiedler's Contingency Model"
+    },
+
+    {
+        term:"Leader-Member Relations",
+
+        definition:
+        "The level of trust and confidence the team has in the manager, a factor of situational favorableness.",
+
+        category:"Situational Favorableness Factors"
+    },
+
+    {
+        term:"Task Structure",
+
+        definition:
+        "Whether tasks are clear and structured versus vague and unstructured, a factor of situational favorableness.",
+
+        category:"Situational Favorableness Factors"
+    },
+
+    {
+        term:"Leader's Position Power",
+
+        definition:
+        "The amount of power a leader has to lead, reward, or punish, whether strong or weak.",
+
+        category:"Situational Favorableness Factors"
+    }
+
+];
+
+
+/* =========================================================
+   SITUATIONAL QUESTIONS
+   ========================================================= */
+
+const SITUATIONS = [
+
+    {
+        term:"Leadership",
+        situation:"A sales manager communicates, inspires, guides, and influences subordinates to work toward the company's goals."
+    },
+
+    {
+        term:"Legitimate Power",
+        situation:"A newly promoted sales manager finds that salespeople follow instructions simply because of the manager's formal position and authority."
+    },
+
+    {
+        term:"Reward Power",
+        situation:"A sales manager offers bonuses, incentives, and a preferred territory to motivate a top performer."
+    },
+
+    {
+        term:"Coercive Power",
+        situation:"A sales manager threatens to withhold a promotion unless a salesperson improves performance."
+    },
+
+    {
+        term:"Referent Power",
+        situation:"Salespeople follow a manager's lead because they genuinely admire the manager's charisma and personal qualities."
+    },
+
+    {
+        term:"Expert Power",
+        situation:"Salespeople turn to a manager for guidance because of the manager's deep product knowledge and specialized skills."
+    },
+
+    {
+        term:"Leadership Is Interpersonal",
+        situation:"A sales manager's authority only works because the salespeople are willing to accept and follow the manager's direction."
+    },
+
+    {
+        term:"Leadership Relies on Influence",
+        situation:"A manager's ability to lead comes down to different sources of power that shape how much influence they have over the team."
+    },
+
+    {
+        term:"Leaders Guide Salespeople to Reach Goals",
+        situation:"A manager sets clear goals, charts a path forward, and inspires the team to reach both personal and company targets."
+    },
+
+    {
+        term:"Leaders Advocate Ethical and Moral Values",
+        situation:"A sales manager consistently models fair, decent, and professional selling behavior for the team to follow."
+    },
+
+    {
+        term:"Supervision",
+        situation:"A manager closely checks the daily sales activities of the team to ensure work is being carried out properly."
+    },
+
+    {
+        term:"Goal of Supervision",
+        situation:"A manager's supervision is aimed at helping salespeople do the right things in the right ways, not just watching them."
+    },
+
+    {
+        term:"Honesty and Integrity",
+        situation:"A sales leader openly admits a mistake to the team and shares both good and bad news transparently."
+    },
+
+    {
+        term:"Outstanding Self-Awareness",
+        situation:"A sales leader acknowledges their own weaknesses, asks for help, and welcomes critical feedback from the team."
+    },
+
+    {
+        term:"Vision",
+        situation:"A sales leader paints a compelling picture of where the company is headed and gets the whole team on board."
+    },
+
+    {
+        term:"Courage",
+        situation:"A sales leader takes a risky but promising course of action even when more cautious colleagues disagree."
+    },
+
+    {
+        term:"Communication Skills",
+        situation:"A sales leader delivers disappointing news to the team honestly while still keeping morale up."
+    },
+
+    {
+        term:"Team Builder",
+        situation:"A sales leader deliberately recruits people more skilled than themselves to build a stronger, more diverse team."
+    },
+
+    {
+        term:"Transactional Leadership",
+        situation:"A sales manager praises a rep after a strong month and reprimands another for missing targets."
+    },
+
+    {
+        term:"Transformational Leadership",
+        situation:"A sales manager reshapes the team's core values and beliefs, inspiring a shift in how they see their work."
+    },
+
+    {
+        term:"Leader-Member Exchange (LMX) Model",
+        situation:"A sales manager builds different levels of trust with different salespeople based on the strength of each relationship."
+    },
+
+    {
+        term:"Cadres (\"In\" Group)",
+        situation:"Certain salespeople receive extra mentoring, favorable territories, and closer communication from their manager."
+    },
+
+    {
+        term:"Hired Hand",
+        situation:"Some salespeople receive less mentoring, fewer favorable territories, and less communication from their manager."
+    },
+
+    {
+        term:"Behavioral Self-Management",
+        situation:"A salesperson sets their own plans, monitors their own behavior, and rewards their own progress without close supervision."
+    },
+
+    {
+        term:"Sales Coaching",
+        situation:"A manager holds a one-on-one session, asking questions so a rep can work out solutions rather than being told what to do."
+    },
+
+    {
+        term:"Planning and Conducting Integrative Sales Meetings",
+        situation:"A manager organizes a sales meeting that combines training, motivation, and recognition to unite the team around a shared goal."
+    },
+
+    {
+        term:"Meeting Ethical and Moral Responsibilities",
+        situation:"A sales manager ensures every management decision follows strict financial controls and ethical standards."
+    },
+
+    {
+        term:"Moral Manager",
+        situation:"A manager pursues company success strictly within ethical boundaries and sees themselves as a steward of the organization."
+    },
+
+    {
+        term:"Immoral Manager",
+        situation:"A manager ignores ethical standards entirely and is willing to break rules if it benefits them personally."
+    },
+
+    {
+        term:"Amoral Manager",
+        situation:"A manager makes decisions based only on staying within legal limits, without thinking about ethics at all."
+    },
+
+    {
+        term:"Non-Role Act",
+        situation:"An employee pads their expense report to gain extra money at the company's expense."
+    },
+
+    {
+        term:"Role Failure Act",
+        situation:"A manager deliberately understates an employee's performance appraisal instead of doing their job properly."
+    },
+
+    {
+        term:"Role Distortion Act",
+        situation:"An employee pays a bribe to secure a contract, putting themselves at risk while benefiting the company."
+    },
+
+    {
+        term:"Trait Theories",
+        situation:"A researcher studies whether all great sales leaders share the same personality traits, like integrity and assertiveness."
+    },
+
+    {
+        term:"Autocratic Leadership",
+        situation:"A manager makes a decision quickly without consulting the sales team because time is short."
+    },
+
+    {
+        term:"Democratic Leadership",
+        situation:"A manager gathers input from the sales team before finalizing an important decision."
+    },
+
+    {
+        term:"Laissez-Faire Leadership",
+        situation:"A manager steps back and lets a highly capable, motivated sales team make most of the decisions themselves."
+    },
+
+    {
+        term:"High Consideration / Low Structure (Quadrant 1)",
+        situation:"A manager gives an experienced, high-performing rep plenty of freedom while keeping the relationship supportive."
+    },
+
+    {
+        term:"High Consideration / High Structure (Quadrant 2)",
+        situation:"A manager provides close guidance and encouragement to a newly hired, inexperienced trainee."
+    },
+
+    {
+        term:"Low Consideration / Low Structure (Quadrant 3)",
+        situation:"A manager takes a mostly hands-off approach with an experienced rep who already knows and enjoys the work."
+    },
+
+    {
+        term:"Low Consideration / High Structure (Quadrant 4)",
+        situation:"A manager tightly structures an unpleasant task for an experienced rep who has to do unfamiliar work."
+    },
+
+    {
+        term:"House's Path-Goal Theory",
+        situation:"A manager tailors their leadership approach based on what the team currently wants and needs in a given situation."
+    },
+
+    {
+        term:"Supportive Leadership",
+        situation:"A manager shows extra sensitivity and support to a team handling a monotonous, demanding workload."
+    },
+
+    {
+        term:"Directive Leadership",
+        situation:"A manager clearly lays out goals and assigns specific tasks to an inexperienced team facing unstructured work."
+    },
+
+    {
+        term:"Participative Leadership",
+        situation:"A manager consults a knowledgeable team and factors in their ideas before deciding on a plan."
+    },
+
+    {
+        term:"Achievement-Oriented Leadership",
+        situation:"A manager sets ambitious targets and high standards for a team that has become unmotivated."
+    },
+
+    {
+        term:"Fiedler's Contingency Model",
+        situation:"A researcher concludes that no single leadership style works best in every situation, since effectiveness depends on the circumstances."
+    },
+
+    {
+        term:"Least-Preferred Co-Worker (LPC) Scale",
+        situation:"A leader scores high on a scale measuring their attitude toward their least-preferred coworker, indicating a relationship-oriented style."
+    },
+
+    {
+        term:"Leader-Member Relations",
+        situation:"A sales team has a high level of trust and confidence in their manager."
+    },
+
+    {
+        term:"Task Structure",
+        situation:"A team's tasks are vague and unstructured rather than clearly defined."
+    },
+
+    {
+        term:"Leader's Position Power",
+        situation:"A manager has strong formal power to reward or punish members of the sales team."
+    }
+
+];
+
+
+/* =========================================================
+   TRUE / FALSE DIRECT
+   ========================================================= */
+
+const TF_DIRECT = [
+
+    ["Leadership is the interpersonal process of communicating, inspiring, guiding, and influencing subordinate salespeople toward organizational goals.", true],
+
+    ["Legitimate power comes from the sales manager's position in the company's hierarchical structure and is also called authority.", true],
+
+    ["Reward power is the ability to hold back rewards or punish salespeople to change their behavior.", false],
+
+    ["Coercive power is the ability to hold back rewards or punish salespeople to transform behavior.", true],
+
+    ["Referent power comes from a manager's skills, knowledge, and special abilities.", false],
+
+    ["Expert power comes from the sales manager's skills, knowledge, and special abilities.", true],
+
+    ["Leadership being interpersonal means followers must be agreeable to accept orders from the manager.", true],
+
+    ["Leadership relying on influence has nothing to do with the different types of power.", false],
+
+    ["Leaders guiding salespeople to reach goals includes setting goals, guiding, clarifying, and offering inspiration.", true],
+
+    ["Leaders advocating ethical and moral values means they serve as models of fair, decent, and professional selling.", true],
+
+    ["Supervision is the close checking of the daily work activities of salespeople.", true],
+
+    ["The goal of supervision is to assist salespeople in doing the right things in the right ways.", true],
+
+    ["Honesty and integrity as a leadership trait involves hiding mistakes from the team to maintain confidence.", false],
+
+    ["Outstanding self-awareness includes acknowledging limitations and welcoming feedback and opposing opinions.", true],
+
+    ["Vision as a leadership trait means staying overly focused on particular tasks rather than the big picture.", false],
+
+    ["Courage means being willing to take risks even when conservative wisdom suggests otherwise.", true],
+
+    ["Communication skills require sales leaders to be great orators or writers above all else.", false],
+
+    ["Team builders search for people who are better than themselves to strengthen the team.", true],
+
+    ["Transactional leadership gives positive or negative feedback based on effort or performance.", true],
+
+    ["Transformational leadership alters the values, attitudes, beliefs, and goals of salespeople.", true],
+
+    ["The Leader-Member Exchange Model focuses on reciprocal relationships between managers and salespeople based on strength and trust.", true],
+
+    ["Members of the \"in\" group, or cadres, receive less mentoring and fewer favorable territories than hired hands.", false],
+
+    ["Hired hands receive fewer mentoring opportunities, favorable territories, and communication under the LMX Model.", true],
+
+    ["Behavioral self-management gives salespeople less control over their own work.", false],
+
+    ["Sales coaching treats the coach as a teacher, counselor, guide, cheerleader, and facilitator all in one.", true],
+
+    ["Planning and conducting integrative sales meetings is considered the best opportunity for managers to display leadership.", true],
+
+    ["Meeting ethical and moral responsibilities means sales management functions do not need strict financial control.", false],
+
+    ["A Moral Manager considers himself a steward rather than an owner of the organization.", true],
+
+    ["An Immoral Manager has no regard for ethical standards and follows a \"kill or be killed\" mentality.", true],
+
+    ["An Amoral Manager always ignores legal boundaries in pursuit of a goal.", false],
+
+    ["A Non-Role Act is a calculated attempt to gain something at the expense of the company.", true],
+
+    ["A Role Failure Act refers to committing bribery to benefit the organization.", false],
+
+    ["A Role Distortion Act may place a person in danger while benefiting the organization.", true],
+
+    ["Trait Theories argue that a single, specific combination of traits guarantees leadership success.", false],
+
+    ["Autocratic leaders formulate decisions with no consultation from the team.", true],
+
+    ["Democratic leadership lets the team give input prior to a decision.", true],
+
+    ["Laissez-faire leadership works best when the team is highly competent and motivated.", true],
+
+    ["Quadrant 1 (high consideration, low structure) is appropriate for newly hired, inexperienced trainees.", false],
+
+    ["Quadrant 2 (high consideration, high structure) is appropriate for newly hired, inexperienced trainees.", true],
+
+    ["Quadrant 3 (low consideration, low structure) is largely passive, with little structure or consideration.", true],
+
+    ["Quadrant 4 (low consideration, high structure) focuses on getting the job done by structuring tasks.", true],
+
+    ["House's Path-Goal Theory helps identify an effective leadership approach based on what salespeople want and the situation.", true],
+
+    ["Supportive leadership is most effective when tasks are monotonous or demanding.", true],
+
+    ["Directive leadership is most effective when a team is highly experienced and needs little guidance.", false],
+
+    ["Participative leadership involves consulting the group and considering their ideas and expertise.", true],
+
+    ["Achievement-oriented leadership sets demanding goals and maintains high standards.", true],
+
+    ["Fiedler's Contingency Model claims there is one best style of leadership regardless of situation.", false],
+
+    ["A high score on the Least-Preferred Co-Worker Scale indicates a relationship-oriented leader.", true],
+
+    ["Leader-Member Relations refers to the level of trust and confidence the team has in the manager.", true],
+
+    ["Task Structure refers to how clear and structured, or vague and unstructured, tasks are.", true],
+
+    ["Leader's Position Power refers to the amount of power a leader has to lead, reward, or punish.", true]
+
+];
+
+
+/* =========================================================
+   TRUE / FALSE SITUATIONAL
+   ========================================================= */
+
+const TF_SITUATIONAL = [
+
+    ["A sales manager communicates, inspires, and influences the team toward company goals. This demonstrates leadership.", true],
+
+    ["A manager's team follows orders mainly because of the manager's formal position in the hierarchy. This demonstrates legitimate power.", true],
+
+    ["A manager offers bonuses and a preferred territory to motivate a rep. This demonstrates coercive power.", false],
+
+    ["A manager threatens to withhold a promotion to change a rep's behavior. This demonstrates coercive power.", true],
+
+    ["A team follows a manager because they admire the manager's charisma and personal traits. This demonstrates referent power.", true],
+
+    ["A team turns to a manager because of the manager's deep skills and specialized knowledge. This demonstrates referent power.", false],
+
+    ["Followers must be willing to accept the manager's orders for leadership to work. This shows that leadership is interpersonal.", true],
+
+    ["A manager's ability to lead depends on the type of power they hold over followers. This shows that leadership relies on influence.", true],
+
+    ["A manager sets goals, clarifies paths, and inspires the team. This shows leaders guiding salespeople to reach goals.", true],
+
+    ["A manager models fair and professional selling behavior for the team to follow. This shows leaders advocating ethical and moral values.", true],
+
+    ["A manager closely checks the team's daily sales activities. This demonstrates supervision.", true],
+
+    ["A manager's supervision is aimed at helping salespeople work smartly, not just watching them. This demonstrates the goal of supervision.", true],
+
+    ["A leader hides a mistake from the team to avoid looking weak. This demonstrates honesty and integrity.", false],
+
+    ["A leader admits their weaknesses and asks the team for feedback. This demonstrates outstanding self-awareness.", true],
+
+    ["A leader paints a compelling picture of the company's future and gets buy-in from the team. This demonstrates vision.", true],
+
+    ["A leader takes a risky decision that others think is unwise. This demonstrates courage.", true],
+
+    ["A leader delivers bad news to the team honestly while keeping morale up. This demonstrates communication skills.", true],
+
+    ["A leader deliberately recruits people more talented than themselves. This demonstrates being a team builder.", true],
+
+    ["A manager praises a rep for a strong month and reprimands another for missing targets. This demonstrates transformational leadership.", false],
+
+    ["A manager reshapes the team's core values and beliefs about their work. This demonstrates transformational leadership.", true],
+
+    ["A manager builds different levels of trust with different salespeople. This demonstrates the Leader-Member Exchange Model.", true],
+
+    ["Certain salespeople receive extra mentoring and favorable territories from their manager. This describes the \"in\" group, or cadres.", true],
+
+    ["Some salespeople receive less mentoring and communication from their manager. This describes cadres.", false],
+
+    ["A rep plans, monitors, and rewards their own work without close supervision. This demonstrates behavioral self-management.", true],
+
+    ["A manager asks questions so a rep can work out their own answers. This demonstrates sales coaching.", true],
+
+    ["A manager organizes a meeting combining training, motivation, and recognition to unite the team. This demonstrates planning and conducting integrative sales meetings.", true],
+
+    ["A manager ensures every decision follows strict financial controls and ethical standards. This demonstrates meeting ethical and moral responsibilities.", true],
+
+    ["A manager pursues success strictly within ethical boundaries and sees himself as a steward. This describes a Moral Manager.", true],
+
+    ["A manager ignores ethical standards entirely to benefit personally. This describes an Immoral Manager.", true],
+
+    ["A manager makes decisions based only on staying within legal limits, without regard for ethics. This describes a Moral Manager.", false],
+
+    ["An employee pads an expense report to gain money at the company's expense. This is a role failure act.", false],
+
+    ["A manager understates an employee's performance appraisal instead of doing their job properly. This is a role failure act.", true],
+
+    ["An employee pays a bribe, risking themselves while benefiting the company. This is a role distortion act.", true],
+
+    ["A researcher studies whether great leaders share common personality traits. This reflects trait theories.", true],
+
+    ["A manager makes a quick decision without consulting the team. This reflects autocratic leadership.", true],
+
+    ["A manager gathers input from the team before finalizing a decision. This reflects autocratic leadership.", false],
+
+    ["A manager lets a highly capable, motivated team make most decisions themselves. This reflects laissez-faire leadership.", true],
+
+    ["A manager gives an experienced, high-performing rep freedom while staying supportive. This reflects Quadrant 2 (high consideration, high structure).", false],
+
+    ["A manager provides close guidance to a newly hired, inexperienced trainee. This reflects Quadrant 2 (high consideration, high structure).", true],
+
+    ["A manager takes a hands-off approach with an experienced rep who enjoys the work. This reflects Quadrant 3 (low consideration, low structure).", true],
+
+    ["A manager tightly structures an unpleasant task for an experienced rep. This reflects Quadrant 4 (low consideration, high structure).", true],
+
+    ["A manager tailors their leadership approach to what the team currently wants and needs. This reflects House's Path-Goal Theory.", true],
+
+    ["A manager shows extra sensitivity and support to a team handling monotonous work. This reflects supportive leadership.", true],
+
+    ["A manager clearly lays out goals and tasks for an inexperienced team facing unstructured work. This reflects participative leadership.", false],
+
+    ["A manager consults a knowledgeable team before deciding on a plan. This reflects participative leadership.", true],
+
+    ["A manager sets ambitious goals for a team that has become unmotivated. This reflects achievement-oriented leadership.", true],
+
+    ["A researcher concludes that one leadership style works best in every situation. This reflects Fiedler's Contingency Model.", false],
+
+    ["A leader scores high on a scale that measures attitudes toward a least-preferred coworker. This reflects the LPC Scale, indicating a relationship-oriented leader.", true],
+
+    ["A sales team has a high level of trust and confidence in their manager. This reflects leader-member relations.", true],
+
+    ["A team's tasks are vague and unstructured rather than clearly defined. This reflects task structure.", true],
+
+    ["A manager has strong formal power to reward or punish team members. This reflects the leader's position power.", true]
+
+];
+
+
+/* =========================================================
+   ENUMERATION
+   ========================================================= */
+
+const ENUMERATION = [
+
+    {
+        question:
+        "Enumerate the five sources of power in sales force leadership.",
+
+        answers:[
+            "Legitimate Power",
+            "Reward Power",
+            "Coercive Power",
+            "Referent Power",
+            "Expert Power"
+        ],
+
+        explanation:
+        "The five sources of power are Legitimate, Reward, Coercive, Referent, and Expert Power."
+    },
+
+    {
+        question:
+        "Enumerate the four important elements in sales force leadership.",
+
+        answers:[
+            "Leadership is interpersonal",
+            "Leadership relies on influence",
+            "Leaders guide salespeople to reach individual and organizational goals",
+            "Leaders advocate ethical and moral values"
+        ],
+
+        explanation:
+        "The four elements are: leadership is interpersonal, leadership relies on influence, leaders guide salespeople to reach goals, and leaders advocate ethical and moral values."
+    },
+
+    {
+        question:
+        "Enumerate the six common skills/traits of effective sales leaders discussed under the components of sales leadership.",
+
+        answers:[
+            "Honesty and Integrity",
+            "Outstanding Self Awareness",
+            "Vision",
+            "Courage",
+            "Communication Skills",
+            "Team Builder"
+        ],
+
+        explanation:
+        "The six traits are Honesty and Integrity, Outstanding Self Awareness, Vision, Courage, Communication Skills, and Team Builder."
+    },
+
+    {
+        question:
+        "Enumerate the two general views of sales leadership discussed under the modern view of sales leadership.",
+
+        answers:[
+            "Leadership Style",
+            "Leader-Member Exchange (LMX) Model"
+        ],
+
+        explanation:
+        "The two general views are Leadership Style and the Leader-Member Exchange (LMX) Model."
+    },
+
+    {
+        question:
+        "Enumerate the three most important sales leadership functions.",
+
+        answers:[
+            "Sales Coaching",
+            "Planning and Conducting Integrative Sales Meetings",
+            "Meeting Ethical and Moral Responsibilities"
+        ],
+
+        explanation:
+        "The three functions are Sales Coaching, Planning and Conducting Integrative Sales Meetings, and Meeting Ethical and Moral Responsibilities."
+    },
+
+    {
+        question:
+        "Enumerate the three approaches to management of ethics.",
+
+        answers:[
+            "Moral Manager",
+            "Immoral Manager",
+            "Amoral Manager"
+        ],
+
+        explanation:
+        "The three approaches are Moral Manager, Immoral Manager, and Amoral Manager."
+    },
+
+    {
+        question:
+        "Enumerate the three relevant types of unethical behavior.",
+
+        answers:[
+            "Non-role act",
+            "Role failure act",
+            "Role distortion act"
+        ],
+
+        explanation:
+        "The three types are Non-role act, Role failure act, and Role distortion act."
+    },
+
+    {
+        question:
+        "Enumerate Kurt Lewin's three types of leaders under the behavioral theories.",
+
+        answers:[
+            "Autocratic",
+            "Democratic",
+            "Laissez-faire"
+        ],
+
+        explanation:
+        "Kurt Lewin's three types of leaders are Autocratic, Democratic, and Laissez-faire."
+    },
+
+    {
+        question:
+        "Enumerate the four types of leadership in House's Path-Goal Theory.",
+
+        answers:[
+            "Supportive",
+            "Directive",
+            "Participative",
+            "Achievement-oriented"
+        ],
+
+        explanation:
+        "The four types are Supportive, Directive, Participative, and Achievement-oriented leadership."
+    },
+
+    {
+        question:
+        "Enumerate the three factors of situational favorableness in Fiedler's Contingency Model.",
+
+        answers:[
+            "Leader-Member Relations",
+            "Task Structure",
+            "Leader's Position Power"
+        ],
+
+        explanation:
+        "The three factors are Leader-Member Relations, Task Structure, and Leader's Position Power."
+    },
+
+    {
+        question:
+        "Enumerate the fifteen traits of highly effective sales managers listed in the chapter.",
+
+        answers:[
+            "Conscientiousness",
+            "Respectful",
+            "Initiative",
+            "They listen",
+            "Persistent",
+            "Coachable",
+            "Positive",
+            "Resourceful",
+            "Passionate",
+            "Ask questions",
+            "Independent",
+            "Time manages",
+            "Overachieve",
+            "Persuasible",
+            "Alertness"
+        ],
+
+        explanation:
+        "The fifteen traits are Conscientiousness, Respectful, Initiative, They listen, Persistent, Coachable, Positive, Resourceful, Passionate, Ask questions, Independent, Time manages, Overachieve, Persuasible, and Alertness."
+    }
+
+];
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let quizQuestions = [];
+
+let currentQuestion = 0;
+
+let score = 0;
+
+let answers = [];
+
+let selectedType = "mc";
+
+let selectedStyle = "direct";
+
+let selectedOrder = "ordered";
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
+
+const startScreen =
+    document.getElementById("startScreen");
+
+const quizScreen =
+    document.getElementById("quizScreen");
+
+const resultScreen =
+    document.getElementById("resultScreen");
+
+const questionType =
+    document.getElementById("questionType");
+
+const questionStyle =
+    document.getElementById("questionStyle");
+
+const questionOrder =
+    document.getElementById("questionOrder");
+
+const startButton =
+    document.getElementById("startButton");
+
+const backButton =
+    document.getElementById("backButton");
+
+const skipButton =
+    document.getElementById("skipButton");
+
+const restartButton =
+    document.getElementById("restartButton");
+
+const nextButton =
+    document.getElementById("nextButton");
+
+const reviewButton =
+    document.getElementById("reviewButton");
+
+const resultRestartButton =
+    document.getElementById("resultRestartButton");
+
+
+/* =========================================================
+   SHUFFLE
+   ========================================================= */
+
+function shuffle(array){
+
+    const result = [...array];
+
+    for(
+        let i = result.length - 1;
+        i > 0;
+        i--
+    ){
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [
+            result[i],
+            result[j]
+        ] =
+        [
+            result[j],
+            result[i]
+        ];
+
+    }
+
+    return result;
+}
+
+
+/* =========================================================
+   NORMALIZE ANSWER
+   ========================================================= */
+
+function normalize(text){
+
+    return String(text)
+        .toLowerCase()
+        .replace(/[.,!?;:'"()]/g,"")
+        .replace(/\s+/g," ")
+        .trim();
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   BUILD MULTIPLE CHOICE — DIRECT
+   ========================================================= */
+
+function buildMCDirect(){
+
+    return FACTS.map(
+        (fact,index)=>{
+
+            const otherAnswers =
+                shuffle(
+                    FACTS.filter(
+                        item =>
+                            item.term !==
+                            fact.term
+                    )
+                )
+                .slice(0,3)
+                .map(
+                    item =>
+                        item.term
+                );
+
+            const choices =
+                shuffle([
+                    fact.term,
+                    ...otherAnswers
+                ]);
+
+            return {
+
+                id:
+                    "mc-direct-" + index,
+
+                type:
+                    "Multiple Choice",
+
+                style:
+                    "Direct",
+
+                question:
+                    `Which of the following is described by this definition?\n\n"${fact.definition}"`,
+
+                choices:
+                    choices,
+
+                correctIndex:
+                    choices.indexOf(
+                        fact.term
+                    ),
+
+                correctText:
+                    fact.term,
+
+                explanation:
+                    `${fact.term} is the concept described by the definition.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BUILD MULTIPLE CHOICE — SITUATIONAL
+   ========================================================= */
+
+function buildMCSituational(){
+
+    return SITUATIONS.map(
+        (item,index)=>{
+
+            const distractors =
+                shuffle(
+                    SITUATIONS.filter(
+                        x =>
+                            x.term !==
+                            item.term
+                    )
+                )
+                .slice(0,3)
+                .map(
+                    x =>
+                        x.term
+                );
+
+            const choices =
+                shuffle([
+                    item.term,
+                    ...distractors
+                ]);
+
+            return {
+
+                id:
+                    "mc-situational-" + index,
+
+                type:
+                    "Multiple Choice",
+
+                style:
+                    "Situational",
+
+                question:
+                    `${item.situation}\n\nWhich Chapter 7 concept is being demonstrated?`,
+
+                choices:
+                    choices,
+
+                correctIndex:
+                    choices.indexOf(
+                        item.term
+                    ),
+
+                correctText:
+                    item.term,
+
+                explanation:
+                    `The situation demonstrates ${item.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION — DIRECT
+   ========================================================= */
+
+function buildIdentificationDirect(){
+
+    return FACTS.map(
+        (fact,index)=>{
+
+            return {
+
+                id:
+                    "id-direct-" + index,
+
+                type:
+                    "Identification",
+
+                style:
+                    "Direct",
+
+                question:
+                    `Identify the concept described below.\n\n"${fact.definition}"`,
+
+                correctText:
+                    fact.term,
+
+                explanation:
+                    `The correct answer is ${fact.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION — SITUATIONAL
+   ========================================================= */
+
+function buildIdentificationSituational(){
+
+    return SITUATIONS.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "id-situational-" + index,
+
+                type:
+                    "Identification",
+
+                style:
+                    "Situational",
+
+                question:
+                    `${item.situation}\n\nIdentify the Chapter 7 concept being demonstrated.`,
+
+                correctText:
+                    item.term,
+
+                explanation:
+                    `The correct concept is ${item.term}.`
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE — DIRECT
+   ========================================================= */
+
+function buildTFDirect(){
+
+    return TF_DIRECT.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "tf-direct-" + index,
+
+                type:
+                    "True / False",
+
+                style:
+                    "Direct",
+
+                question:
+                    item[0],
+
+                correct:
+                    item[1],
+
+                correctText:
+                    item[1]
+                        ? "True"
+                        : "False",
+
+                explanation:
+                    item[1]
+                        ? "The statement agrees with the Chapter 7 presentation."
+                        : "The statement is misleading or contradicts the Chapter 7 presentation."
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE — SITUATIONAL
+   ========================================================= */
+
+function buildTFSituational(){
+
+    return TF_SITUATIONAL.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "tf-situational-" + index,
+
+                type:
+                    "True / False",
+
+                style:
+                    "Situational",
+
+                question:
+                    item[0],
+
+                correct:
+                    item[1],
+
+                correctText:
+                    item[1]
+                        ? "True"
+                        : "False",
+
+                explanation:
+                    item[1]
+                        ? "The situation correctly represents the Chapter 7 concept."
+                        : "The situation does not correctly represent the Chapter 7 concept."
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ENUMERATION
+   ========================================================= */
+
+function buildEnumeration(){
+
+    return ENUMERATION.map(
+        (item,index)=>{
+
+            return {
+
+                id:
+                    "enumeration-" + index,
+
+                type:
+                    "Enumeration",
+
+                style:
+                    "Direct",
+
+                question:
+                    item.question,
+
+                answers:
+                    item.answers,
+
+                correctText:
+                    item.answers.join("; "),
+
+                explanation:
+                    item.explanation
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BUILD SELECTED QUIZ
+   ========================================================= */
+
+function buildQuiz(){
+
+    if(
+        selectedType === "mc"
+    ){
+
+        if(
+            selectedStyle === "direct"
+        ){
+
+            return buildMCDirect();
+
+        }
+
+        return buildMCSituational();
+
+    }
+
+
+    if(
+        selectedType === "identification"
+    ){
+
+        if(
+            selectedStyle === "direct"
+        ){
+
+            return buildIdentificationDirect();
+
+        }
+
+        return buildIdentificationSituational();
+
+    }
+
+
+    if(
+        selectedType === "tf"
+    ){
+
+        if(
+            selectedStyle === "direct"
+        ){
+
+            return buildTFDirect();
+
+        }
+
+        return buildTFSituational();
+
+    }
+
+
+    if(
+        selectedType === "enumeration"
+    ){
+
+        return buildEnumeration();
+
+    }
+
+
+    return [];
+
+}
+
+
+/* =========================================================
+   START QUIZ
+   ========================================================= */
+
+function startQuiz(){
+
+    selectedType =
+        questionType.value;
+
+    selectedStyle =
+        questionStyle.value;
+
+    selectedOrder =
+        questionOrder.value;
+
+
+    quizQuestions =
+        buildQuiz();
+
+
+    if(
+        selectedOrder === "random"
+    ){
+
+        quizQuestions =
+            shuffle(
+                quizQuestions
+            );
+
+    }
+
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answers = [];
+
+
+    startScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.add(
+        "hidden"
+    );
+
+    quizScreen.classList.remove(
+        "hidden"
+    );
+
+
+    renderQuestion();
+
+}
+
+
+/* =========================================================
+   RENDER QUESTION
+   ========================================================= */
+
+function renderQuestion(){
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    if(!q){
+
+        finishQuiz();
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "questionCounter"
+    ).textContent =
+        `Question ${currentQuestion + 1} of ${quizQuestions.length}`;
+
+
+    document.getElementById(
+        "scoreDisplay"
+    ).textContent =
+        `Score: ${score}`;
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        `${((currentQuestion + 1) / quizQuestions.length) * 100}%`;
+
+
+    document.getElementById(
+        "typeBadge"
+    ).textContent =
+        q.type;
+
+
+    document.getElementById(
+        "styleBadge"
+    ).textContent =
+        q.style;
+
+
+    document.getElementById(
+        "questionText"
+    ).textContent =
+        q.question;
+
+
+    const answerArea =
+        document.getElementById(
+            "answerArea"
+        );
+
+
+    answerArea.innerHTML = "";
+
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    feedback.className =
+        "feedback";
+
+
+    feedback.innerHTML =
+        "";
+
+
+    nextButton.classList.add(
+        "hidden"
+    );
+
+
+    backButton.disabled =
+        currentQuestion === 0;
+
+
+    skipButton.disabled =
+        false;
+
+
+    /* =====================================================
+       MULTIPLE CHOICE
+       ===================================================== */
+
+    if(
+        q.type === "Multiple Choice"
+    ){
+
+        const choices =
+            document.createElement(
+                "div"
+            );
+
+        choices.className =
+            "choices";
+
+
+        q.choices.forEach(
+            (choice,index)=>{
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.className =
+                    "choice";
+
+
+                button.innerHTML =
+                    `
+                    <span class="choice-letter">
+                        ${String.fromCharCode(65 + index)}
+                    </span>
+                    ${escapeHTML(choice)}
+                    `;
+
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        answerMultipleChoice(
+                            index
+                        );
+
+                    }
+                );
+
+
+                choices.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        answerArea.appendChild(
+            choices
+        );
+
+    }
+
+
+    /* =====================================================
+       TRUE / FALSE
+       ===================================================== */
+
+    else if(
+        q.type === "True / False"
+    ){
+
+        const choices =
+            document.createElement(
+                "div"
+            );
+
+        choices.className =
+            "choices";
+
+
+        ["True","False"]
+        .forEach(
+            value=>{
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.className =
+                    "choice";
+
+                button.textContent =
+                    value;
+
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        answerTrueFalse(
+                            value === "True"
+                        );
+
+                    }
+                );
+
+
+                choices.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        answerArea.appendChild(
+            choices
+        );
+
+    }
+
+
+    /* =====================================================
+       IDENTIFICATION
+       ===================================================== */
+
+    else if(
+        q.type === "Identification"
+    ){
+
+        answerArea.innerHTML =
+            `
+            <div class="text-answer">
+
+                <input
+                    type="text"
+                    id="textAnswer"
+                    placeholder="Type your answer here..."
+                    autocomplete="off"
+                >
+
+                <button
+                    id="submitIdentification"
+                    class="primary">
+
+                    Submit Answer
+
+                </button>
+
+            </div>
+            `;
+
+
+        document
+            .getElementById(
+                "submitIdentification"
+            )
+            .addEventListener(
+                "click",
+                answerIdentification
+            );
+
+
+        document
+            .getElementById(
+                "textAnswer"
+            )
+            .addEventListener(
+                "keydown",
+                function(event){
+
+                    if(
+                        event.key === "Enter"
+                    ){
+
+                        answerIdentification();
+
+                    }
+
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       ENUMERATION
+       ===================================================== */
+
+    else if(
+        q.type === "Enumeration"
+    ){
+
+        let html =
+            `<div class="enumeration-inputs">`;
+
+
+        q.answers.forEach(
+            (answer,index)=>{
+
+                html +=
+                    `
+                    <div class="enum-row">
+
+                        <div class="enum-number">
+                            ${index + 1}.
+                        </div>
+
+                        <input
+                            type="text"
+                            id="enumInput${index}"
+                            placeholder="Enter answer ${index + 1}"
+                        >
+
+                    </div>
+                    `;
+
+            }
+        );
+
+
+        html +=
+            `
+            </div>
+
+            <br>
+
+            <button
+                id="submitEnumeration"
+                class="primary">
+
+                Submit Answers
+
+            </button>
+            `;
+
+
+        answerArea.innerHTML =
+            html;
+
+
+        document
+            .getElementById(
+                "submitEnumeration"
+            )
+            .addEventListener(
+                "click",
+                answerEnumeration
+            );
+
+    }
+
+
+    restoreSavedAnswer();
+
+}
+
+
+/* =========================================================
+   MULTIPLE CHOICE ANSWER
+   ========================================================= */
+
+function answerMultipleChoice(index){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const isCorrect =
+        index === q.correctIndex;
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            q.choices[index],
+
+        correct:
+            isCorrect
+
+    };
+
+
+    const buttons =
+        document.querySelectorAll(
+            "#answerArea .choice"
+        );
+
+
+    buttons.forEach(
+        (button,i)=>{
+
+            button.disabled =
+                true;
+
+
+            if(
+                i === q.correctIndex
+            ){
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+
+            if(
+                i === index &&
+                !isCorrect
+            ){
+
+                button.classList.add(
+                    "wrong"
+                );
+
+            }
+
+        }
+    );
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   TRUE / FALSE ANSWER
+   ========================================================= */
+
+function answerTrueFalse(value){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const isCorrect =
+        value === q.correct;
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            value
+                ? "True"
+                : "False",
+
+        correct:
+            isCorrect
+
+    };
+
+
+    const buttons =
+        document.querySelectorAll(
+            "#answerArea .choice"
+        );
+
+
+    buttons.forEach(
+        button=>{
+
+            button.disabled =
+                true;
+
+
+            if(
+                button.textContent ===
+                q.correctText
+            ){
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+
+            if(
+                button.textContent ===
+                (
+                    value
+                        ? "True"
+                        : "False"
+                ) &&
+                !isCorrect
+            ){
+
+                button.classList.add(
+                    "wrong"
+                );
+
+            }
+
+        }
+    );
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   IDENTIFICATION ANSWER
+   ========================================================= */
+
+function answerIdentification(){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "textAnswer"
+        );
+
+
+    const entered =
+        input.value.trim();
+
+
+    if(!entered){
+
+        alert(
+            "Please enter an answer."
+        );
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const isCorrect =
+        normalize(entered) ===
+        normalize(q.correctText);
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            entered,
+
+        correct:
+            isCorrect
+
+    };
+
+
+    input.disabled =
+        true;
+
+
+    document
+        .getElementById(
+            "submitIdentification"
+        )
+        .disabled =
+            true;
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   ENUMERATION ANSWER
+   ========================================================= */
+
+function answerEnumeration(){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    const entered = [];
+
+
+    for(
+        let i = 0;
+        i < q.answers.length;
+        i++
+    ){
+
+        const input =
+            document.getElementById(
+                `enumInput${i}`
+            );
+
+
+        if(
+            !input.value.trim()
+        ){
+
+            alert(
+                "Please answer all items."
+            );
+
+            return;
+
+        }
+
+
+        entered.push(
+            input.value.trim()
+        );
+
+    }
+
+
+    /*
+       Enumeration is checked against the
+       correct list. Order is required because
+       the chapter presents these lists in order.
+    */
+
+    let isCorrect = true;
+
+
+    if(
+        entered.length !==
+        q.answers.length
+    ){
+
+        isCorrect = false;
+
+    }
+    else{
+
+        for(
+            let i = 0;
+            i < q.answers.length;
+            i++
+        ){
+
+            if(
+                normalize(entered[i]) !==
+                normalize(q.answers[i])
+            ){
+
+                isCorrect = false;
+
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    if(isCorrect){
+
+        score++;
+
+    }
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:false,
+
+        answer:
+            entered.join(" | "),
+
+        correct:
+            isCorrect
+
+    };
+
+
+    document
+        .querySelectorAll(
+            "#answerArea input"
+        )
+        .forEach(
+            input =>
+                input.disabled = true
+        );
+
+
+    document
+        .getElementById(
+            "submitEnumeration"
+        )
+        .disabled =
+            true;
+
+
+    showFeedback(
+        isCorrect,
+        q.explanation,
+        q.correctText
+    );
+
+}
+
+
+/* =========================================================
+   SHOW FEEDBACK
+   ========================================================= */
+
+function showFeedback(
+    isCorrect,
+    explanation,
+    correctAnswer
+){
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    feedback.className =
+        "feedback show " +
+        (
+            isCorrect
+                ? "correct"
+                : "incorrect"
+        );
+
+
+    feedback.innerHTML =
+        `
+        <div class="feedback-title">
+
+            ${
+                isCorrect
+                    ? "✓ Correct!"
+                    : "✗ Incorrect"
+            }
+
+        </div>
+
+        <div>
+            ${escapeHTML(
+                explanation
+            )}
+        </div>
+
+        <div style="margin-top:8px;">
+
+            <b>Correct answer:</b>
+            ${escapeHTML(
+                correctAnswer
+            )}
+
+        </div>
+        `;
+
+
+    document.getElementById(
+        "scoreDisplay"
+    ).textContent =
+        `Score: ${score}`;
+
+
+    skipButton.disabled =
+        true;
+
+
+    nextButton.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   SKIP
+   ========================================================= */
+
+function skipQuestion(){
+
+    if(
+        answers[currentQuestion]
+    ){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    answers[currentQuestion] = {
+
+        answered:true,
+
+        skipped:true,
+
+        answer:"Skipped",
+
+        correct:false
+
+    };
+
+
+    showFeedback(
+        false,
+        "You skipped this question. No point was awarded.",
+        q.correctText ||
+        (
+            q.answers
+                ? q.answers.join("; ")
+                : ""
+        )
+    );
+
+}
+
+
+/* =========================================================
+   NEXT
+   ========================================================= */
+
+function nextQuestion(){
+
+    if(
+        currentQuestion <
+        quizQuestions.length - 1
+    ){
+
+        currentQuestion++;
+
+        renderQuestion();
+
+    }
+    else{
+
+        finishQuiz();
+
+    }
+
+}
+
+
+/* =========================================================
+   BACK
+   ========================================================= */
+
+function goBack(){
+
+    if(
+        currentQuestion <= 0
+    ){
+
+        return;
+
+    }
+
+
+    currentQuestion--;
+
+    renderQuestion();
+
+}
+
+
+/* =========================================================
+   RESTORE PREVIOUS ANSWER
+   ========================================================= */
+
+function restoreSavedAnswer(){
+
+    const saved =
+        answers[currentQuestion];
+
+
+    if(!saved){
+
+        return;
+
+    }
+
+
+    const q =
+        quizQuestions[
+            currentQuestion
+        ];
+
+
+    /* =====================================================
+       MULTIPLE CHOICE
+       ===================================================== */
+
+    if(
+        q.type === "Multiple Choice"
+    ){
+
+        const buttons =
+            document.querySelectorAll(
+                "#answerArea .choice"
+            );
+
+
+        buttons.forEach(
+            (button,index)=>{
+
+                button.disabled =
+                    true;
+
+
+                if(
+                    index ===
+                    q.correctIndex
+                ){
+
+                    button.classList.add(
+                        "correct"
+                    );
+
+                }
+
+
+                if(
+                    button.textContent
+                        .replace(/^[A-D]\s*/,"")
+                        .trim() ===
+                    saved.answer &&
+                    !saved.correct
+                ){
+
+                    button.classList.add(
+                        "wrong"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       TRUE / FALSE
+       ===================================================== */
+
+    else if(
+        q.type === "True / False"
+    ){
+
+        const buttons =
+            document.querySelectorAll(
+                "#answerArea .choice"
+            );
+
+
+        buttons.forEach(
+            button=>{
+
+                button.disabled =
+                    true;
+
+
+                if(
+                    button.textContent ===
+                    q.correctText
+                ){
+
+                    button.classList.add(
+                        "correct"
+                    );
+
+                }
+
+
+                if(
+                    button.textContent ===
+                    saved.answer &&
+                    !saved.correct
+                ){
+
+                    button.classList.add(
+                        "wrong"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       IDENTIFICATION
+       ===================================================== */
+
+    else if(
+        q.type === "Identification"
+    ){
+
+        const input =
+            document.getElementById(
+                "textAnswer"
+            );
+
+
+        if(input){
+
+            input.value =
+                saved.answer;
+
+            input.disabled =
+                true;
+
+        }
+
+
+        const submit =
+            document.getElementById(
+                "submitIdentification"
+            );
+
+
+        if(submit){
+
+            submit.disabled =
+                true;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ENUMERATION
+       ===================================================== */
+
+    else if(
+        q.type === "Enumeration"
+    ){
+
+        const values =
+            saved.answer.split(
+                " | "
+            );
+
+
+        values.forEach(
+            (value,index)=>{
+
+                const input =
+                    document.getElementById(
+                        `enumInput${index}`
+                    );
+
+
+                if(input){
+
+                    input.value =
+                        value;
+
+                    input.disabled =
+                        true;
+
+                }
+
+            }
+        );
+
+
+        const submit =
+            document.getElementById(
+                "submitEnumeration"
+            );
+
+
+        if(submit){
+
+            submit.disabled =
+                true;
+
+        }
+
+    }
+
+
+    showFeedback(
+        saved.correct,
+        q.explanation,
+        q.correctText ||
+        (
+            q.answers
+                ? q.answers.join("; ")
+                : ""
+        )
+    );
+
+}
+
+
+/* =========================================================
+   FINISH QUIZ
+   ========================================================= */
+
+function finishQuiz(){
+
+    quizScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.remove(
+        "hidden"
+    );
+
+
+    const total =
+        quizQuestions.length;
+
+
+    const percentage =
+        total === 0
+            ? 0
+            : Math.round(
+                (score / total) * 100
+            );
+
+
+    document.getElementById(
+        "resultScore"
+    ).textContent =
+        `${score} / ${total}`;
+
+
+    document.getElementById(
+        "resultPercent"
+    ).textContent =
+        `${percentage}%`;
+
+
+    let message;
+
+
+    if(
+        percentage >= 90
+    ){
+
+        message =
+            "Excellent work! You have a strong understanding of Chapter 7.";
+
+    }
+    else if(
+        percentage >= 75
+    ){
+
+        message =
+            "Good job! You have a solid understanding of the chapter.";
+
+    }
+    else if(
+        percentage >= 60
+    ){
+
+        message =
+            "Not bad. Review the chapter and try again.";
+
+    }
+    else{
+
+        message =
+            "Keep studying. Review Chapter 7 and try the quiz again.";
+
+    }
+
+
+    document.getElementById(
+        "resultMessage"
+    ).textContent =
+        message;
+
+}
+
+
+/* =========================================================
+   REVIEW ANSWERS
+   ========================================================= */
+
+function showReview(){
+
+    const area =
+        document.getElementById(
+            "reviewArea"
+        );
+
+
+    if(
+        !area.classList.contains(
+            "hidden"
+        )
+    ){
+
+        area.classList.add(
+            "hidden"
+        );
+
+        return;
+
+    }
+
+
+    area.classList.remove(
+        "hidden"
+    );
+
+
+    let html =
+        "<h2>Answer Review</h2>";
+
+
+    quizQuestions.forEach(
+        (q,index)=>{
+
+            const result =
+                answers[index];
+
+
+            let status =
+                "Not answered";
+
+
+            let statusClass =
+                "skipped";
+
+
+            let userAnswer =
+                "Not answered";
+
+
+            if(result){
+
+                userAnswer =
+                    result.answer;
+
+
+                if(
+                    result.skipped
+                ){
+
+                    status =
+                        "Skipped";
+
+                    statusClass =
+                        "skipped";
+
+                }
+                else if(
+                    result.correct
+                ){
+
+                    status =
+                        "Correct";
+
+                    statusClass =
+                        "correct";
+
+                }
+                else{
+
+                    status =
+                        "Incorrect";
+
+                    statusClass =
+                        "incorrect";
+
+                }
+
+            }
+
+
+            const correctAnswer =
+                q.correctText ||
+                (
+                    q.answers
+                        ? q.answers.join("; ")
+                        : ""
+                );
+
+
+            html +=
+                `
+                <div class="review-item">
+
+                    <b>
+                        ${index + 1}.
+                        ${escapeHTML(
+                            q.question
+                        )}
+                    </b>
+
+                    <br><br>
+
+                    <b>Your answer:</b>
+                    ${escapeHTML(
+                        userAnswer
+                    )}
+
+                    <br>
+
+                    <b>Correct answer:</b>
+                    ${escapeHTML(
+                        correctAnswer
+                    )}
+
+                    <br><br>
+
+                    <span class="review-status ${statusClass}">
+
+                        ${status}
+
+                    </span>
+
+                </div>
+                `;
+
+        }
+    );
+
+
+    area.innerHTML =
+        html;
+
+}
+
+
+/* =========================================================
+   RESTART
+   ========================================================= */
+
+function restartQuiz(){
+
+    quizQuestions = [];
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answers = [];
+
+
+    quizScreen.classList.add(
+        "hidden"
+    );
+
+    resultScreen.classList.add(
+        "hidden"
+    );
+
+
+    document
+        .getElementById(
+            "reviewArea"
+        )
+        .classList
+        .add("hidden");
+
+
+    startScreen.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   BUTTON EVENTS
+   ========================================================= */
+
+startButton.addEventListener(
+    "click",
+    startQuiz
+);
+
+
+backButton.addEventListener(
+    "click",
+    goBack
+);
+
+
+skipButton.addEventListener(
+    "click",
+    skipQuestion
+);
+
+
+restartButton.addEventListener(
+    "click",
+    restartQuiz
+);
+
+
+nextButton.addEventListener(
+    "click",
+    nextQuestion
+);
+
+
+reviewButton.addEventListener(
+    "click",
+    showReview
+);
+
+
+resultRestartButton.addEventListener(
+    "click",
+    restartQuiz
+);
+
+</script>
+
+</body>
+</html>
