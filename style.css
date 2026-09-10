@@ -572,6 +572,28 @@ body {
 }
 
 /* ============================================================
+   Back-to-top button — a second, separate round button that sits
+   directly below the FAB icon (see back-to-top.js, which measures
+   the FAB's position and places this to match). Reuses .fab-icon
+   for the same glass look, and fades/scales in only once the page
+   has been scrolled down a bit.
+   ============================================================ */
+.back-to-top-btn {
+  position: fixed;
+  z-index: 99;
+  opacity: 0;
+  transform: translateY(6px) scale(0.9);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.back-to-top-btn.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* ============================================================
    Chapter detail page — editable content area
    ============================================================ */
 
