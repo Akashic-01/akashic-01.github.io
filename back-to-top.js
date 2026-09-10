@@ -1,73 +1,102 @@
 // Back-to-top button for chapter pages.
 //
-// Sits in the same right-hand column as the FAB (widget.js), directly
-// below it, so a reader who has scrolled far down a chapter can jump
-// back to the top in one tap. Its position is measured off the FAB's
-// own icon (#fabToggle) rather than a hardcoded offset, so it lines up
-// correctly whether the FAB is vertically centered (desktop) or pinned
-// to the bottom-right corner (mobile) — both are handled by widget.js
-// already, this just reads wherever that ends up.
-//
-// If sitting directly below the FAB would push it past the bottom of
-// the screen (this happens on mobile, where the FAB already sits close
-// to the bottom edge), it's clamped to stay a small fixed gap above
-// the screen's true bottom edge instead of running off it.
+// Appears only after the chapter toolbar has relocated to its fixed
+// "stuck" position at the top of the screen (same moment the undo /
+// redo / reset / theme controls become the floating dock). Pinned to
+// the bottom edge of the viewport on every device so it sits beside
+// the screen limit, well clear of the FAB.
 (function () {
-  const GAP_BELOW_FAB = 16; // px, gap kept between the FAB and this button
-  const BOTTOM_SAFE_MARGIN = 20; // px, min gap this button keeps from the screen's bottom edge
-  const SHOW_AFTER_PX = 480; // px scrolled down before the button fades in
+  const BOTTOM_MARGIN = 20; // px from the true bottom edge of the screen
+  const RIGHT_MARGIN = 16;  // px from the right edge
 
   function init() {
+    const toolbar = document.getElementById('chapterToolbar');
+    // Still useful to know the FAB exists (for layout awareness on mobile),
+    // but we no longer anchor position to it on desktop.
     const fabIcon = document.getElementById('fabToggle');
-    if (!fabIcon) return; // no FAB on this page — nothing to anchor to, so skip
 
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'fab-icon back-to-top-btn';
     btn.id = 'backToTopBtn';
     btn.setAttribute('aria-label', 'Back to top');
+    // Proper up-arrow with triangular head + rectangular tail (stem)
     btn.innerHTML =
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>';
+      '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+      '<path d="M12 4 L5 12 H9.5 V20 H14.5 V12 H19 Z"/>' +
+      '</svg>';
     document.body.appendChild(btn);
 
-    let ticking = false;
-
-    function update() {
-      ticking = false;
-
-      const fabRect = fabIcon.getBoundingClientRect();
-      const btnHeight = btn.offsetHeight || fabRect.height;
-      const idealTop = fabRect.bottom + GAP_BELOW_FAB;
-      const maxTop = window.innerHeight - btnHeight - BOTTOM_SAFE_MARGIN;
-
-      btn.style.top = `${Math.min(idealTop, maxTop)}px`;
-      btn.style.left = `${fabRect.left}px`;
-      btn.style.width = `${fabRect.width}px`;
-      btn.style.height = `${fabRect.height}px`;
-
-      const scrolled = window.scrollY || document.documentElement.scrollTop || 0;
-      btn.classList.toggle('is-visible', scrolled > SHOW_AFTER_PX);
+    // ---- Visibility: show only while the toolbar is stuck ----
+    function updateVisibility() {
+      const stuck = toolbar && toolbar.classList.contains('is-stuck');
+      btn.classList.toggle('is-visible', !!stuck);
     }
 
-    function requestUpdate() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(update);
+    if (toolbar) {
+      // React to class changes on the toolbar (is-stuck is toggled by
+      // the IntersectionObserver in chapter.html).
+      const observer = new MutationObserver(updateVisibility);
+      observer.observe(toolbar, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+      updateVisibility();
     }
 
-    update();
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate);
-    // widget.js re-measures the FAB's own position shortly after an
-    // orientation change (once the browser has settled) — do the same
-    // here so this stays lined up with it.
-    window.addEventListener('orientationchange', () => setTimeout(requestUpdate, 200));
+    // ---- Position: fixed to the bottom-right edge of the viewport ----
+    function updatePosition() {
+      btn.style.top = 'auto';
+      btn.style.bottom = BOTTOM_MARGIN + 'px';
+      btn.style.left = 'auto';
+      btn.style.right = RIGHT_MARGIN + 'px';
 
-    const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+      // On mobile the FAB already occupies the bottom-right corner.
+      // Shift this button left of the FAB so both remain tappable and
+      // sit along the bottom screen limit.
+      if (fabIcon && window.matchMedia('(max-width: 640px)').matches) {
+        const fabRect = fabIcon.getBoundingClientRect();
+        const gap = 12;
+        // Place just to the left of the FAB, still near the bottom edge.
+        btn.style.right = (window.innerWidth - fabRect.left + gap) + 'px';
+        // Keep the same bottom margin so it lines up with the FAB row.
+        btn.style.bottom = (window.innerHeight - fabRect.bottom) + 'px';
+      }
+    }
+
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('orientationchange', function () {
+      setTimeout(updatePosition, 200);
+    });
+    // FAB may re-measure after load / orientation — re-run shortly after.
+    setTimeout(updatePosition, 300);
+
+    // ---- Scroll to top (robust click / tap) ----
+    function scrollToTop(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      // Prefer smooth scroll; fall back for older browsers.
+      try {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (_) {
+        window.scrollTo(0, 0);
+      }
+      // Also reset documentElement / body for stubborn mobile browsers.
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+
     if (window.addTapListener) {
       window.addTapListener(btn, scrollToTop);
     } else {
       btn.addEventListener('click', scrollToTop);
+      btn.addEventListener('touchend', function (e) {
+        e.preventDefault();
+        scrollToTop(e);
+      }, { passive: false });
     }
   }
 
