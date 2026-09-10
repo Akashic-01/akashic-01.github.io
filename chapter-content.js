@@ -777,6 +777,18 @@ window.CHAPTER_CONTENT = {
       </li>
       <li>Newly promoted managers who were high-performing salespeople may need to switch from task-oriented to more relationship-centered leadership.</li>
     </ul>
+
+    <h3>Problems in Leadership</h3>
+
+    <p>Any managerial position concerning the direct supervision of employees like the sales manager necessitates periodic managing of personnel management problems. Some of the most common problems being handled by managers are:</p>
+
+    <ol>
+      <li><strong>Conflicts of interest</strong> &ndash; Salespeople may meet conflict of interest in their sales activities, so problem-solving skills are frequently put into test. In several cases, satisfying customer demands possibly will go against company policy. In few severe cases, salesperson could have a hidden interest in a competitor&rsquo;s business. The use of classified information for individual profit, like insider trading is an illustration of serious conflict of interest, which in fact is a crime.</li>
+      <li><strong>Chemical abuse and dependency</strong> &ndash; Chemical or drug dependency is a serious problem and affects the performances of the salespeople. Drug abuse in the sales organization really costs a lot. Sales managers are making a more dynamic role in spotting employees with problems and helping revitalize drug dependence. It is sensible to let professionals do the counseling.</li>
+      <li><strong>Problem salespeople a disruptive influence</strong> &ndash; Sales managers ought to deal successfully with problem salespeople. In most instances, problems can be corrected by determining the behavior or attitude to be remedied than promoting a change using motivation, supervision, additional training, and development.</li>
+      <li><strong>Termination of employment</strong> &ndash; In several instances, problems cannot be solved, and it is essential to conclude the service of a salesperson. When performance always fails to meet up with the standards and coaching, training, and re-training are ineffective, termination or reassignment may be the alternatives available.</li>
+      <li><strong>Sexual harassment</strong> &ndash; It is vital to take action right away if a sexual harassment problem occurs in the sales organization. Employers may be accountable based on law. For instance, if they pay no attention to sexual harassment of their salespeople are being done by customers or others in the workplace.</li>
+    </ol>
   `,
   'sales-8': `
     <p>Controlling and evaluating the salesperson's performance is how sales management confirms that the sales plan is actually working &mdash; and corrects course when it isn't. It closes the loop on everything else sales management sets out to do.</p>
