@@ -501,7 +501,7 @@ window.CHAPTER_CONTENT = {
     </ul>
   `,
   'sales-7': `
-    <p>After studying this chapter, the students should be able to:</p>
+    <p>After studying this chapter, the students should be able to bruh:</p>
 
     <ol>
       <li>Understand the foundations of sales leadership and supervision;</li>
