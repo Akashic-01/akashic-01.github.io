@@ -2,18 +2,16 @@
 //
 // Appears only after the chapter toolbar has relocated to its fixed
 // "stuck" position at the top of the screen (same moment the undo /
-// redo / reset / theme controls become the floating dock). Pinned to
-// the bottom edge of the viewport on every device so it sits beside
-// the screen limit, well clear of the FAB.
+// redo / reset / theme controls become the floating dock).
+// Positioned to the LEFT of the FAB, sharing the same vertical center
+// so the two buttons sit on one horizontal line.
 (function () {
-  const BOTTOM_MARGIN = 20; // px from the true bottom edge of the screen
-  const RIGHT_MARGIN = 16;  // px from the right edge
+  const GAP_LEFT_OF_FAB = 12; // px gap between this button and the FAB
 
   function init() {
     const toolbar = document.getElementById('chapterToolbar');
-    // Still useful to know the FAB exists (for layout awareness on mobile),
-    // but we no longer anchor position to it on desktop.
     const fabIcon = document.getElementById('fabToggle');
+    if (!fabIcon) return; // no FAB on this page — nothing to align with
 
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -34,8 +32,6 @@
     }
 
     if (toolbar) {
-      // React to class changes on the toolbar (is-stuck is toggled by
-      // the IntersectionObserver in chapter.html).
       const observer = new MutationObserver(updateVisibility);
       observer.observe(toolbar, {
         attributes: true,
@@ -44,33 +40,45 @@
       updateVisibility();
     }
 
-    // ---- Position: fixed to the bottom-right edge of the viewport ----
-    function updatePosition() {
-      btn.style.top = 'auto';
-      btn.style.bottom = BOTTOM_MARGIN + 'px';
-      btn.style.left = 'auto';
-      btn.style.right = RIGHT_MARGIN + 'px';
+    // ---- Position: same vertical level as FAB, to its left ----
+    let ticking = false;
 
-      // On mobile the FAB already occupies the bottom-right corner.
-      // Shift this button left of the FAB so both remain tappable and
-      // sit along the bottom screen limit.
-      if (fabIcon && window.matchMedia('(max-width: 640px)').matches) {
-        const fabRect = fabIcon.getBoundingClientRect();
-        const gap = 12;
-        // Place just to the left of the FAB, still near the bottom edge.
-        btn.style.right = (window.innerWidth - fabRect.left + gap) + 'px';
-        // Keep the same bottom margin so it lines up with the FAB row.
-        btn.style.bottom = (window.innerHeight - fabRect.bottom) + 'px';
-      }
+    function updatePosition() {
+      ticking = false;
+
+      const fabRect = fabIcon.getBoundingClientRect();
+      const btnWidth = btn.offsetWidth || fabRect.width;
+      const btnHeight = btn.offsetHeight || fabRect.height;
+
+      // Match FAB size so they look like a pair
+      btn.style.width = fabRect.width + 'px';
+      btn.style.height = fabRect.height + 'px';
+
+      // Same vertical center as the FAB
+      const top = fabRect.top + (fabRect.height - btnHeight) / 2;
+      btn.style.top = top + 'px';
+      btn.style.bottom = 'auto';
+
+      // Place to the LEFT of the FAB with a small gap
+      const left = fabRect.left - GAP_LEFT_OF_FAB - btnWidth;
+      btn.style.left = left + 'px';
+      btn.style.right = 'auto';
+    }
+
+    function requestUpdate() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updatePosition);
     }
 
     updatePosition();
-    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
     window.addEventListener('orientationchange', function () {
-      setTimeout(updatePosition, 200);
+      setTimeout(requestUpdate, 200);
     });
-    // FAB may re-measure after load / orientation — re-run shortly after.
-    setTimeout(updatePosition, 300);
+    // FAB may re-measure after load / orientation
+    setTimeout(requestUpdate, 300);
 
     // ---- Scroll to top (robust click / tap) ----
     function scrollToTop(e) {
@@ -78,13 +86,11 @@
         e.preventDefault();
         e.stopPropagation();
       }
-      // Prefer smooth scroll; fall back for older browsers.
       try {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } catch (_) {
         window.scrollTo(0, 0);
       }
-      // Also reset documentElement / body for stubborn mobile browsers.
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
     }
