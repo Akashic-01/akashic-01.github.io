@@ -4,18 +4,18 @@
 // "stuck" position at the top of the screen (same moment the undo /
 // redo / reset / theme controls become the floating dock).
 //
-// Position: same horizontal column as the FAB (same right/left edge),
-// pinned near the bottom edge of the screen. On mobile — where the FAB
-// already sits near the bottom — this button is placed just above the
-// FAB so the two never overlap, still in the same column.
+// Position: same horizontal column as the FAB (same left edge),
+// pinned near the bottom edge of the screen. Only when the FAB itself
+// is already near the bottom (mobile) does this button sit just above
+// the FAB so the two never overlap.
 (function () {
   const BOTTOM_MARGIN = 20; // px from the true bottom edge of the screen
-  const GAP_ABOVE_FAB = 12; // px gap when we must sit above the FAB instead
+  const GAP_ABOVE_FAB = 12; // px gap when we must sit above the FAB
 
   function init() {
     const toolbar = document.getElementById('chapterToolbar');
     const fabIcon = document.getElementById('fabToggle');
-    if (!fabIcon) return; // no FAB on this page — nothing to align with
+    if (!fabIcon) return;
 
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -51,31 +51,35 @@
       ticking = false;
 
       const fabRect = fabIcon.getBoundingClientRect();
-      const btnHeight = btn.offsetHeight || fabRect.height;
+      const btnH = btn.offsetHeight || fabRect.height;
+      const btnW = btn.offsetWidth || fabRect.width;
 
-      // Match FAB size so they look consistent
       btn.style.width = fabRect.width + 'px';
       btn.style.height = fabRect.height + 'px';
 
-      // Same horizontal column as the FAB
+      // Same horizontal column as the FAB (aligned under it)
       btn.style.left = fabRect.left + 'px';
       btn.style.right = 'auto';
 
-      // Ideal: near the bottom edge of the viewport
-      const idealTop = window.innerHeight - btnHeight - BOTTOM_MARGIN;
+      // Preferred spot: near the bottom edge of the viewport
+      const idealTop = window.innerHeight - btnH - BOTTOM_MARGIN;
+      const idealBottom = idealTop + btnH;
 
-      // If that would overlap (or sit too close under) the FAB,
-      // place this button just above the FAB instead — still same column.
-      const fabTop = fabRect.top;
-      const wouldOverlap = idealTop + btnHeight + GAP_ABOVE_FAB > fabTop;
+      // True overlap only if the two vertical ranges intersect
+      // (with a small gap). FAB in the middle of the screen does NOT
+      // count as overlap with a button at the bottom.
+      const overlaps =
+        idealTop < fabRect.bottom + GAP_ABOVE_FAB &&
+        idealBottom > fabRect.top - GAP_ABOVE_FAB;
 
-      if (wouldOverlap) {
-        btn.style.top = (fabTop - GAP_ABOVE_FAB - btnHeight) + 'px';
-        btn.style.bottom = 'auto';
+      if (overlaps) {
+        // FAB is near the bottom (typical on mobile) — sit just above it
+        btn.style.top = (fabRect.top - GAP_ABOVE_FAB - btnH) + 'px';
       } else {
+        // Plenty of room — pin to the bottom of the screen
         btn.style.top = idealTop + 'px';
-        btn.style.bottom = 'auto';
       }
+      btn.style.bottom = 'auto';
     }
 
     function requestUpdate() {
@@ -90,10 +94,9 @@
     window.addEventListener('orientationchange', function () {
       setTimeout(requestUpdate, 200);
     });
-    // FAB may re-measure after load / orientation
     setTimeout(requestUpdate, 300);
 
-    // ---- Scroll to top (robust click / tap) ----
+    // ---- Scroll to top ----
     function scrollToTop(e) {
       if (e) {
         e.preventDefault();
