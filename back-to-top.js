@@ -3,10 +3,14 @@
 // Appears only after the chapter toolbar has relocated to its fixed
 // "stuck" position at the top of the screen (same moment the undo /
 // redo / reset / theme controls become the floating dock).
-// Positioned to the LEFT of the FAB, sharing the same vertical center
-// so the two buttons sit on one horizontal line.
+//
+// Position: same horizontal column as the FAB (same right/left edge),
+// pinned near the bottom edge of the screen. On mobile — where the FAB
+// already sits near the bottom — this button is placed just above the
+// FAB so the two never overlap, still in the same column.
 (function () {
-  const GAP_LEFT_OF_FAB = 12; // px gap between this button and the FAB
+  const BOTTOM_MARGIN = 20; // px from the true bottom edge of the screen
+  const GAP_ABOVE_FAB = 12; // px gap when we must sit above the FAB instead
 
   function init() {
     const toolbar = document.getElementById('chapterToolbar');
@@ -40,29 +44,38 @@
       updateVisibility();
     }
 
-    // ---- Position: same vertical level as FAB, to its left ----
+    // ---- Position: same column as FAB, near bottom of screen ----
     let ticking = false;
 
     function updatePosition() {
       ticking = false;
 
       const fabRect = fabIcon.getBoundingClientRect();
-      const btnWidth = btn.offsetWidth || fabRect.width;
       const btnHeight = btn.offsetHeight || fabRect.height;
 
-      // Match FAB size so they look like a pair
+      // Match FAB size so they look consistent
       btn.style.width = fabRect.width + 'px';
       btn.style.height = fabRect.height + 'px';
 
-      // Same vertical center as the FAB
-      const top = fabRect.top + (fabRect.height - btnHeight) / 2;
-      btn.style.top = top + 'px';
-      btn.style.bottom = 'auto';
-
-      // Place to the LEFT of the FAB with a small gap
-      const left = fabRect.left - GAP_LEFT_OF_FAB - btnWidth;
-      btn.style.left = left + 'px';
+      // Same horizontal column as the FAB
+      btn.style.left = fabRect.left + 'px';
       btn.style.right = 'auto';
+
+      // Ideal: near the bottom edge of the viewport
+      const idealTop = window.innerHeight - btnHeight - BOTTOM_MARGIN;
+
+      // If that would overlap (or sit too close under) the FAB,
+      // place this button just above the FAB instead — still same column.
+      const fabTop = fabRect.top;
+      const wouldOverlap = idealTop + btnHeight + GAP_ABOVE_FAB > fabTop;
+
+      if (wouldOverlap) {
+        btn.style.top = (fabTop - GAP_ABOVE_FAB - btnHeight) + 'px';
+        btn.style.bottom = 'auto';
+      } else {
+        btn.style.top = idealTop + 'px';
+        btn.style.bottom = 'auto';
+      }
     }
 
     function requestUpdate() {
