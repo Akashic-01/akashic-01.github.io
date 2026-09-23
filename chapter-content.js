@@ -28,7 +28,7 @@ window.CHAPTER_TITLES = {
   'sales-6': 'Salespeople Motivation, Compensation, and Reward',
   'sales-7': 'Sales Leadership and Supervision',
   'sales-8': 'Controlling and Evaluating the Salesperson Performance',
-  'sales-9': '',
+  'sales-9': 'Strategic Role of Sales Management',
   'sales-10': '',
   'entrepreneurial-1': '',
   'entrepreneurial-2': '',
