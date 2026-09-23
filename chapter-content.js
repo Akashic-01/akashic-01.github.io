@@ -30,6 +30,7 @@ window.CHAPTER_TITLES = {
   'sales-8': 'Controlling and Evaluating the Salesperson Performance',
   'sales-9': 'Strategic Role of Sales Management',
   'sales-10': '',
+  'sales-11': 'test chapter',
   'entrepreneurial-1': '',
   'entrepreneurial-2': '',
   'entrepreneurial-3': '',
